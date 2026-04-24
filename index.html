@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Simon Lee — Head of Product | Web3 & DeFi</title>
+  <title>Simon Lee — Head of Product | Fintech & AI</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
@@ -142,6 +142,7 @@
     .tl-bullets { list-style:none; display:flex; flex-direction:column; gap:6px; margin-bottom:14px; }
     .tl-bullets li { font-size:.88rem; color:var(--muted); padding-left:16px; position:relative; }
     .tl-bullets li::before { content:'▸'; position:absolute; left:0; color:var(--accent2); }
+    .tl-sub { font-size:.85rem; font-weight:600; color:var(--accent2); margin:14px 0 8px; }
     .tags { display:flex; flex-wrap:wrap; gap:8px; }
     .tag { padding:4px 12px; background:rgba(255,255,255,.04); border:1px solid var(--border); border-radius:50px; font-size:.76rem; color:var(--muted); }
     @media(max-width:680px){ .tl-item{grid-template-columns:1fr;gap:12px;} .tl-left{flex-direction:row;flex-wrap:wrap;align-items:center;gap:10px;} }
@@ -166,10 +167,12 @@
     /* ── EDUCATION ── */
     #education { background:var(--surface); }
     .edu-certs { display:grid; grid-template-columns:1fr 1fr; gap:40px; }
-    .edu-block { background:var(--bg); border:1px solid var(--border); border-radius:var(--radius); padding:28px; }
+    .edu-block { background:var(--bg); border:1px solid var(--border); border-radius:var(--radius); padding:28px; margin-bottom:20px; }
+    .edu-block:last-child { margin-bottom:0; }
     .edu-block h3 { font-family:'Space Grotesk',sans-serif; font-size:1.05rem; font-weight:600; color:#fff; margin-bottom:4px; }
     .edu-block .degree { color:var(--accent2); font-size:.9rem; font-weight:500; }
     .edu-block .period { color:var(--muted); font-size:.83rem; margin-top:8px; }
+    .edu-block p { color:var(--muted); font-size:.87rem; line-height:1.7; margin-top:10px; }
     .cert-list { list-style:none; display:flex; flex-direction:column; gap:10px; }
     .cert-list li { font-size:.87rem; color:var(--muted); padding-left:22px; position:relative; }
     .cert-list li::before { content:'🏅'; position:absolute; left:0; font-size:.75rem; }
@@ -185,6 +188,18 @@
     .contact-btn:hover { border-color:var(--accent2); color:var(--accent2); transform:translateY(-2px); }
     .contact-btn svg { width:16px; height:16px; flex-shrink:0; }
     footer { text-align:center; padding:28px 6vw; border-top:1px solid var(--border); color:var(--muted); font-size:.82rem; }
+
+    /* ── KEY DATA BANNER ── */
+    .key-data-banner {
+      display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:16px;
+      margin-bottom:40px;
+    }
+    .kd-card {
+      background:var(--surface); border:1px solid var(--border); border-radius:var(--radius);
+      padding:20px 24px; text-align:center;
+    }
+    .kd-num { font-family:'Space Grotesk',sans-serif; font-size:1.6rem; font-weight:700; color:#fff; }
+    .kd-label { font-size:.8rem; color:var(--muted); margin-top:4px; }
 
     /* ── LANG HIDDEN ── */
     [data-lang] { transition: opacity .25s; }
@@ -223,37 +238,42 @@
   <h1>Simon Lee<br><span class="accent">李仲軒</span></h1>
 
   <p class="hero-title" data-lang="en">
-    <strong>Head of Product</strong> &nbsp;·&nbsp; Web3 &amp; DeFi Platforms &nbsp;·&nbsp; Cross-Regional Teams (50+) &nbsp;·&nbsp; 17–18 Years Experience
+    <strong>Head of Product</strong> &nbsp;·&nbsp; Fintech &amp; AI Platforms &nbsp;·&nbsp; Cross-Regional Teams (50+) &nbsp;·&nbsp; 17+ Years Experience
   </p>
   <p class="hero-title" data-lang="zh">
-    <strong>產品負責人（Head of Product）</strong> &nbsp;·&nbsp; Web3 &amp; DeFi 平台 &nbsp;·&nbsp; 跨國技術團隊（50+人）&nbsp;·&nbsp; 17–18 年工作經歷
+    <strong>產品負責人（Head of Product）</strong> &nbsp;·&nbsp; 金融科技 &amp; AI 平台 &nbsp;·&nbsp; 跨國技術團隊（50+人）&nbsp;·&nbsp; 17+ 年工作經歷
   </p>
 
   <blockquote class="hero-quote">
-    <span data-lang="en">"Emulate the virtuous; reflect inward when encountering shortcomings."</span>
+    <span data-lang="en">"See the virtuous and aspire to be their equal; see the unvirtuous and reflect upon oneself."</span>
     <span data-lang="zh">「見賢思齊，見不賢則內自省。」</span>
   </blockquote>
 
   <div class="hero-stats">
     <div class="stat">
-      <span class="stat-num">17+</span>
-      <span class="stat-label" data-lang="en">Years Experience</span>
-      <span class="stat-label" data-lang="zh">年工作經驗</span>
+      <span class="stat-num">$400M+</span>
+      <span class="stat-label" data-lang="en">Digital Assets Managed</span>
+      <span class="stat-label" data-lang="zh">數位資產管理總值</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">2M</span>
+      <span class="stat-label" data-lang="en">Daily Active Users</span>
+      <span class="stat-label" data-lang="zh">平台日活用戶</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">$100M+</span>
+      <span class="stat-label" data-lang="en">Monthly Trading Vol.</span>
+      <span class="stat-label" data-lang="zh">月交易量</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">~5 yrs</span>
+      <span class="stat-label" data-lang="en">Zero Fund Loss</span>
+      <span class="stat-label" data-lang="zh">零資金損失紀錄</span>
     </div>
     <div class="stat">
       <span class="stat-num">50+</span>
       <span class="stat-label" data-lang="en">Engineers Led</span>
       <span class="stat-label" data-lang="zh">人跨國團隊</span>
-    </div>
-    <div class="stat">
-      <span class="stat-num">1,900</span>
-      <span class="stat-label" data-lang="en">Employee Scale</span>
-      <span class="stat-label" data-lang="zh">人規模企業</span>
-    </div>
-    <div class="stat">
-      <span class="stat-num">5</span>
-      <span class="stat-label" data-lang="en">Countries Covered</span>
-      <span class="stat-label" data-lang="zh">國跨區域管理</span>
     </div>
   </div>
 
@@ -271,21 +291,18 @@
   <div class="section-wrap">
     <p class="section-label" data-lang="en">About Me</p>
     <p class="section-label" data-lang="zh">關於我</p>
-    <h2 class="section-title" data-lang="en">Building scalable products<br>across borders</h2>
-    <h2 class="section-title" data-lang="zh">跨越國界，打造可擴展的產品體系</h2>
+    <h2 class="section-title" data-lang="en">Building scalable fintech products<br>with AI &amp; integrity</h2>
+    <h2 class="section-title" data-lang="zh">以 AI 與誠信驅動，打造可擴展的金融科技產品</h2>
     <div class="about-grid">
       <div>
-        <p data-lang="en">I am currently serving as <strong>Head of Product</strong> at a group-level organization, leading enterprise digital transformation and Web3 product strategy. I oversee cross-regional engineering teams across China, Taiwan, and Southeast Asia, managing <strong>more than 50 team members</strong>.</p>
-        <p data-lang="zh">我目前擔任集團總部<strong>產品負責人</strong>，主要負責企業數位化建設與 Web3 產品規劃落地，管理橫跨中國、台灣與東南亞的多地技術團隊，<strong>總人數 50 人以上</strong>。</p>
+        <p data-lang="en">Seasoned <strong>Head of Product</strong> with 17+ years of cross-border product management experience, specializing in fintech platforms, digital technology products, and enterprise digital transformation. Led core system development for a <strong>1,900-person conglomerate</strong> and managed <strong>50+ R&amp;D teams</strong> spanning China, Taiwan, UAE, and Southeast Asia.</p>
+        <p data-lang="zh">具備 17 年以上產品管理與跨國技術整合經驗，專注於<strong>金融科技平台、數位科技產品與企業數位轉型</strong>。曾統籌 <strong>1,900 人規模集團</strong>之核心系統建設，管理橫跨中國、台灣、阿聯酋與東南亞的多地研發團隊（<strong>50+ 人</strong>）。</p>
 
-        <p data-lang="en">My role goes beyond traditional product management. I translate executive strategy into <strong>scalable product systems</strong> — from architecture design and roadmap planning to cross-functional execution and performance governance.</p>
-        <p data-lang="zh">我的核心優勢不只是產品規劃能力，而是「<strong>把複雜事情拆解清楚並確實落地</strong>」。我擅長將高層戰略需求轉化為可執行任務，拆解成清晰的版本節點與交付標準，同時協調跨文化團隊協作，確保產品準時甚至提前上線。</p>
+        <p data-lang="en">Deeply leverages <strong>AI technology</strong> to enhance product management efficiency. Established an "AI Command System" — with Claude as the core brain orchestrating GPT, Gemini, and other multi-AI Agent collaborative architectures. Achieved end-to-end automation across product analysis, competitor research, PRD writing, multilingual translation, and progress tracking, <strong>reducing the product development cycle from 4 weeks to 2 weeks</strong>.</p>
+        <p data-lang="zh">深度運用 <strong>AI 技術</strong>提升產品管理效率，建立「AI 指揮體系」— 以 Claude 作為核心大腦，協調指揮 GPT、Gemini 等多 AI Agent 協作架構，實現產品分析、競品研究、PRD 撰寫、多語翻譯、進度追蹤的全流程自動化，<strong>將產品開發週期從 4 週縮短至 2 週</strong>。</p>
 
-        <p data-lang="en">I have led the development of enterprise-level systems for a <strong>1,900-employee organization</strong>, including hospitality management, payroll, dispatch, financial reconciliation, casino digitalization, e-commerce, and Web3 blockchain applications.</p>
-        <p data-lang="zh">過去主導過企業級管理系統、實體賭場數位升級、多端電商平台、區塊鏈應用產品等專案，從<strong>產品架構設計、原型規劃到版本交付與績效管理</strong>，都由我統籌負責。服務約 <strong>1,900 人規模</strong>企業營運。</p>
-
-        <p data-lang="en">My personal philosophy: I practice daily self-reflection to continuously improve my leadership and decision-making. I believe sustainable growth starts with disciplined self-improvement.</p>
-        <p data-lang="zh">我的管理理念：我每天都會反思今天發生的大小事情，檢視自己的決策與溝通是否還可以更好。我始終要求自己——<strong>今天的我一定要比昨天更進步</strong>。</p>
+        <p data-lang="en">Upholds the highest standards of <strong>professional integrity</strong>. During nearly five years of managing over <strong>$400M in digital assets</strong>, maintained a perfect record of zero losses and zero incidents, earning the full trust of executive leadership.</p>
+        <p data-lang="zh">秉持<strong>誠信正直</strong>的職業操守，在管理超過 <strong>4 億美金數位資產</strong>的近五年期間，維持零損失、零事故的完美紀錄，深受集團高層信任，被委以最高資金安全管理權限。</p>
       </div>
       <div>
         <div class="info-card">
@@ -305,14 +322,14 @@
           <div class="info-row">
             <span class="info-key" data-lang="en">Target</span>
             <span class="info-key" data-lang="zh">目標職稱</span>
-            <span class="info-val" data-lang="en">Head of Product / VP Product</span>
-            <span class="info-val" data-lang="zh">產品總監（駐點越南佳）</span>
+            <span class="info-val" data-lang="en">Head of Product / Product Director</span>
+            <span class="info-val" data-lang="zh">產品總監／產品負責人</span>
           </div>
           <div class="info-row">
             <span class="info-key" data-lang="en">Preferred</span>
             <span class="info-key" data-lang="zh">希望地點</span>
-            <span class="info-val" data-lang="en">Vietnam, SEA, Taiwan, Remote</span>
-            <span class="info-val" data-lang="zh">越南、東南亞、台北、遠端</span>
+            <span class="info-val" data-lang="en">Vietnam (preferred), SEA, Taiwan, Remote</span>
+            <span class="info-val" data-lang="zh">越南（佳）、東南亞、台北、遠端</span>
           </div>
           <div class="info-row">
             <span class="info-key">Email</span>
@@ -326,10 +343,65 @@
           <div class="info-row">
             <span class="info-key" data-lang="en">Languages</span>
             <span class="info-key" data-lang="zh">語言</span>
-            <span class="info-val" data-lang="en">Chinese (Native) · English (Mid)</span>
-            <span class="info-val" data-lang="zh">中文（母語）· 台語（中等）· 英文（中等）</span>
+            <span class="info-val" data-lang="en">Chinese (Native) · English (Business)</span>
+            <span class="info-val" data-lang="zh">中文（母語）· 英文（商務）· 越南語（基礎）</span>
           </div>
         </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- KEY DATA -->
+<section id="keydata">
+  <div class="section-wrap">
+    <p class="section-label" data-lang="en">Key Metrics</p>
+    <p class="section-label" data-lang="zh">關鍵數據</p>
+    <h2 class="section-title" data-lang="en">Results that speak for themselves</h2>
+    <h2 class="section-title" data-lang="zh">用數據說話的實戰成果</h2>
+    <div class="key-data-banner">
+      <div class="kd-card">
+        <div class="kd-num">$400M+</div>
+        <div class="kd-label" data-lang="en">Digital Assets Under Management</div>
+        <div class="kd-label" data-lang="zh">數位資產管理總值 (USD)</div>
+      </div>
+      <div class="kd-card">
+        <div class="kd-num">2M DAU</div>
+        <div class="kd-label" data-lang="en">Daily Active Users</div>
+        <div class="kd-label" data-lang="zh">平台日活躍用戶數</div>
+      </div>
+      <div class="kd-card">
+        <div class="kd-num">2B+/day</div>
+        <div class="kd-label" data-lang="en">Database Read/Write Ops</div>
+        <div class="kd-label" data-lang="zh">每日資料庫讀寫量</div>
+      </div>
+      <div class="kd-card">
+        <div class="kd-num">$100M+</div>
+        <div class="kd-label" data-lang="en">Monthly Trading Volume</div>
+        <div class="kd-label" data-lang="zh">月交易量 (USD)</div>
+      </div>
+      <div class="kd-card">
+        <div class="kd-num" data-lang="en">~5 Years</div>
+        <div class="kd-num" data-lang="zh">近 5 年</div>
+        <div class="kd-label" data-lang="en">Zero Fund Loss Record</div>
+        <div class="kd-label" data-lang="zh">零資金損失紀錄</div>
+      </div>
+      <div class="kd-card">
+        <div class="kd-num">1.0→4.9</div>
+        <div class="kd-label" data-lang="en">~50 Releases in One Year</div>
+        <div class="kd-label" data-lang="zh">一年內近 50 個版本迭代</div>
+      </div>
+      <div class="kd-card">
+        <div class="kd-num">50+</div>
+        <div class="kd-label" data-lang="en">Cross-border Team Size</div>
+        <div class="kd-label" data-lang="zh">跨國技術團隊規模</div>
+      </div>
+      <div class="kd-card">
+        <div class="kd-num">$2.5M+</div>
+        <div class="kd-label" data-lang="en">Digital Asset Fundraising</div>
+        <div class="kd-label" data-lang="zh">數位資產募資金額 (USD)</div>
       </div>
     </div>
   </div>
@@ -342,43 +414,57 @@
   <div class="section-wrap">
     <p class="section-label" data-lang="en">Core Expertise</p>
     <p class="section-label" data-lang="zh">核心能力</p>
-    <h2 class="section-title" data-lang="en">Five pillars of my product leadership</h2>
-    <h2 class="section-title" data-lang="zh">五大產品領導能力支柱</h2>
+    <h2 class="section-title" data-lang="en">Seven pillars of my product leadership</h2>
+    <h2 class="section-title" data-lang="zh">七大產品領導能力支柱</h2>
     <div class="comp-grid">
       <div class="comp-card">
-        <span class="comp-icon">🏗️</span>
-        <h3 data-lang="en">Enterprise System Architecture</h3>
-        <h3 data-lang="zh">企業級系統整合與架構規劃</h3>
-        <p data-lang="en">Designing scalable enterprise systems from operational workflow — covering order flows, financial reconciliation, back-office permission structures, and cross-departmental data integration.</p>
-        <p data-lang="zh">具備大型企業數位轉型經驗，能從營運流程出發設計完整系統架構，涵蓋訂單與交易流程、財務對帳與數據流轉機制、後台管理與權限系統設計、跨部門數據整合架構。</p>
+        <span class="comp-icon">🤖</span>
+        <h3 data-lang="en">AI Command System &amp; Multi-Agent Collaboration</h3>
+        <h3 data-lang="zh">AI 指揮體系與多 Agent 協作</h3>
+        <p data-lang="en">Claude as the core brain orchestrating GPT/Gemini for end-to-end product automation — from analysis, PRD writing, competitor research, to multilingual translation and progress tracking.</p>
+        <p data-lang="zh">以 Claude 為核心大腦，指揮 GPT/Gemini 多 AI 協作，實現產品分析、PRD 撰寫、競品研究、多語翻譯、進度追蹤的全流程自動化。</p>
       </div>
       <div class="comp-card">
-        <span class="comp-icon">⛓️</span>
-        <h3 data-lang="en">Web3 &amp; Platform Product Design</h3>
-        <h3 data-lang="zh">Web3 與平台型產品設計能力</h3>
-        <p data-lang="en">Blockchain wallet systems (multi-chain), DApp user flows, smart contract integration, DEX/AMM mechanics, LP staking, on-chain asset monitoring, and hybrid Web3/Web2 architecture.</p>
-        <p data-lang="zh">具備中心化與去中心化產品規劃經驗：DApp 流程設計、錢包交互與合約整合邏輯、後台數據監控系統、平台型產品架構規劃。理解區塊鏈產品的商業邏輯與風險控制需求。</p>
+        <span class="comp-icon">🛡️</span>
+        <h3 data-lang="en">Asset Security &amp; Professional Integrity</h3>
+        <h3 data-lang="zh">資產安全與誠信管理</h3>
+        <p data-lang="en">Nearly 5 years holding $400M+ in company digital assets with zero losses, zero incidents. Designed multi-signature authorization and real-time monitoring systems with automatic alerts for transactions exceeding $500K.</p>
+        <p data-lang="zh">近五年手握公司 $400M+ 虛擬貨幣資金，零損失、零事故。設計多簽授權機制與即時監控系統，超 50 萬美金異動自動觸發告警，嚴守職業操守。</p>
+      </div>
+      <div class="comp-card">
+        <span class="comp-icon">📊</span>
+        <h3 data-lang="en">Multi-Product Parallel Management</h3>
+        <h3 data-lang="zh">多產品線並行管理</h3>
+        <p data-lang="en">Simultaneously managing 6+ product lines (wallet, trading, wealth management, lending, payment, admin systems), efficiently tracked via AI-built management tools ensuring zero gaps.</p>
+        <p data-lang="zh">同時管理 6+ 條產品線（錢包、交易、理財、借貸、支付、後台管理），透過 AI 建構的管理工具高效追蹤，確保多產品並行開發不遺漏。</p>
+      </div>
+      <div class="comp-card">
+        <span class="comp-icon">🏗️</span>
+        <h3 data-lang="en">White-label System &amp; Operations Backend</h3>
+        <h3 data-lang="zh">包網系統與營運後台建設</h3>
+        <p data-lang="en">Built from 0 to 1 a replicable, commercializable exchange white-label solution — including product architecture, agent/channel/merchant systems, KYC workflows, asset management, and risk control.</p>
+        <p data-lang="zh">從 0 到 1 打造可複製、可商業化的交易所 White-label 解決方案，包括營運後台系統、代理／渠道／商戶／分潤機制、KYC 流程、資產管理與風控。</p>
       </div>
       <div class="comp-card">
         <span class="comp-icon">🌏</span>
-        <h3 data-lang="en">Cross-Regional Team Management</h3>
-        <h3 data-lang="zh">跨國團隊管理與組織能力建設</h3>
-        <p data-lang="en">Leading 50+ engineers across China, Taiwan, Vietnam, India, and Cambodia. Establishing standardized PRD → Design → Dev → Launch → Iteration pipelines and performance evaluation systems.</p>
-        <p data-lang="zh">管理橫跨中國、台灣與東南亞的技術團隊（50+人規模）：建立標準化產品流程、制定績效考核制度、強化跨文化溝通效率、建立高向心力團隊氛圍。</p>
+        <h3 data-lang="en">Cross-border Team Building</h3>
+        <h3 data-lang="zh">跨國團隊建設</h3>
+        <p data-lang="en">50+ person multinational tech team management across China, Taiwan, Vietnam, India, and Cambodia. Established performance review systems and talent development programs.</p>
+        <p data-lang="zh">50+ 人跨國技術團隊管理（中國、台灣、越南、印度、柬埔寨），建立績效考核制度與人才培養體系，多名團隊成員在任內獲得晉升。</p>
       </div>
       <div class="comp-card">
-        <span class="comp-icon">🚀</span>
-        <h3 data-lang="en">Complex Product Decomposition</h3>
-        <h3 data-lang="zh">複雜產品拆解與落地能力</h3>
-        <p data-lang="en">Translating abstract strategy into clear product structures: high-level goals → product blueprints → feature modules → technical task breakdown. Controlling delivery milestones and tech dependencies.</p>
-        <p data-lang="zh">擅長將抽象戰略需求轉化為清晰產品結構：高層目標 → 產品藍圖 → 功能模組 → 技術任務拆解。建立版本節奏與交付節點，控制專案風險與技術依賴關係。</p>
+        <span class="comp-icon">⚙️</span>
+        <h3 data-lang="en">Enterprise System Integration</h3>
+        <h3 data-lang="zh">企業級系統整合</h3>
+        <p data-lang="en">Fintech platform architecture design and large-scale system integration. Led enterprise digital transformation for a 1,900-person organization.</p>
+        <p data-lang="zh">金融科技平台架構設計與大型系統整合，主導 1,900 人規模企業的數位轉型建設。</p>
       </div>
       <div class="comp-card">
         <span class="comp-icon">📈</span>
-        <h3 data-lang="en">0→1 &amp; 1→N Product Scaling</h3>
-        <h3 data-lang="zh">0→1 與 1→N 產品推進能力</h3>
-        <p data-lang="en">Building products from scratch and optimizing existing systems. Establishing scalable growth models, strengthening commercial viability, and driving sustainable iteration in high-uncertainty environments.</p>
-        <p data-lang="zh">從無到有建立產品體系、優化既有系統結構、建立可規模化成長模型、強化產品商業落地能力。在不確定性高的環境中保持決策穩定，推動產品持續迭代。</p>
+        <h3 data-lang="en">Data-driven Operations</h3>
+        <h3 data-lang="zh">數據化營運</h3>
+        <p data-lang="en">AI-powered data analysis and backend management architecture design. Built product progress dashboards, automated weekly reports, priority scoring systems, and risk alert notifications.</p>
+        <p data-lang="zh">AI 驅動的數據分析與後台管理架構設計，打造產品進度儀表板、自動週報生成器、需求優先級評分系統、風險預警通知系統。</p>
       </div>
     </div>
   </div>
@@ -395,37 +481,71 @@
     <h2 class="section-title" data-lang="zh">17+ 年的產品構建與團隊領導</h2>
     <div class="timeline">
 
+      <!-- Baisha Group -->
       <div class="tl-item">
         <div class="tl-left">
-          <span class="tl-period" data-lang="en">Aug 2021 – Feb 2025</span>
-          <span class="tl-period" data-lang="zh">2021/8 – 2025/2</span>
-          <span class="tl-duration" data-lang="en">3 yrs 7 mos</span>
-          <span class="tl-duration" data-lang="zh">3年7個月</span>
+          <span class="tl-period" data-lang="en">Aug 2021 – Apr 2026</span>
+          <span class="tl-period" data-lang="zh">2021/8 – 2026/4</span>
+          <span class="tl-duration" data-lang="en">~5 years</span>
+          <span class="tl-duration" data-lang="zh">近5年</span>
           <span class="tl-location">📍 <span data-lang="en">Cambodia</span><span data-lang="zh">柬埔寨</span></span>
         </div>
         <div class="tl-right">
           <h3 data-lang="en">Head of Product</h3>
           <h3 data-lang="zh">產品負責人（Head of Product）</h3>
-          <div class="tl-company" data-lang="en">白沙集團 Bai Sha Group · Internet / 500+ employees</div>
-          <div class="tl-company" data-lang="zh">白沙集團 · 網際網路相關業 · 500人以上</div>
+          <div class="tl-company" data-lang="en">Baisha Group · Digital Technology Platform · 500+ employees · Leading 50+ cross-border team</div>
+          <div class="tl-company" data-lang="zh">白沙集團 · 數位科技平台 · 500人以上 · 統籌 50+ 人跨國團隊</div>
+
+          <div class="tl-sub" data-lang="en">Core Responsibilities &amp; Achievements</div>
+          <div class="tl-sub" data-lang="zh">核心職責與成果</div>
           <ul class="tl-bullets" data-lang="en">
-            <li>Built complete DeFi platform: Blockchain wallet (multi-chain), Spot Trading, DEX/AMM, C2C/P2P, DeFi yield &amp; liquidity mining</li>
-            <li>Led 50+ cross-regional engineers (China, Taiwan, Vietnam, India, Cambodia)</li>
-            <li>Established standardized PRD → Prototype → Dev → Launch → Iteration pipeline</li>
-            <li>Led enterprise digital transformation for 1,900-person org: hotel booking, payroll, dispatch, e-voucher, financial reconciliation</li>
-            <li>Integrated smart contracts with front-end DApp interaction and on-chain asset monitoring</li>
+            <li>Led full-line product development for a digital fintech platform: digital wallet APP, trading system, exchange platform, wealth management staking, lending protocol, stablecoin issuance, and C2C trading — serving 2M DAU with 2B+ daily database operations</li>
+            <li>Led from 0→1 the development of a White-label system and operations backend: replicable exchange solution including agent/channel/merchant/revenue-sharing mechanisms, KYC workflows, asset management, trade monitoring with risk control, and operational analytics</li>
+            <li>Simultaneously managed 6+ product lines (wallet, trading, wealth management, lending, payment, admin systems), leveraging AI-built management tools</li>
+            <li>Led cross-regional technical teams of 50+ engineers (China, Taiwan, Vietnam, India, Cambodia), established performance review systems and talent development programs</li>
+            <li>Established standardized product workflow: PRD → Prototyping → Development → Testing &amp; Launch → Continuous Iteration. Achieved 2-week requirement-to-launch cycle, completing 1.0→4.9 (~50 releases) within one year</li>
           </ul>
           <ul class="tl-bullets" data-lang="zh">
-            <li>主導區塊鏈金融產品設計與開發：多鏈錢包、現貨交易系統、DEX 代幣兌換（AMM）、C2C/P2P 加密貨幣交易、DeFi 收益策略與流動性挖礦</li>
-            <li>統籌跨地區區塊鏈技術團隊 50+ 工程師（中國、台灣、越南、印度、柬埔寨）</li>
-            <li>建立標準化產品流程：PRD → 原型設計 → 技術開發 → 測試上線 → 持續迭代</li>
-            <li>主導企業 1,900 人規模數位化：酒店訂房管理、薪資系統、派車調度、電子餐券、財務對帳</li>
-            <li>整合智能合約與前端 DApp 交互流程，建立鏈上交易監控與資產管理機制</li>
+            <li>主導數位金融科技平台全線產品開發：數位錢包 APP、交易系統、兌換平台、理財質押、借貸協議、穩定幣發行與 C2C 交易平台，平台日活 200 萬，每日資料庫讀寫超過 20 億筆</li>
+            <li>主導從 0→1 建立包網（White-label）系統與營運後台：可複製的交易所解決方案，包含代理／渠道／商戶／分潤機制、KYC 流程、資產管理、交易監控與風控、營運數據分析</li>
+            <li>同時管理 6+ 條產品線（錢包、交易、理財、借貸、支付、後台管理），透過 AI 建構的管理工具高效追蹤</li>
+            <li>統籌跨地區技術團隊 50+ 人（中國、台灣、越南、印度、柬埔寨），建立績效考核制度與人才培養體系</li>
+            <li>建立標準化產品流程：PRD → 原型設計 → 技術開發 → 測試上線 → 持續迭代，實現需求到上線僅需 2 週，一年內完成 1.0→4.9 近 50 個版本迭代</li>
           </ul>
-          <div class="tags"><span class="tag">Web3/DeFi</span><span class="tag">Blockchain Wallet</span><span class="tag">Spot Trading</span><span class="tag">DEX/AMM</span><span class="tag">Smart Contract</span><span class="tag">Team 50+</span></div>
+
+          <div class="tl-sub" data-lang="en">AI-driven Product Management</div>
+          <div class="tl-sub" data-lang="zh">AI 驅動的產品管理</div>
+          <ul class="tl-bullets" data-lang="en">
+            <li>Established "AI Command System" — Claude as core brain orchestrating GPT &amp; Gemini in multi-AI Agent collaborative architecture for automated product analysis, document writing, and data organization</li>
+            <li>Built AI-powered management tools: product progress dashboard, automated weekly report generator, priority scoring system, task auto-allocation engine, and risk alert notification system</li>
+            <li>Implemented AI Agent automation workflows: scheduled tasks for tech trend tracking, daily AI skill library updates, custom Cowork Skills development</li>
+            <li>AI-powered multilingual product localization (Chinese/English/Vietnamese), reducing translation costs by 80%</li>
+          </ul>
+          <ul class="tl-bullets" data-lang="zh">
+            <li>建立「AI 指揮體系」— 以 Claude 為核心大腦，協調 GPT 與 Gemini 多 AI Agent 協作，實現產品分析、文件撰寫、數據整理的自動化流水線</li>
+            <li>運用 AI 打造管理工具：產品進度儀表板、自動週報生成器、需求優先級評分系統、任務自動分配引擎、風險預警通知系統</li>
+            <li>AI Agent 自動化工作流程：排程追蹤最新科技動態、每日更新 AI 技能庫、開發客製化 Cowork Skills</li>
+            <li>AI 實現多語言在地化（中文／英文／越南文），翻譯成本降低 80%，品質與速度同步提升</li>
+          </ul>
+
+          <div class="tl-sub" data-lang="en">Asset Security &amp; Risk Control</div>
+          <div class="tl-sub" data-lang="zh">資產安全與風控</div>
+          <ul class="tl-bullets" data-lang="en">
+            <li>Designed asset security architecture with multi-signature authorization and real-time monitoring. Automatic alerts for transactions exceeding $500K. Held $400M+ in company funds over ~5 years with zero losses</li>
+            <li>Risk control system with liquidation ratios, multi-sig authorization, and fund pool threshold-triggered approval. Monthly trading volume reached $100M+ with fully auditable fund flow trails</li>
+          </ul>
+          <ul class="tl-bullets" data-lang="zh">
+            <li>設計資產安全架構，整合多簽授權與即時監控，超 50 萬美金異動自動告警。近五年手握 $400M+ 資金，零損失、零事故</li>
+            <li>規劃風控體系：清算比例、多簽授權與資金池閾值觸發審批，月交易量達億美金級，每筆資金流向皆可追溯審計</li>
+          </ul>
+
+          <div class="tags">
+            <span class="tag">Fintech Platform</span><span class="tag">White-label System</span><span class="tag">AI Command System</span><span class="tag">$400M+ Assets</span><span class="tag">2M DAU</span><span class="tag">Team 50+</span><span class="tag">Multi-sig Security</span>
+          </div>
         </div>
       </div>
 
+      <!-- Huixin -->
       <div class="tl-item">
         <div class="tl-left">
           <span class="tl-period" data-lang="en">Jan 2021 – Aug 2021</span>
@@ -437,23 +557,25 @@
         <div class="tl-right">
           <h3 data-lang="en">Product Manager</h3>
           <h3 data-lang="zh">產品經理</h3>
-          <div class="tl-company">匯信國際區塊鏈交易所 · 30–100 <span data-lang="en">employees</span><span data-lang="zh">人</span></div>
+          <div class="tl-company" data-lang="en">Huixin International Fintech Trading Platform · Internet</div>
+          <div class="tl-company" data-lang="zh">匯信國際金融科技交易平台 · 網際網路相關業</div>
           <ul class="tl-bullets" data-lang="en">
-            <li>0→1 development of blockchain exchange web platform (risk-control perspective)</li>
-            <li>Designed ICO/IEO product pages, prototypes, and asset detail pages</li>
-            <li>Planned DEX decentralized exchange and DeFi mining products</li>
-            <li>Integrated mini-casino game features into app</li>
+            <li>Built a fintech trading platform from 0→1 on Web, establishing complete trading system architecture</li>
+            <li>Integrated US and HK stock trading functionalities into the App architecture</li>
+            <li>Designed digital asset issuance platform and decentralized product architecture</li>
+            <li>Planned digital wealth management products and computing power product integration</li>
           </ul>
           <ul class="tl-bullets" data-lang="zh">
-            <li>以營運風控的角度設計從0到1的開發區塊鏈交易所（web）端</li>
-            <li>在原有 app 中申接美港股買賣，設計原型、腦圖與資產詳情，帳單與後台</li>
-            <li>設計 ICO/IEO 產品頁面與後台、規畫 DEX 去中心化交易所</li>
-            <li>在 APP 設計對接 DeFi 挖礦產品與雲算力產品；加入博奕小遊戲</li>
+            <li>從 0→1 規劃金融科技交易平台 Web 端，建立完整交易系統架構</li>
+            <li>整合美股與港股交易功能至 App 架構中</li>
+            <li>設計數位資產發行平台與去中心化產品架構</li>
+            <li>規劃數位理財產品與算力產品整合</li>
           </ul>
-          <div class="tags"><span class="tag">0→1 Product</span><span class="tag">ICO/IEO</span><span class="tag">DEX</span><span class="tag">DeFi Mining</span></div>
+          <div class="tags"><span class="tag">0→1 Product</span><span class="tag">Fintech Trading</span><span class="tag">US/HK Stocks</span></div>
         </div>
       </div>
 
+      <!-- Bicheng -->
       <div class="tl-item">
         <div class="tl-left">
           <span class="tl-period" data-lang="en">Mar 2020 – Oct 2020</span>
@@ -465,151 +587,135 @@
         <div class="tl-right">
           <h3 data-lang="en">Operations Deputy Manager</h3>
           <h3 data-lang="zh">營運處副理</h3>
-          <div class="tl-company">幣丞科技有限公司 · <span data-lang="en">Software / Internet</span><span data-lang="zh">電腦軟體服務業</span></div>
+          <div class="tl-company" data-lang="en">Bicheng Technology Co., Ltd. · Software Services</div>
+          <div class="tl-company" data-lang="zh">幣丞科技有限公司 · 電腦軟體服務業</div>
           <ul class="tl-bullets" data-lang="en">
-            <li>Exchange system operations and feature maintenance</li>
-            <li>Cold/hot wallet management and custody</li>
-            <li>DeFi, staking, blockchain financial product research and launch</li>
-            <li>Training instructor and lecturer for staff</li>
+            <li>Managed daily operations and trading process optimization for the trading platform</li>
+            <li>Managed digital asset security and operational fund controls</li>
+            <li>Assisted in planning fintech products and application development</li>
+            <li>Served as digital finance training instructor</li>
           </ul>
           <ul class="tl-bullets" data-lang="zh">
-            <li>交易所系統操作，精進功能與維護；冷熱錢包管理與主保管人</li>
-            <li>交易所營運資金安全管理；協助開發區塊鏈金融產品</li>
-            <li>DEFI、staking、區塊鏈金融商品研究與上架、後台操作</li>
-            <li>教育訓練導師與講師</li>
+            <li>負責交易平台日常營運管理與交易流程優化</li>
+            <li>管理數位資產安全與營運資金管控</li>
+            <li>協助規劃金融科技產品與應用開發</li>
+            <li>擔任數位金融教育訓練講師</li>
           </ul>
-          <div class="tags"><span class="tag">Exchange Ops</span><span class="tag">Wallet Management</span><span class="tag">DeFi/Staking</span></div>
+          <div class="tags"><span class="tag">Platform Ops</span><span class="tag">Asset Security</span><span class="tag">Fintech</span></div>
         </div>
       </div>
 
+      <!-- Fandak -->
       <div class="tl-item">
         <div class="tl-left">
           <span class="tl-period" data-lang="en">Sep 2019 – Feb 2020</span>
           <span class="tl-period" data-lang="zh">2019/9 – 2020/2</span>
           <span class="tl-duration" data-lang="en">6 mos</span>
           <span class="tl-duration" data-lang="zh">6個月</span>
-          <span class="tl-location">📍 <span data-lang="en">Taipei</span><span data-lang="zh">台北大安區</span></span>
+          <span class="tl-location">📍 <span data-lang="en">Taipei</span><span data-lang="zh">台北</span></span>
         </div>
         <div class="tl-right">
-          <h3 data-lang="en">Deputy VP of Marketing</h3>
+          <h3 data-lang="en">VP of Marketing &amp; Sales</h3>
           <h3 data-lang="zh">營銷副總經理</h3>
-          <div class="tl-company">粉絲達克股份有限公司 · <span data-lang="en">Internet</span><span data-lang="zh">網際網路相關業</span></div>
+          <div class="tl-company" data-lang="en">Fandak Inc. · Internet</div>
+          <div class="tl-company" data-lang="zh">粉絲達克股份有限公司 · 網際網路相關業</div>
           <ul class="tl-bullets" data-lang="en">
-            <li>Cross-border BD: negotiations with China/HK vendors on contracts</li>
-            <li>Planned and executed blockchain exchange and virtual currency ecosystem</li>
-            <li>Taiwan org restructuring; established HK and Shenzhen operations teams</li>
+            <li>Represented the company in contract negotiations in mainland China and Hong Kong</li>
+            <li>Planned and executed digital technology trading platform and digital asset ecosystem</li>
+            <li>Restructured Taiwan organization, established Hong Kong and Shenzhen operations teams</li>
+            <li>Led backend and risk control system management</li>
           </ul>
           <ul class="tl-bullets" data-lang="zh">
-            <li>代表公司至大陸、香港與接下來合作廠商洽談合約及執行細節</li>
-            <li>團隊建立與整併、調整公司章呈；規畫與執行區塊鏈交易所、自家虛擬貨幣生態系</li>
-            <li>台灣組織重整，並建立香港和深圳營運團隊</li>
+            <li>代表公司赴中國大陸、香港洽談合約與執行細節</li>
+            <li>規劃與執行數位科技交易平台與數位資產生態系</li>
+            <li>台灣組織重整，建立香港與深圳營運團隊</li>
+            <li>管理後台與風控系統</li>
           </ul>
-          <div class="tags"><span class="tag">Cross-Border BD</span><span class="tag">Blockchain Ecosystem</span><span class="tag">Team Building</span></div>
+          <div class="tags"><span class="tag">Cross-Border BD</span><span class="tag">Digital Ecosystem</span><span class="tag">Team Building</span></div>
         </div>
       </div>
 
+      <!-- Jiajia You -->
       <div class="tl-item">
         <div class="tl-left">
           <span class="tl-period" data-lang="en">Sep 2017 – Aug 2019</span>
           <span class="tl-period" data-lang="zh">2017/9 – 2019/8</span>
           <span class="tl-duration" data-lang="en">2 yrs</span>
           <span class="tl-duration" data-lang="zh">2年</span>
-          <span class="tl-location">📍 <span data-lang="en">Taipei</span><span data-lang="zh">台北內湖區</span></span>
+          <span class="tl-location">📍 <span data-lang="en">Taipei</span><span data-lang="zh">台北</span></span>
         </div>
         <div class="tl-right">
           <h3 data-lang="en">Deputy Director of Marketing</h3>
           <h3 data-lang="zh">營銷處副處長</h3>
-          <div class="tl-company">家家有股份有限公司 · <span data-lang="en">Internet</span><span data-lang="zh">網際網路相關業</span></div>
+          <div class="tl-company" data-lang="en">Jiajia You Co., Ltd. · Internet</div>
+          <div class="tl-company" data-lang="zh">家家有股份有限公司 · 網際網路相關業</div>
           <ul class="tl-bullets" data-lang="en">
-            <li>Blockchain/ICO project lead: raised NT$80M+ in ICO funding</li>
-            <li>Built and operated virtual currency ecosystem (online + offline, city-wide wallet integration)</li>
-            <li>Established KYC compliance; co-drafted 10+ cryptocurrency white papers</li>
-            <li>E-commerce site revenue broke NT$10M in 2018</li>
+            <li>Led digital technology industry projects: trading platform, digital wallet, accounting system</li>
+            <li>Digital asset fundraising: cumulative $2.5M+ USD, assisted partners in raising $600K+</li>
+            <li>E-commerce operations: 2018 annual revenue exceeded $300K USD</li>
+            <li>Built digital asset ecosystem: online/offline marketplace integration with wallet connectivity</li>
+            <li>Established KYC verification center; authored ~10 digital asset whitepapers</li>
           </ul>
           <ul class="tl-bullets" data-lang="zh">
-            <li>區塊鏈產業專案主負責人，負責開發與管理：①交易所 ②錢包 ③區塊鏈帳務</li>
-            <li>區塊鏈ICO專案主執行人：總執行ico募資金額累計達8千萬以上，協助合作伙伴公司募資達2千萬</li>
-            <li>電商網站經營：2018年營業額突破千萬；虛擬貨幣生態圈建立並營運</li>
-            <li>建立KYC中心與管理會員資訊；共撰約10種不同虛擬貨幣白皮書</li>
+            <li>數位科技產業專案主負責人：交易平台、數位錢包、帳務系統開發與管理</li>
+            <li>數位資產募資執行：累計募資金額達 8,000 萬+ NTD，協助合作方募資達 2,000 萬</li>
+            <li>電商網站經營：2018 年營業額突破千萬</li>
+            <li>數位資產生態圈建立：線上線下商城串接與錢包整合</li>
+            <li>建立 KYC 認證中心、撰寫約 10 種數位資產白皮書</li>
           </ul>
-          <div class="tags"><span class="tag">ICO Project</span><span class="tag">Crypto Ecosystem</span><span class="tag">KYC</span><span class="tag">White Paper</span></div>
+          <div class="tags"><span class="tag">Fundraising</span><span class="tag">Digital Ecosystem</span><span class="tag">KYC</span><span class="tag">E-commerce</span></div>
         </div>
       </div>
 
+      <!-- EBC owlpass -->
       <div class="tl-item">
         <div class="tl-left">
           <span class="tl-period" data-lang="en">Aug 2016 – Jun 2017</span>
           <span class="tl-period" data-lang="zh">2016/8 – 2017/6</span>
           <span class="tl-duration" data-lang="en">11 mos</span>
           <span class="tl-duration" data-lang="zh">11個月</span>
-          <span class="tl-location">📍 <span data-lang="en">Taipei</span><span data-lang="zh">台北中正區</span></span>
+          <span class="tl-location">📍 <span data-lang="en">Taipei</span><span data-lang="zh">台北</span></span>
         </div>
         <div class="tl-right">
           <h3>owlpass App <span data-lang="en">BD / Marketing Consultant</span><span data-lang="zh">招商 / 行銷顧問</span></h3>
-          <div class="tl-company">東森電視事業股份有限公司 · <span data-lang="en">TV / 500+</span><span data-lang="zh">電視業 500人以上</span></div>
+          <div class="tl-company" data-lang="en">Eastern Broadcasting Co. (EBC) · 500+ employees</div>
+          <div class="tl-company" data-lang="zh">東森電視事業股份有限公司 · 500人以上</div>
           <ul class="tl-bullets" data-lang="en">
-            <li>Developed and maintained channels; 10+ new partner stores per month (Tier 10+)</li>
-            <li>Designed and executed co-marketing strategies; achieved 90+ KPI scores every quarter</li>
-            <li>Sales of ETtoday media advertising, articles, and live streaming integrations</li>
+            <li>Onboarded 60+ partner merchants, developed marketing strategies for partners</li>
+            <li>Consistently scored 90+ on quarterly KPI reviews</li>
           </ul>
           <ul class="tl-bullets" data-lang="zh">
-            <li>開發潛在通路及維護現有客戶已達成業績目標，每月新店家數約10間，檔次10檔以上</li>
-            <li>為合作夥伴制定與執行行銷策略；每季考核皆達90分 KPI 指數達成</li>
-            <li>代理銷售東森新聞雲之廣告版位、文章與直播節目置入</li>
+            <li>開發合作店家超過 60 間，為合作夥伴制定行銷策略</li>
+            <li>每季 KPI 考核皆達 90 分</li>
           </ul>
           <div class="tags"><span class="tag">BD</span><span class="tag">Channel Sales</span><span class="tag">Media</span></div>
         </div>
       </div>
 
+      <!-- Earlier Career -->
       <div class="tl-item">
         <div class="tl-left">
-          <span class="tl-period" data-lang="en">Dec 2010 – Nov 2018</span>
-          <span class="tl-period" data-lang="zh">2010/12 – 2018/11</span>
-          <span class="tl-duration" data-lang="en">8 yrs</span>
-          <span class="tl-duration" data-lang="zh">8年</span>
-          <span class="tl-location">📍 <span data-lang="en">New Taipei</span><span data-lang="zh">新北板橋區</span></span>
+          <span class="tl-period" data-lang="en">2009 – 2018</span>
+          <span class="tl-period" data-lang="zh">2009 – 2018</span>
+          <span class="tl-duration" data-lang="en">Earlier Career</span>
+          <span class="tl-duration" data-lang="zh">早期經歷</span>
         </div>
         <div class="tl-right">
-          <h3 data-lang="en">Administrative Manager</h3>
-          <h3 data-lang="zh">行政主管</h3>
-          <div class="tl-company">大富企業社（彩券行）· <span data-lang="en">Retail / 1–30</span><span data-lang="zh">其他零售業 1–30人</span></div>
+          <h3 data-lang="en">Administrative Director &amp; Sales Manager</h3>
+          <h3 data-lang="zh">行政主管 &amp; 業務經理</h3>
+          <div class="tl-company" data-lang="en">Dafu Enterprise (Lottery Business) · Macau Kehai Co., Ltd. TW Branch</div>
+          <div class="tl-company" data-lang="zh">大富企業社（彩券行）· 澳門商科海有限公司台灣分公司</div>
           <ul class="tl-bullets" data-lang="en">
-            <li>Daily cash reconciliation and collection for all stores</li>
-            <li>Operations management for 3 lottery stores; activity and event planning</li>
-            <li>Staff training for lottery systems and HR recruitment</li>
+            <li>Managed operations and accounting for three retail locations, established recruitment and training programs</li>
+            <li>Marketing planning, generating ~$250K USD in first-year revenue</li>
+            <li>Established certification SOP processes, producing 300 certificates and $150K training revenue in first year</li>
           </ul>
           <ul class="tl-bullets" data-lang="zh">
-            <li>每天匯整各店營業金額及收取現金；製作每日帳務報表；支付並並收廠商匯款</li>
-            <li>三家樂透店的營運、統合大小事處理、活動方案設計</li>
-            <li>面試及教育訓練新人操作相關彩券系統；人員工作項目審查和查核</li>
+            <li>管理三家店面營運與帳務，建立人員招募與教育訓練制度</li>
+            <li>行銷規劃，首年創造近 800 萬收入</li>
+            <li>建立證照考試 SOP 流程，首年產出 300 張證書與 500 萬課堂收入</li>
           </ul>
-          <div class="tags"><span class="tag">Operations</span><span class="tag">Finance</span><span class="tag">HR Training</span></div>
-        </div>
-      </div>
-
-      <div class="tl-item">
-        <div class="tl-left">
-          <span class="tl-period" data-lang="en">Apr 2009 – Aug 2011</span>
-          <span class="tl-period" data-lang="zh">2009/4 – 2011/8</span>
-          <span class="tl-duration" data-lang="en">2 yrs 5 mos</span>
-          <span class="tl-duration" data-lang="zh">2年5個月</span>
-          <span class="tl-location">📍 <span data-lang="en">Taipei</span><span data-lang="zh">台北內湖區</span></span>
-        </div>
-        <div class="tl-right">
-          <h3 data-lang="en">Sales Manager</h3>
-          <h3 data-lang="zh">業務經理</h3>
-          <div class="tl-company">澳門商科海有限公司台灣分公司 · <span data-lang="en">Special Education / 30–100</span><span data-lang="zh">特殊教育事業 30–100人</span></div>
-          <ul class="tl-bullets" data-lang="en">
-            <li>Gaming industry sales: generated ~NT$8M revenue in first year</li>
-            <li>Created 300+ certifications and NT$5M curriculum revenue upon first-year launch</li>
-            <li>Localized gaming products; annual reporting and accounts receivable management</li>
-          </ul>
-          <ul class="tl-bullets" data-lang="zh">
-            <li>博奕產業行銷規劃首年即創造近800萬收入</li>
-            <li>博奕商品及證照考試SOP流程製定首年執行即創造約300張證書與500萬課堂收入</li>
-            <li>博奕商品規劃，每年銷售5萬顆籌碼及教材1千套；重大決策會議討論並製定</li>
-          </ul>
-          <div class="tags"><span class="tag">Sales</span><span class="tag">Product Localization</span><span class="tag">Revenue Growth</span></div>
+          <div class="tags"><span class="tag">Operations</span><span class="tag">Sales</span><span class="tag">Training</span></div>
         </div>
       </div>
 
@@ -629,63 +735,69 @@
     <div class="skills-outer">
       <div>
         <div class="skill-group" style="margin-bottom:32px">
-          <h4>⛓ Web3 / Blockchain</h4>
+          <h4>🤖 AI Toolchain</h4>
           <div class="skill-chips">
-            <span class="chip" data-lang="en">DeFi Architecture</span><span class="chip" data-lang="zh">DeFi 產品架構</span>
-            <span class="chip" data-lang="en">Blockchain Wallet</span><span class="chip" data-lang="zh">區塊鏈錢包</span>
-            <span class="chip" data-lang="en">Smart Contract</span><span class="chip" data-lang="zh">智能合約整合</span>
-            <span class="chip" data-lang="en">DEX / AMM</span><span class="chip" data-lang="zh">DEX / AMM</span>
-            <span class="chip" data-lang="en">LP Staking</span><span class="chip" data-lang="zh">LP 質押</span>
-            <span class="chip" data-lang="en">C2C / P2P Exchange</span><span class="chip" data-lang="zh">C2C / P2P 交易所</span>
-            <span class="chip" data-lang="en">Spot Trading</span><span class="chip" data-lang="zh">現貨交易系統</span>
+            <span class="chip green">Claude Cowork</span>
+            <span class="chip green">OpenAI Codex</span>
+            <span class="chip green">ChatGPT</span>
+            <span class="chip green">Gemini</span>
+            <span class="chip green">Antigravity</span>
+            <span class="chip" data-lang="en">Prompt Engineering</span><span class="chip" data-lang="zh">Prompt 工程</span>
+            <span class="chip" data-lang="en">AI Agent Design</span><span class="chip" data-lang="zh">AI Agent 設計</span>
+            <span class="chip" data-lang="en">Cowork Skills Dev</span><span class="chip" data-lang="zh">Cowork Skills 開發</span>
+            <span class="chip" data-lang="en">Automated Scheduling</span><span class="chip" data-lang="zh">自動化排程</span>
+            <span class="chip">Python / Node.js</span>
           </div>
         </div>
         <div class="skill-group" style="margin-bottom:32px">
-          <h4>🛠 <span data-lang="en">Product Management</span><span data-lang="zh">產品管理</span></h4>
+          <h4>💰 <span data-lang="en">Fintech</span><span data-lang="zh">金融科技</span></h4>
           <div class="skill-chips">
-            <span class="chip" data-lang="en">PRD Writing</span><span class="chip" data-lang="zh">PRD 撰寫</span>
-            <span class="chip" data-lang="en">0→1 Product Build</span><span class="chip" data-lang="zh">0→1 產品建立</span>
-            <span class="chip" data-lang="en">Roadmap Planning</span><span class="chip" data-lang="zh">產品路線圖規劃</span>
-            <span class="chip" data-lang="en">Prototype (Axure)</span><span class="chip" data-lang="zh">原型設計 (Axure)</span>
-            <span class="chip">Xmind</span>
-            <span class="chip" data-lang="en">Agile Delivery</span><span class="chip" data-lang="zh">敏捷交付</span>
+            <span class="chip" data-lang="en">Trading System Architecture</span><span class="chip" data-lang="zh">交易系統架構</span>
+            <span class="chip" data-lang="en">Digital Wallets</span><span class="chip" data-lang="zh">數位錢包</span>
+            <span class="chip" data-lang="en">Smart Contract Collaboration</span><span class="chip" data-lang="zh">智能合約協作</span>
+            <span class="chip" data-lang="en">Multi-sig Wallets</span><span class="chip" data-lang="zh">多簽錢包</span>
+            <span class="chip" data-lang="en">Asset Security Mgmt</span><span class="chip" data-lang="zh">資產安全管理</span>
+            <span class="chip">KYC / Risk Control</span>
           </div>
         </div>
         <div class="skill-group">
-          <h4>🌏 <span data-lang="en">Operations</span><span data-lang="zh">營運管理</span></h4>
+          <h4>🛠 <span data-lang="en">Product Development</span><span data-lang="zh">產品開發</span></h4>
           <div class="skill-chips">
-            <span class="chip" data-lang="en">Cross-Regional Team Mgmt</span><span class="chip" data-lang="zh">跨國團隊管理</span>
-            <span class="chip" data-lang="en">KPI / OKR Performance</span><span class="chip" data-lang="zh">KPI / OKR 績效</span>
-            <span class="chip" data-lang="en">Digital Transformation</span><span class="chip" data-lang="zh">企業數位轉型</span>
+            <span class="chip">Axure RP</span><span class="chip">Xmind</span><span class="chip">Figma</span>
+            <span class="chip" data-lang="en">PRD Writing</span><span class="chip" data-lang="zh">PRD 撰寫</span>
+            <span class="chip" data-lang="en">Prototyping</span><span class="chip" data-lang="zh">原型設計</span>
+            <span class="chip">UI/UX Design</span>
           </div>
         </div>
       </div>
       <div>
         <div class="skill-group" style="margin-bottom:32px">
-          <h4>💼 Tools</h4>
+          <h4>🌏 <span data-lang="en">Management &amp; Operations</span><span data-lang="zh">管理 &amp; 營運</span></h4>
           <div class="skill-chips">
-            <span class="chip green">Axure RP</span><span class="chip green">Xmind</span>
-            <span class="chip green">Excel</span><span class="chip green">PowerPoint</span>
-            <span class="chip green">Keynote</span><span class="chip green">Zendesk</span>
-            <span class="chip green">LINE</span><span class="chip green">Telegram</span>
+            <span class="chip" data-lang="en">Cross-border Team Mgmt</span><span class="chip" data-lang="zh">跨國團隊管理</span>
+            <span class="chip" data-lang="en">Performance Review Systems</span><span class="chip" data-lang="zh">績效考核制度</span>
+            <span class="chip" data-lang="en">Budget &amp; Cost Control</span><span class="chip" data-lang="zh">預算與成本控管</span>
+            <span class="chip" data-lang="en">Project Communication</span><span class="chip" data-lang="zh">專案溝通整合</span>
+            <span class="chip" data-lang="en">Training &amp; Development</span><span class="chip" data-lang="zh">教育訓練</span>
+            <span class="chip" data-lang="en">Org Restructuring</span><span class="chip" data-lang="zh">組織重整</span>
           </div>
         </div>
         <div class="skill-group" style="margin-bottom:32px">
-          <h4>🤝 <span data-lang="en">Soft Skills</span><span data-lang="zh">軟實力</span></h4>
+          <h4>💼 <span data-lang="en">Office Tools</span><span data-lang="zh">辦公工具</span></h4>
           <div class="skill-chips">
-            <span class="chip" data-lang="en">Bi-directional Management</span><span class="chip" data-lang="zh">雙向管理能力</span>
-            <span class="chip" data-lang="en">Negotiation</span><span class="chip" data-lang="zh">協商談判能力</span>
-            <span class="chip" data-lang="en">Risk Management</span><span class="chip" data-lang="zh">危機與議題管理</span>
-            <span class="chip" data-lang="en">Problem Solving</span><span class="chip" data-lang="zh">問題解決</span>
-            <span class="chip" data-lang="en">Team Building</span><span class="chip" data-lang="zh">團隊建立</span>
+            <span class="chip green">Excel</span><span class="chip green">PowerPoint</span>
+            <span class="chip green">Keynote</span><span class="chip green">Zendesk</span>
+            <span class="chip green">Telegram</span><span class="chip green">Notion</span>
+            <span class="chip green">Jira</span>
           </div>
         </div>
         <div class="skill-group">
           <h4>🌐 <span data-lang="en">Languages</span><span data-lang="zh">語言能力</span></h4>
           <div class="skill-chips">
-            <span class="chip" data-lang="en">Mandarin (Native)</span><span class="chip" data-lang="zh">中文（母語）</span>
-            <span class="chip" data-lang="en">Taiwanese (Mid)</span><span class="chip" data-lang="zh">台語（中等）</span>
-            <span class="chip" data-lang="en">English (Mid)</span><span class="chip" data-lang="zh">英文（聽說讀寫中等）</span>
+            <span class="chip" data-lang="en">Chinese (Native)</span><span class="chip" data-lang="zh">中文（母語）</span>
+            <span class="chip" data-lang="en">Taiwanese (Intermediate)</span><span class="chip" data-lang="zh">台語（中等）</span>
+            <span class="chip" data-lang="en">English (Business Proficient)</span><span class="chip" data-lang="zh">英文（商務流利）</span>
+            <span class="chip" data-lang="en">Vietnamese (Basic)</span><span class="chip" data-lang="zh">越南語（基礎）</span>
           </div>
         </div>
       </div>
@@ -695,37 +807,43 @@
 
 <hr class="divider">
 
-<!-- PROJECTS -->
+<!-- PROJECTS / PORTFOLIO -->
 <section id="projects">
   <div class="section-wrap">
-    <p class="section-label" data-lang="en">Key Projects</p>
-    <p class="section-label" data-lang="zh">重點專案成就</p>
-    <h2 class="section-title" data-lang="en">Selected work &amp; achievements</h2>
-    <h2 class="section-title" data-lang="zh">精選工作成果</h2>
+    <p class="section-label" data-lang="en">Portfolio</p>
+    <p class="section-label" data-lang="zh">作品連結</p>
+    <h2 class="section-title" data-lang="en">Product documents &amp; prototypes</h2>
+    <h2 class="section-title" data-lang="zh">產品文件與原型設計</h2>
     <div class="projects-grid">
       <div class="proj-card">
-        <div class="proj-period">2022/3 – <span data-lang="en">Present</span><span data-lang="zh">仍在進行</span></div>
-        <h3 data-lang="en">Group Salary APP — White Sand Palace</h3>
-        <h3 data-lang="zh">集團薪水 APP — 白沙皇宮</h3>
-        <p data-lang="en">Built the group's salary management app. Designed KYC mechanism, risk control system, multi-signature approval flow, departmental fund requisition, and budget reconciliation.</p>
-        <p data-lang="zh">開發集團薪水 app，設計 KYC、風控機制，多簽審核機制，部門撥款，部門核銷對帳。</p>
-        <div class="tags" style="margin-top:14px"><span class="tag">FinTech</span><span class="tag">KYC</span><span class="tag">Risk Control</span></div>
+        <div class="proj-period" data-lang="en">Product Document (PRD)</div>
+        <div class="proj-period" data-lang="zh">產品文件 PRD</div>
+        <h3 data-lang="en">Digital Finance DEX Product Plan</h3>
+        <h3 data-lang="zh">數位金融 DEX 產品規劃</h3>
+        <p data-lang="en">Comprehensive DEX product architecture planning document covering AMM mechanisms, liquidity pool design, and user flow.</p>
+        <p data-lang="zh">完整的 DEX 產品架構規劃文件，涵蓋 AMM 機制、流動性池設計與用戶流程。</p>
+        <div class="tags" style="margin-top:14px"><a class="tag" href="https://www.notion.so/Web3-uniswap-33e8a405df4e818da2badfc400c87b30" target="_blank">View on Notion ↗</a></div>
       </div>
       <div class="proj-card">
-        <div class="proj-period">2021/1 – <span data-lang="en">Present</span><span data-lang="zh">仍在進行</span></div>
-        <h3 data-lang="en">Blockchain Exchange — 匯信國際</h3>
-        <h3 data-lang="zh">匯信國際私人銀行（區塊鏈交易所）</h3>
-        <p data-lang="en">Developed MVP crypto wallet supporting ETH/BTC/BNB/TRON/DOT. Built 30-second contract trading, US/HK stock pairs, DeFi mining, cloud mining, and investment products (fixed/flexible/ICO).</p>
-        <p data-lang="zh">開發 MVP 錢包，支援 ETH/BTC/BNB/TRON/DOT，開發30秒合約，美港股交易對接，defi挖礦，雲端挖礦，理財（活期/定期/ICO）產品開發。</p>
-        <div class="tags" style="margin-top:14px"><span class="tag">Crypto Wallet</span><span class="tag">DeFi</span><span class="tag">Multi-chain</span></div>
+        <div class="proj-period" data-lang="en">Product Document (PRD)</div>
+        <div class="proj-period" data-lang="zh">產品文件 PRD</div>
+        <h3 data-lang="en">Trading Platform PRD</h3>
+        <h3 data-lang="zh">交易平台 PRD</h3>
+        <p data-lang="en">Complete product requirements document for a centralized exchange platform with trading, order management, and risk control systems.</p>
+        <p data-lang="zh">中心化交易平台的完整產品需求文件，含交易、訂單管理與風控系統。</p>
+        <div class="tags" style="margin-top:14px"><a class="tag" href="https://www.notion.so/CEX-PRD-33e8a405df4e81eda37cf20ade932309" target="_blank">View on Notion ↗</a></div>
       </div>
       <div class="proj-card">
-        <div class="proj-period">2017/10 – 2019/8</div>
-        <h3 data-lang="en">Virtual Currency Ecosystem — 家家有</h3>
-        <h3 data-lang="zh">虛擬貨幣生態系建立 — 家家有</h3>
-        <p data-lang="en">Built a complete virtual currency ecosystem from scratch: exchange infrastructure, welfare coin white papers (10+ coins), vendor recruitment, business development, and org team building.</p>
-        <p data-lang="zh">架溝虛擬貨幣（福利幣）生態系、福利幣白皮書、合作廠商招募、商務開發、組織團隊建立。ICO 募資累計達 8 千萬以上。</p>
-        <div class="tags" style="margin-top:14px"><span class="tag">ICO</span><span class="tag">Ecosystem</span><span class="tag">White Paper</span></div>
+        <div class="proj-period" data-lang="en">Prototype &amp; Design</div>
+        <div class="proj-period" data-lang="zh">原型與設計</div>
+        <h3 data-lang="en">Web Trading Platform &amp; Admin Backend</h3>
+        <h3 data-lang="zh">Web 交易平台 &amp; 後台管理原型</h3>
+        <p data-lang="en">Interactive prototypes for trading platform (Axure), group APP (Figma), and admin backend system.</p>
+        <p data-lang="zh">交易平台互動原型（Axure）、集團 APP（Figma）與後台管理系統原型。</p>
+        <div class="tags" style="margin-top:14px">
+          <a class="tag" href="https://p9hr8h.axshare.com" target="_blank">Trading Prototype ↗</a>
+          <a class="tag" href="https://mofn9a.axshare.com" target="_blank">Admin Prototype ↗</a>
+        </div>
       </div>
     </div>
   </div>
@@ -736,33 +854,42 @@
 <!-- EDUCATION -->
 <section id="education">
   <div class="section-wrap">
-    <p class="section-label" data-lang="en">Education &amp; Certifications</p>
-    <p class="section-label" data-lang="zh">學歷與證照</p>
-    <h2 class="section-title" data-lang="en">Academic &amp; professional credentials</h2>
-    <h2 class="section-title" data-lang="zh">學術背景與國際認證</h2>
+    <p class="section-label" data-lang="en">Education &amp; Continuous Learning</p>
+    <p class="section-label" data-lang="zh">學歷與持續學習</p>
+    <h2 class="section-title" data-lang="en">Academic background &amp; professional growth</h2>
+    <h2 class="section-title" data-lang="zh">學術背景與專業成長</h2>
     <div class="edu-certs">
       <div>
         <h4 style="font-size:.8rem;font-weight:700;color:var(--accent2);text-transform:uppercase;letter-spacing:.1em;margin-bottom:16px" data-lang="en">Education</h4>
         <h4 style="font-size:.8rem;font-weight:700;color:var(--accent2);text-transform:uppercase;letter-spacing:.1em;margin-bottom:16px" data-lang="zh">學歷</h4>
         <div class="edu-block">
-          <h3>中國技術學院</h3>
-          <div class="degree" data-lang="en">Business Administration — Five-Year Program (五專畢業)</div>
-          <div class="degree" data-lang="zh">企業管理 | 五專畢業</div>
-          <div class="period">1996/7 – 2000/5</div>
+          <h3 data-lang="en">China Institute of Technology</h3>
+          <h3 data-lang="zh">中國技術學院</h3>
+          <div class="degree" data-lang="en">Business Administration — Five-Year Junior College</div>
+          <div class="degree" data-lang="zh">企業管理科 | 五年制專科</div>
+          <div class="period">1996 – 2000</div>
+        </div>
+        <div class="edu-block" style="margin-top:20px">
+          <h3 data-lang="en">Industry Training</h3>
+          <h3 data-lang="zh">業界實戰教學</h3>
+          <p data-lang="en">Served multiple times as fintech and digital asset training instructor (internal and external), covering digital finance fundamentals, trading platform operations, fintech product logic, and asset security management.</p>
+          <p data-lang="zh">多次擔任金融科技與數位資產教育訓練講師（內訓與外訓），培訓內容涵蓋數位金融基礎、交易平台操作、金融科技產品邏輯與資產安全管理。</p>
         </div>
       </div>
       <div>
-        <h4 style="font-size:.8rem;font-weight:700;color:var(--accent2);text-transform:uppercase;letter-spacing:.1em;margin-bottom:16px" data-lang="en">International Certifications</h4>
-        <h4 style="font-size:.8rem;font-weight:700;color:var(--accent2);text-transform:uppercase;letter-spacing:.1em;margin-bottom:16px" data-lang="zh">其他證照</h4>
+        <h4 style="font-size:.8rem;font-weight:700;color:var(--accent2);text-transform:uppercase;letter-spacing:.1em;margin-bottom:16px" data-lang="en">Self-directed Learning</h4>
+        <h4 style="font-size:.8rem;font-weight:700;color:var(--accent2);text-transform:uppercase;letter-spacing:.1em;margin-bottom:16px" data-lang="zh">自主學習</h4>
         <div class="edu-block">
-          <ul class="cert-list">
-            <li>IC3 國際認證及監評資格</li>
-            <li>21點博奕國際認證</li>
-            <li>百家樂博奕國際認證</li>
-            <li>三公百家樂國際認證</li>
-            <li>加勒比海撲克國際認證</li>
-            <li>德州撲克博奕國際認證</li>
-          </ul>
+          <h3 data-lang="en">Continuous Tech Research</h3>
+          <h3 data-lang="zh">持續前沿技術研究</h3>
+          <p data-lang="en">Continuously researching cutting-edge technologies through hands-on practice and AI tools, including Real World Asset (RWA) digitization, AI automation strategies, cross-platform infrastructure, and emerging technology applications. Built a personal AI Agent ecosystem with daily scheduled updates to skill libraries and technology trend tracking.</p>
+          <p data-lang="zh">持續透過實戰與 AI 工具深入研究前沿技術，包含實體資產數位化（RWA）、AI 自動化策略、跨平台基礎設施與新興技術應用場景。建立個人 AI Agent 生態系，每日透過排程自動更新技能庫與追蹤科技趨勢。</p>
+        </div>
+        <div class="edu-block" style="margin-top:20px">
+          <h3 data-lang="en">Management Philosophy</h3>
+          <h3 data-lang="zh">管理理念</h3>
+          <p data-lang="en">An empathetic leader skilled in bi-directional management — translating executive vision into actionable product roadmaps upward, while empowering team members with ownership and growth downward. Committed to a "triple-win" outcome and unwavering integrity in asset security.</p>
+          <p data-lang="zh">具備同理心的管理者，擅長雙向管理。追求「三贏局面」：產品準時上線、公司營運效率提升、員工獲得晉升。近五年管理 4 億美金數位資產，堅守「公司的錢一分不差」的原則。</p>
         </div>
       </div>
     </div>
@@ -775,8 +902,8 @@
   <p class="section-label" data-lang="zh">聯絡方式</p>
   <h2 class="section-title" data-lang="en">Let's connect</h2>
   <h2 class="section-title" data-lang="zh">歡迎與我聯絡</h2>
-  <p data-lang="en">Open to Head of Product / VP Product roles in Vietnam, Southeast Asia, Taiwan, or remote. Feel free to reach out.</p>
-  <p data-lang="zh">目前求職中，目標職稱為產品總監（駐點越南佳）。希望地點：台北市、越南、泰國、馬來西亞、新加坡，對遠端工作有意願。</p>
+  <p data-lang="en">Open to Product Director / Head of Product roles in Fintech &amp; Digital Technology. Preferred locations: Vietnam, Southeast Asia, Taiwan, or Remote.</p>
+  <p data-lang="zh">目前求職中，目標職稱為產品總監／產品負責人（金融科技／數位科技方向）。希望地點：越南（佳）、台北、泰國、馬來西亞、新加坡、全球遠端。</p>
   <div class="contact-row">
     <a class="contact-btn" href="mailto:skinnerlee1225@gmail.com">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
@@ -798,7 +925,7 @@
 </section>
 
 <footer>
-  <p>© 2026 Simon Lee (李仲軒) &nbsp;·&nbsp; Head of Product | Web3 &amp; DeFi &nbsp;·&nbsp;
+  <p>© 2026 Simon Lee (李仲軒) &nbsp;·&nbsp; Head of Product | Fintech &amp; AI &nbsp;·&nbsp;
     <span data-lang="en">Hosted on <a href="https://pages.github.com" target="_blank">GitHub Pages</a></span>
     <span data-lang="zh">架設於 <a href="https://pages.github.com" target="_blank">GitHub Pages</a></span>
   </p>
@@ -838,53 +965,35 @@
     setTimeout(() => t.classList.remove('show'), 3000);
   }
 
-  /* ── Local Model (Ollama) AI Translation ──
-     Calls your local Ollama server at http://localhost:11434
-     Make sure Ollama is running with a model loaded, e.g.:
-       ollama run llama3
-     The button is intentionally hidden in production (GitHub Pages)
-     and only visible when browsing the file locally (localhost / file://)
-  ── */
+  /* ── Local Model (Ollama) AI Translation ── */
   async function aiTranslate() {
     const targetLang = currentLang === 'en' ? 'zh' : 'en';
-    const targetLabel = targetLang === 'zh' ? '繁體中文' : 'English';
-
-    // Collect visible text nodes to translate
-    const hero = document.getElementById('hero');
-    const sampleText = hero.querySelector('h1').innerText + '\n' +
-      hero.querySelector('.hero-title').innerText;
-
     showToast('🤖 連接本地模型中…');
-
     try {
+      const hero = document.getElementById('hero');
+      const sampleText = hero.querySelector('h1').innerText + '\n' + hero.querySelector('.hero-title').innerText;
       const resp = await fetch('http://localhost:11434/api/generate', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          model: 'llama3',          // ← 換成你本地有的模型名稱
-          prompt: `Translate the following to ${targetLang === 'zh' ? 'Traditional Chinese (繁體中文)' : 'English'}. Return ONLY the translation, no explanation:\n\n${sampleText}`,
+          model: 'llama3',
+          prompt: `Translate the following to ${targetLang === 'zh' ? 'Traditional Chinese (繁體中文)' : 'English'}. Return ONLY the translation:\n\n${sampleText}`,
           stream: false
         })
       });
-
       if (!resp.ok) throw new Error('Ollama returned ' + resp.status);
-      const data = await resp.json();
       showToast('✅ 本地模型翻譯完成！');
-      // After AI translate, just flip the built-in lang
       applyLang(targetLang);
-
     } catch (err) {
-      console.warn('Local model unavailable, using built-in translation:', err.message);
+      console.warn('Local model unavailable:', err.message);
       showToast('⚡ 使用內建翻譯（本地模型未啟動）');
-      applyLang(targetLang);
+      applyLang(currentLang === 'en' ? 'zh' : 'en');
     }
   }
 
   /* Show AI Translate button only when running locally */
   window.addEventListener('DOMContentLoaded', () => {
-    const isLocal = location.hostname === 'localhost' ||
-                    location.hostname === '127.0.0.1' ||
-                    location.protocol === 'file:';
+    const isLocal = location.hostname === 'localhost' || location.hostname === '127.0.0.1' || location.protocol === 'file:';
     if (isLocal) {
       const btn = document.createElement('li');
       btn.innerHTML = `<button class="lang-btn" onclick="aiTranslate()" style="background:rgba(52,211,153,.1);border-color:rgba(52,211,153,.35);color:var(--green)">🤖 AI 翻譯</button>`;
