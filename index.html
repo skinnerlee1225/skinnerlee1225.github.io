@@ -67,6 +67,36 @@
       background-image:linear-gradient(rgba(255,255,255,.015) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.015) 1px,transparent 1px);
       background-size:80px 80px;pointer-events:none;mask-image:radial-gradient(ellipse 60% 60% at 50% 50%,black 20%,transparent 70%)
     }
+    /* HERO LAYOUT */
+    .hero-content{display:flex;align-items:flex-start;justify-content:space-between;gap:48px}
+    .hero-left{flex:1;min-width:0}
+    .hero-right{flex-shrink:0;display:flex;align-items:center;justify-content:center;padding-top:20px}
+    .hero-avatar{
+      width:200px;height:200px;border-radius:24px;object-fit:cover;
+      border:2px solid rgba(124,58,237,.3);
+      box-shadow:0 0 60px rgba(124,58,237,.15),0 0 120px rgba(52,211,153,.05);
+      transition:transform .4s cubic-bezier(.16,1,.3,1),box-shadow .4s;
+      position:relative;z-index:2
+    }
+    .hero-avatar:hover{transform:scale(1.03) rotate(1deg);box-shadow:0 0 80px rgba(124,58,237,.25),0 0 160px rgba(52,211,153,.08)}
+    .avatar-wrap{position:relative}
+    .avatar-wrap::before{
+      content:'';position:absolute;top:-8px;left:-8px;right:-8px;bottom:-8px;
+      border-radius:28px;border:1px solid rgba(124,58,237,.15);
+      background:linear-gradient(135deg,rgba(124,58,237,.06),rgba(52,211,153,.03));
+      z-index:1
+    }
+    .avatar-wrap::after{
+      content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+      width:260px;height:260px;border-radius:50%;
+      background:radial-gradient(circle,rgba(124,58,237,.1) 0%,transparent 60%);
+      z-index:0;pointer-events:none
+    }
+    @media(max-width:768px){
+      .hero-content{flex-direction:column-reverse;align-items:center;text-align:center}
+      .hero-avatar{width:150px;height:150px;border-radius:20px}
+      .hero-pills,.hero-cta{justify-content:center}
+    }
     .hero-badge{
       display:inline-flex;align-items:center;gap:8px;padding:7px 18px;margin-bottom:32px;
       background:rgba(52,211,153,.06);border:1px solid rgba(52,211,153,.18);
@@ -325,46 +355,55 @@
   <div class="hero-orb hero-orb-3"></div>
   <div class="hero-grid"></div>
 
-  <div class="hero-badge reveal">
-    <span class="dot"></span>
-    <span data-lang="en">Open to Opportunities</span>
-    <span data-lang="zh">求職中・歡迎洽談</span>
-  </div>
+  <div class="hero-content">
+    <div class="hero-left">
+      <div class="hero-badge reveal">
+        <span class="dot"></span>
+        <span data-lang="en">Open to Opportunities</span>
+        <span data-lang="zh">求職中・歡迎洽談</span>
+      </div>
 
-  <div class="hero-mega reveal reveal-delay-1">
-    Head of<br><span class="gradient">Product</span>
-  </div>
+      <div class="hero-mega reveal reveal-delay-1">
+        Head of<br><span class="gradient">Product</span>
+      </div>
 
-  <p class="hero-sub reveal reveal-delay-2" data-lang="en">
-    <strong>17+ years</strong> building fintech platforms with AI-driven product management.<br>
-    $400M+ digital assets · 2M DAU · Zero losses over nearly five years.
-  </p>
-  <p class="hero-sub reveal reveal-delay-2" data-lang="zh">
-    <strong>17+ 年</strong>跨國金融科技產品管理經驗，AI 驅動的產品開發流程。<br>
-    管理超過 4 億美金數位資產 · 200 萬日活 · 近五年零損失。
-  </p>
+      <p class="hero-sub reveal reveal-delay-2" data-lang="en">
+        <strong>17+ years</strong> building fintech platforms with AI-driven product management.<br>
+        $400M+ digital assets · 2M DAU · Zero losses over nearly five years.
+      </p>
+      <p class="hero-sub reveal reveal-delay-2" data-lang="zh">
+        <strong>17+ 年</strong>跨國金融科技產品管理經驗，AI 驅動的產品開發流程。<br>
+        管理超過 4 億美金數位資產 · 200 萬日活 · 近五年零損失。
+      </p>
 
-  <blockquote class="hero-quote reveal reveal-delay-2">
-    <span data-lang="en">"See the virtuous and aspire to be their equal; see the unvirtuous and reflect upon oneself."</span>
-    <span data-lang="zh">「見賢思齊，見不賢則內自省。」</span>
-  </blockquote>
+      <blockquote class="hero-quote reveal reveal-delay-2">
+        <span data-lang="en">"See the virtuous and aspire to be their equal; see the unvirtuous and reflect upon oneself."</span>
+        <span data-lang="zh">「見賢思齊，見不賢則內自省。」</span>
+      </blockquote>
 
-  <div class="hero-pills reveal reveal-delay-3">
-    <span class="pill pill-accent">$400M+ managed</span>
-    <span class="pill pill-green" data-lang="en">~5 yrs zero loss</span>
-    <span class="pill pill-green" data-lang="zh">近 5 年零損失</span>
-    <span class="pill pill-ghost">2M DAU</span>
-    <span class="pill pill-ghost" data-lang="en">50+ engineers</span>
-    <span class="pill pill-ghost" data-lang="zh">50+ 人跨國團隊</span>
-    <span class="pill pill-ghost">$100M+/mo</span>
-    <span class="pill pill-ghost" data-lang="en">~50 releases/yr</span>
-    <span class="pill pill-ghost" data-lang="zh">年迭代 50 版</span>
-  </div>
+      <div class="hero-pills reveal reveal-delay-3">
+        <span class="pill pill-accent">$400M+ managed</span>
+        <span class="pill pill-green" data-lang="en">~5 yrs zero loss</span>
+        <span class="pill pill-green" data-lang="zh">近 5 年零損失</span>
+        <span class="pill pill-ghost">2M DAU</span>
+        <span class="pill pill-ghost" data-lang="en">50+ engineers</span>
+        <span class="pill pill-ghost" data-lang="zh">50+ 人跨國團隊</span>
+        <span class="pill pill-ghost">$100M+/mo</span>
+        <span class="pill pill-ghost" data-lang="en">~50 releases/yr</span>
+        <span class="pill pill-ghost" data-lang="zh">年迭代 50 版</span>
+      </div>
 
-  <div class="hero-cta reveal reveal-delay-4">
-    <a href="#contact" class="btn-primary" data-lang="en">Get in Touch</a>
-    <a href="#contact" class="btn-primary" data-lang="zh">立即聯絡</a>
-    <a href="https://www.linkedin.com/in/simon-lee-a0957914b/" target="_blank" class="btn-outline">LinkedIn ↗</a>
+      <div class="hero-cta reveal reveal-delay-4">
+        <a href="#contact" class="btn-primary" data-lang="en">Get in Touch</a>
+        <a href="#contact" class="btn-primary" data-lang="zh">立即聯絡</a>
+        <a href="https://www.linkedin.com/in/simon-lee-a0957914b/" target="_blank" class="btn-outline">LinkedIn ↗</a>
+      </div>
+    </div>
+    <div class="hero-right reveal reveal-delay-2">
+      <div class="avatar-wrap">
+        <img src="mypic.jpeg" alt="Simon Lee" class="hero-avatar" />
+      </div>
+    </div>
   </div>
 </section>
 
