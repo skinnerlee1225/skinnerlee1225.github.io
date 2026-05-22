@@ -1,0 +1,939 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Simon Lee — Head of Product | AI Strategy & Team Leadership</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --bg:#06060c;--surface:#0c0c16;--surface2:#12121f;--border:rgba(255,255,255,0.06);
+      --accent:#7c3aed;--accent2:#a78bfa;--accent3:#c4b5fd;--green:#34d399;--green2:#6ee7b7;
+      --text:#e8e8f0;--muted:rgba(255,255,255,0.35);--muted2:rgba(255,255,255,0.5);
+      --radius:12px;--font:'Inter',sans-serif;--font-head:'Space Grotesk',sans-serif;
+    }
+    html{scroll-behavior:smooth}
+    body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:1.7;font-size:18px;overflow-x:hidden}
+    a{color:var(--accent2);text-decoration:none;transition:color .2s}
+    a:hover{color:#fff}
+    ::selection{background:rgba(124,58,237,.3);color:#fff}
+
+    /* Scroll reveal */
+    .reveal{opacity:0;transform:translateY(40px);transition:opacity .8s cubic-bezier(.16,1,.3,1),transform .8s cubic-bezier(.16,1,.3,1)}
+    .reveal.visible{opacity:1;transform:translateY(0)}
+    .reveal-delay-1{transition-delay:.1s}
+    .reveal-delay-2{transition-delay:.2s}
+    .reveal-delay-3{transition-delay:.3s}
+    .reveal-delay-4{transition-delay:.4s}
+
+    /* NAV */
+    nav{
+      position:fixed;top:0;left:0;right:0;z-index:100;
+      display:flex;align-items:center;justify-content:space-between;
+      padding:20px 5vw;
+      background:rgba(6,6,12,0.7);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
+      border-bottom:1px solid var(--border);
+      transition:padding .3s;
+    }
+    nav.scrolled{padding:14px 5vw}
+    .nav-logo{font-family:var(--font-head);font-weight:700;font-size:1rem;color:#fff;letter-spacing:.15em;text-transform:uppercase}
+    .nav-logo span{color:var(--accent2)}
+    .nav-links{display:flex;gap:28px;list-style:none;align-items:center}
+    .nav-links a{font-size:1rem;font-weight:500;color:var(--muted);transition:color .2s;letter-spacing:.08em;text-transform:uppercase;display:flex;align-items:center;gap:6px}
+    .nav-links a:hover{color:#fff}
+    .nav-num{color:var(--accent2);font-size:1.05rem;font-weight:700;font-family:var(--font-head)}
+    .lang-btn{
+      display:flex;align-items:center;gap:6px;padding:7px 16px;
+      background:rgba(124,58,237,.08);border:1px solid rgba(124,58,237,.2);
+      border-radius:50px;cursor:pointer;font-size:.86rem;font-weight:700;color:var(--accent2);
+      transition:all .25s;letter-spacing:.06em;font-family:var(--font)
+    }
+    .lang-btn:hover{background:rgba(124,58,237,.2);border-color:var(--accent2);color:#fff}
+    @media(max-width:900px){.nav-links li:not(:last-child){display:none}}
+
+    /* HERO */
+    #hero{
+      min-height:100vh;display:flex;flex-direction:column;justify-content:center;
+      padding:140px 5vw 100px;position:relative;overflow:hidden
+    }
+    .hero-orb{position:absolute;border-radius:50%;pointer-events:none;filter:blur(80px)}
+    .hero-orb-1{top:-15%;right:-5%;width:600px;height:600px;background:rgba(124,58,237,.12)}
+    .hero-orb-2{bottom:-20%;left:10%;width:500px;height:500px;background:rgba(52,211,153,.06)}
+    .hero-orb-3{top:30%;left:-10%;width:350px;height:350px;background:rgba(167,139,250,.05)}
+    .hero-grid{position:absolute;top:0;left:0;right:0;bottom:0;
+      background-image:linear-gradient(rgba(255,255,255,.015) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.015) 1px,transparent 1px);
+      background-size:80px 80px;pointer-events:none;mask-image:radial-gradient(ellipse 60% 60% at 50% 50%,black 20%,transparent 70%)
+    }
+    /* HERO LAYOUT */
+    .hero-content{display:flex;align-items:flex-start;justify-content:space-between;gap:48px}
+    .hero-left{flex:1;min-width:0}
+    .hero-right{flex-shrink:0;display:flex;align-items:center;justify-content:center;padding-top:20px}
+    .hero-avatar{
+      width:400px;height:400px;border-radius:32px;object-fit:cover;
+      border:2px solid rgba(124,58,237,.3);
+      box-shadow:0 0 60px rgba(124,58,237,.15),0 0 120px rgba(52,211,153,.05);
+      transition:transform .4s cubic-bezier(.16,1,.3,1),box-shadow .4s;
+      position:relative;z-index:2
+    }
+    .hero-avatar:hover{transform:scale(1.03) rotate(1deg);box-shadow:0 0 80px rgba(124,58,237,.25),0 0 160px rgba(52,211,153,.08)}
+    .avatar-wrap{position:relative}
+    .avatar-wrap::before{
+      content:'';position:absolute;top:-8px;left:-8px;right:-8px;bottom:-8px;
+      border-radius:36px;border:1px solid rgba(124,58,237,.15);
+      background:linear-gradient(135deg,rgba(124,58,237,.06),rgba(52,211,153,.03));
+      z-index:1
+    }
+    .avatar-wrap::after{
+      content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+      width:480px;height:480px;border-radius:50%;
+      background:radial-gradient(circle,rgba(124,58,237,.1) 0%,transparent 60%);
+      z-index:0;pointer-events:none
+    }
+    @media(max-width:768px){
+      .hero-content{flex-direction:column-reverse;align-items:center;text-align:center}
+      .hero-avatar{width:280px;height:280px;border-radius:36px}
+      .hero-pills,.hero-cta{justify-content:center}
+    }
+    .hero-badge{
+      display:inline-flex;align-items:center;gap:8px;padding:7px 18px;margin-bottom:32px;
+      background:rgba(52,211,153,.06);border:1px solid rgba(52,211,153,.18);
+      border-radius:50px;font-size:.86rem;font-weight:600;color:var(--green);
+      letter-spacing:.1em;text-transform:uppercase;width:fit-content
+    }
+    .hero-badge .dot{width:6px;height:6px;border-radius:50%;background:var(--green);animation:pulse 2s infinite}
+    @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+    .hero-mega{
+      font-family:var(--font-head);font-weight:900;
+      font-size:clamp(3.5rem,9vw,7rem);line-height:.95;letter-spacing:-.05em;
+      color:#fff;margin-bottom:6px
+    }
+    .hero-mega .gradient{
+      background:linear-gradient(135deg,#a78bfa 0%,#7c3aed 40%,#34d399 100%);
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+      background-clip:text
+    }
+    .hero-sub{
+      font-size:clamp(1rem,1.8vw,1.15rem);color:var(--muted);margin-top:12px;
+      max-width:560px;line-height:1.8
+    }
+    .hero-sub strong{color:var(--accent2);font-weight:600}
+    .hero-quote{
+      font-size:1rem;color:var(--muted);border-left:2px solid var(--accent);
+      padding-left:16px;margin:28px 0 36px;max-width:480px;font-style:italic;line-height:1.6
+    }
+    .hero-pills{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:36px}
+    .pill{
+      padding:8px 18px;border-radius:50px;font-size:1.05rem;font-weight:600;
+      transition:transform .2s,border-color .2s
+    }
+    .pill:hover{transform:translateY(-2px)}
+    .pill-accent{background:rgba(167,139,250,.1);border:1px solid rgba(167,139,250,.25);color:var(--accent2)}
+    .pill-green{background:rgba(52,211,153,.08);border:1px solid rgba(52,211,153,.2);color:var(--green)}
+    .pill-ghost{background:rgba(255,255,255,.03);border:1px solid var(--border);color:var(--muted2)}
+    .hero-cta{display:flex;gap:12px;flex-wrap:wrap}
+    .btn-primary{
+      padding:14px 32px;background:var(--accent);color:#fff;border-radius:50px;
+      font-weight:600;font-size:1.05rem;transition:all .25s;border:none;cursor:pointer;
+      position:relative;overflow:hidden
+    }
+    .btn-primary:hover{transform:translateY(-2px);box-shadow:0 12px 40px rgba(124,58,237,.35);color:#fff}
+    .btn-outline{
+      padding:14px 32px;border:1.5px solid rgba(255,255,255,.1);color:var(--text);border-radius:50px;
+      font-weight:500;font-size:1.05rem;transition:all .25s;cursor:pointer;background:transparent
+    }
+    .btn-outline:hover{border-color:var(--accent2);color:var(--accent2);transform:translateY(-2px)}
+
+    /* SECTIONS */
+    .section-wrap{max-width:1120px;margin:0 auto;padding:100px 5vw}
+    .section-num{font-family:var(--font-head);font-size:1.05rem;font-weight:700;color:var(--accent2);letter-spacing:.15em;margin-bottom:8px}
+    .section-label{font-size:.86rem;font-weight:600;color:var(--accent2);text-transform:uppercase;letter-spacing:.15em;margin-bottom:10px}
+    .section-title{
+      font-family:var(--font-head);font-size:clamp(1.8rem,4vw,2.8rem);font-weight:800;
+      letter-spacing:-.04em;color:#fff;margin-bottom:20px;line-height:1.1
+    }
+    .section-desc{font-size:1.08rem;color:var(--muted);max-width:560px;line-height:1.8;margin-bottom:52px}
+    hr.divider{border:none;border-top:1px solid var(--border);margin:0}
+
+    /* KEY DATA */
+    .data-ribbon{
+      display:flex;gap:0;overflow:hidden;border-radius:16px;
+      border:1px solid var(--border);background:var(--surface)
+    }
+    .data-cell{
+      flex:1;padding:28px 20px;text-align:center;
+      border-right:1px solid var(--border);position:relative
+    }
+    .data-cell:last-child{border-right:none}
+    .data-num{font-family:var(--font-head);font-size:clamp(1.2rem,2.5vw,1.8rem);font-weight:800;color:#fff;letter-spacing:-.02em}
+    .data-num .highlight{color:var(--accent2)}
+    .data-num .green{color:var(--green)}
+    .data-label{font-size:.84rem;color:var(--muted);margin-top:4px;letter-spacing:.02em}
+    @media(max-width:768px){.data-ribbon{flex-wrap:wrap}.data-cell{flex:1 1 50%;border-bottom:1px solid var(--border)}}
+
+    /* ABOUT */
+    .about-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:60px;align-items:start}
+    .about-text{font-size:1.08rem;color:var(--muted);line-height:1.9;margin-bottom:18px}
+    .about-text strong{color:var(--text);font-weight:600}
+    .about-card{
+      background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:28px;
+      position:relative;overflow:hidden
+    }
+    .about-card::before{
+      content:'';position:absolute;top:0;left:0;right:0;height:2px;
+      background:linear-gradient(90deg,var(--accent),var(--green),transparent)
+    }
+    .about-card h4{font-size:.86rem;font-weight:700;color:var(--accent2);text-transform:uppercase;letter-spacing:.12em;margin-bottom:20px}
+    .info-row{display:flex;justify-content:space-between;align-items:flex-start;padding:11px 0;border-bottom:1px solid var(--border);gap:12px}
+    .info-row:last-child{border-bottom:none;padding-bottom:0}
+    .info-key{font-size:1.05rem;color:var(--muted);min-width:70px}
+    .info-val{font-size:1rem;color:var(--text);font-weight:500;text-align:right}
+    @media(max-width:768px){.about-grid{grid-template-columns:1fr;gap:36px}}
+
+    /* COMPETENCIES - Bento */
+    #competencies{background:var(--surface)}
+    .bento{display:grid;grid-template-columns:repeat(3,1fr);grid-auto-rows:auto;gap:12px}
+    .bento-card{
+      background:var(--bg);border:1px solid var(--border);border-radius:14px;padding:24px;
+      transition:border-color .3s,transform .3s;position:relative;overflow:hidden
+    }
+    .bento-card:hover{border-color:rgba(124,58,237,.35);transform:translateY(-4px)}
+    .bento-card.featured{
+      grid-column:span 2;grid-row:span 2;
+      background:linear-gradient(145deg,rgba(124,58,237,.08) 0%,var(--bg) 60%);
+      border-color:rgba(124,58,237,.2)
+    }
+    .bento-card.green-accent{border-color:rgba(52,211,153,.15);background:linear-gradient(145deg,rgba(52,211,153,.04) 0%,var(--bg) 60%)}
+    .bento-icon{font-size:1.6rem;margin-bottom:12px;display:block}
+    .bento-card h3{font-family:var(--font-head);font-size:1.08rem;font-weight:600;color:#fff;margin-bottom:8px;line-height:1.3}
+    .bento-card p{font-size:1.08rem;color:var(--muted);line-height:1.7}
+    .bento-tags{display:flex;gap:5px;flex-wrap:wrap;margin-top:12px}
+    .bento-tag{background:rgba(167,139,250,.1);border-radius:20px;padding:3px 10px;font-size:1.08rem;color:var(--accent2);font-weight:500}
+    @media(max-width:768px){.bento{grid-template-columns:1fr}.bento-card.featured{grid-column:span 1;grid-row:span 1}}
+
+    /* EXPERIENCE */
+    .exp-featured{
+      background:var(--surface);border:1px solid rgba(124,58,237,.15);border-radius:16px;
+      padding:32px;margin-bottom:32px;position:relative;overflow:hidden
+    }
+    .exp-featured::before{
+      content:'';position:absolute;top:0;left:0;right:0;height:2px;
+      background:linear-gradient(90deg,var(--accent),var(--green),transparent)
+    }
+    .exp-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px;flex-wrap:wrap;gap:12px}
+    .exp-title{font-family:var(--font-head);font-size:1.25rem;font-weight:700;color:#fff;margin-bottom:2px}
+    .exp-company{font-size:1.05rem;font-weight:600;color:var(--accent2)}
+    .exp-meta{text-align:right}
+    .exp-period{font-size:1.05rem;color:var(--muted)}
+    .exp-badge{
+      display:inline-block;margin-top:6px;
+      background:rgba(124,58,237,.1);border:1px solid rgba(124,58,237,.25);
+      border-radius:50px;padding:4px 14px;font-size:.86rem;color:var(--accent2);font-weight:600
+    }
+    .exp-sub{font-size:1.08rem;font-weight:600;color:var(--accent2);margin:18px 0 10px;letter-spacing:.02em}
+    .exp-bullets{list-style:none;display:flex;flex-direction:column;gap:8px;margin-bottom:16px}
+    .exp-bullets li{font-size:1rem;color:var(--muted);padding-left:18px;position:relative;line-height:1.7}
+    .exp-bullets li::before{content:'';position:absolute;left:0;top:10px;width:6px;height:6px;border-radius:50%;background:var(--accent);opacity:.5}
+    .exp-tags{display:flex;flex-wrap:wrap;gap:6px}
+    .exp-tag{padding:5px 14px;background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:50px;font-size:.86rem;color:var(--muted2);font-weight:500}
+    .exp-tag.accent{background:rgba(124,58,237,.08);border-color:rgba(124,58,237,.2);color:var(--accent2)}
+    .exp-tag.green{background:rgba(52,211,153,.06);border-color:rgba(52,211,153,.15);color:var(--green)}
+
+    /* Timeline compact */
+    .tl-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .tl-card{
+      background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:22px;
+      transition:border-color .25s,transform .25s
+    }
+    .tl-card:hover{border-color:rgba(124,58,237,.3);transform:translateY(-3px)}
+    .tl-card h4{font-family:var(--font-head);font-size:1.08rem;font-weight:600;color:#fff;margin-bottom:3px}
+    .tl-card .company{font-size:1.08rem;color:var(--accent2);font-weight:500;margin-bottom:4px}
+    .tl-card .period{font-size:1rem;color:var(--muted)}
+    .tl-card .desc{font-size:1.05rem;color:var(--muted);line-height:1.6;margin-top:10px}
+    .tl-card .desc li{margin-bottom:4px}
+    @media(max-width:600px){.tl-grid{grid-template-columns:1fr}}
+
+    /* SKILLS */
+    #skills{background:var(--surface)}
+    .skills-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px}
+    .skill-group{margin-bottom:28px}
+    .skill-group h4{font-size:.86rem;font-weight:700;color:var(--accent2);text-transform:uppercase;letter-spacing:.12em;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+    .skill-chips{display:flex;flex-wrap:wrap;gap:7px}
+    .chip{
+      padding:7px 14px;border-radius:50px;font-size:1.05rem;font-weight:500;
+      transition:transform .2s,border-color .2s
+    }
+    .chip:hover{transform:translateY(-1px)}
+    .chip-default{background:rgba(124,58,237,.06);border:1px solid rgba(124,58,237,.15);color:var(--text)}
+    .chip-green{background:rgba(52,211,153,.06);border:1px solid rgba(52,211,153,.15);color:var(--green)}
+    .chip-ghost{background:rgba(255,255,255,.03);border:1px solid var(--border);color:var(--muted2)}
+    @media(max-width:600px){.skills-grid{grid-template-columns:1fr}}
+
+    /* PORTFOLIO */
+    .port-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px}
+    .port-card{
+      background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:24px;
+      transition:border-color .25s,transform .25s
+    }
+    .port-card:hover{border-color:rgba(124,58,237,.35);transform:translateY(-4px)}
+    .port-card .type{font-size:1.08rem;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px}
+    .port-card h3{font-family:var(--font-head);font-size:1rem;font-weight:600;color:#fff;margin-bottom:8px}
+    .port-card p{font-size:1.08rem;color:var(--muted);line-height:1.7;margin-bottom:14px}
+    .port-link{font-size:1.05rem;color:var(--accent2);font-weight:500}
+
+    /* EDUCATION */
+    #education{background:var(--surface)}
+    .edu-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    .edu-card{background:var(--bg);border:1px solid var(--border);border-radius:14px;padding:24px}
+    .edu-card h3{font-family:var(--font-head);font-size:1rem;font-weight:600;color:#fff;margin-bottom:4px}
+    .edu-card .degree{color:var(--accent2);font-size:1rem;font-weight:500}
+    .edu-card .period{color:var(--muted);font-size:1.05rem;margin-top:6px}
+    .edu-card p{color:var(--muted);font-size:1.08rem;line-height:1.7;margin-top:10px}
+    @media(max-width:600px){.edu-grid{grid-template-columns:1fr}}
+
+    /* CONTACT */
+    #contact{text-align:center;padding:120px 5vw;position:relative;overflow:hidden}
+    #contact::before{
+      content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+      width:600px;height:600px;border-radius:50%;
+      background:radial-gradient(circle,rgba(124,58,237,.08) 0%,transparent 60%);pointer-events:none
+    }
+    .contact-row{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;position:relative}
+    .contact-btn{
+      display:flex;align-items:center;gap:10px;padding:14px 28px;
+      background:var(--surface);border:1px solid var(--border);border-radius:50px;
+      color:var(--text);font-weight:500;font-size:1rem;transition:all .25s
+    }
+    .contact-btn:hover{border-color:var(--accent2);color:var(--accent2);transform:translateY(-2px)}
+    .contact-btn svg{width:16px;height:16px;flex-shrink:0}
+
+    footer{text-align:center;padding:28px 5vw;border-top:1px solid var(--border);color:var(--muted);font-size:1.05rem}
+
+    /* LANG */
+    [data-lang]{transition:opacity .2s}
+    .lang-zh [data-lang="en"]{display:none!important}
+    .lang-en [data-lang="zh"]{display:none!important}
+
+    /* Toast */
+    #toast{
+      position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(80px);
+      background:#1a1a2e;border:1px solid var(--accent);border-radius:50px;
+      padding:12px 24px;color:var(--accent2);font-size:1.08rem;font-weight:600;
+      z-index:999;transition:transform .35s cubic-bezier(.34,1.56,.64,1);pointer-events:none
+    }
+    #toast.show{transform:translateX(-50%) translateY(0)}
+  </style>
+</head>
+<body class="lang-en">
+
+<div id="toast"></div>
+
+<!-- NAV -->
+<nav id="nav">
+  <span class="nav-logo">Simon <span>Lee</span></span>
+  <ul class="nav-links">
+    <li><a href="#about"><span class="nav-num" data-lang="en">01</span><span data-lang="en">About</span><span class="nav-num" data-lang="zh">01</span><span data-lang="zh">關於</span></a></li>
+    <li><a href="#experience"><span class="nav-num" data-lang="en">02</span><span data-lang="en">Work</span><span class="nav-num" data-lang="zh">02</span><span data-lang="zh">經歷</span></a></li>
+    <li><a href="#competencies"><span class="nav-num" data-lang="en">03</span><span data-lang="en">Expertise</span><span class="nav-num" data-lang="zh">03</span><span data-lang="zh">專長</span></a></li>
+    <li><a href="#skills"><span class="nav-num" data-lang="en">04</span><span data-lang="en">Skills</span><span class="nav-num" data-lang="zh">04</span><span data-lang="zh">技能</span></a></li>
+    <li><a href="#contact"><span class="nav-num" data-lang="en">05</span><span data-lang="en">Contact</span><span class="nav-num" data-lang="zh">05</span><span data-lang="zh">聯絡</span></a></li>
+    <li>
+      <button class="lang-btn" onclick="toggleLang()">
+        <span style="font-size:1.05rem">🌐</span>
+        <span id="langLabel">繁體中文</span>
+      </button>
+    </li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-orb hero-orb-1"></div>
+  <div class="hero-orb hero-orb-2"></div>
+  <div class="hero-orb hero-orb-3"></div>
+  <div class="hero-grid"></div>
+
+  <div class="hero-content">
+    <div class="hero-left">
+      <div class="hero-badge reveal">
+        <span class="dot"></span>
+        <span data-lang="en">Open to Opportunities</span>
+        <span data-lang="zh">求職中・歡迎洽談</span>
+      </div>
+
+      <div class="hero-mega reveal reveal-delay-1">
+        Head of<br><span class="gradient">Product</span>
+      </div>
+
+      <p class="hero-sub reveal reveal-delay-2" data-lang="en">
+        <strong>17+ years</strong> leading cross-border teams with AI-driven product management.<br>
+        AI mentor · People-first leadership · $400M+ assets · 2M DAU · Zero losses.
+      </p>
+      <p class="hero-sub reveal reveal-delay-2" data-lang="zh">
+        <strong>17+ 年</strong>跨國團隊領導與 AI 驅動產品管理經驗。<br>
+        AI 導師 · 以人為本的管理 · 4 億美金資產 · 200 萬日活 · 近五年零損失。
+      </p>
+
+      <blockquote class="hero-quote reveal reveal-delay-2">
+        <span data-lang="en">"See the virtuous and aspire to be their equal; see the unvirtuous and reflect upon oneself."</span>
+        <span data-lang="zh">「見賢思齊，見不賢則內自省。」</span>
+      </blockquote>
+
+      <div class="hero-pills reveal reveal-delay-3">
+        <span class="pill pill-accent" data-lang="en">AI Mentor</span>
+        <span class="pill pill-accent" data-lang="zh">AI 導師</span>
+        <span class="pill pill-green" data-lang="en">People-first Leader</span>
+        <span class="pill pill-green" data-lang="zh">以人為本管理</span>
+        <span class="pill pill-ghost">$400M+ managed</span>
+        <span class="pill pill-ghost">2M DAU</span>
+        <span class="pill pill-ghost" data-lang="en">30+ cross-border team</span>
+        <span class="pill pill-ghost" data-lang="zh">30+ 人跨國團隊</span>
+        <span class="pill pill-ghost" data-lang="en">~50 releases/yr</span>
+        <span class="pill pill-ghost" data-lang="zh">年迭代 50 版</span>
+      </div>
+
+      <div class="hero-cta reveal reveal-delay-4">
+        <a href="#contact" class="btn-primary" data-lang="en">Get in Touch</a>
+        <a href="#contact" class="btn-primary" data-lang="zh">立即聯絡</a>
+        <a href="https://www.linkedin.com/in/simon-lee-a0957914b/" target="_blank" class="btn-outline">LinkedIn ↗</a>
+      </div>
+    </div>
+    <div class="hero-right reveal reveal-delay-2">
+      <div class="avatar-wrap">
+        <img src="mypic.jpeg" alt="Simon Lee" class="hero-avatar" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- KEY DATA RIBBON -->
+<div style="max-width:1120px;margin:0 auto;padding:0 5vw">
+  <div class="data-ribbon reveal">
+    <div class="data-cell">
+      <div class="data-num">$400M<span class="highlight">+</span></div>
+      <div class="data-label" data-lang="en">Assets Under Mgmt</div>
+      <div class="data-label" data-lang="zh">數位資產管理總值</div>
+    </div>
+    <div class="data-cell">
+      <div class="data-num">2M</div>
+      <div class="data-label">DAU</div>
+    </div>
+    <div class="data-cell">
+      <div class="data-num">2B<span class="highlight">+</span>/d</div>
+      <div class="data-label" data-lang="en">DB Read/Write Ops</div>
+      <div class="data-label" data-lang="zh">每日讀寫量</div>
+    </div>
+    <div class="data-cell">
+      <div class="data-num">$100M<span class="highlight">+</span></div>
+      <div class="data-label" data-lang="en">Monthly Volume</div>
+      <div class="data-label" data-lang="zh">月交易量</div>
+    </div>
+    <div class="data-cell">
+      <div class="data-num"><span class="green">~5</span> yr</div>
+      <div class="data-label" data-lang="en">Zero Fund Loss</div>
+      <div class="data-label" data-lang="zh">零資金損失</div>
+    </div>
+    <div class="data-cell">
+      <div class="data-num">30<span class="highlight">+</span></div>
+      <div class="data-label" data-lang="en">Cross-border Team</div>
+      <div class="data-label" data-lang="zh">跨國團隊</div>
+    </div>
+  </div>
+</div>
+
+<hr class="divider" style="margin-top:100px">
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-wrap">
+    <div class="section-num reveal">01</div>
+    <h2 class="section-title reveal" data-lang="en">About Me</h2>
+    <h2 class="section-title reveal" data-lang="zh">關於我</h2>
+    <div class="about-grid">
+      <div>
+        <p class="about-text reveal" data-lang="en">Seasoned <strong>Head of Product</strong> with 17+ years of cross-border product management and <strong>team leadership</strong> experience. Led core system development for a <strong>1,900-person conglomerate</strong> and managed <strong>30+ R&D teams</strong> spanning China, Taiwan, India, Vietnam, and Cambodia.</p>
+        <p class="about-text reveal" data-lang="zh">具備 17 年以上產品管理與<strong>跨國團隊領導</strong>經驗，曾統籌 <strong>1,900 人規模集團</strong>之核心系統建設，管理橫跨中國、台灣、印度、越南與柬埔寨的 <strong>30+ 人</strong>跨國研發團隊。</p>
+
+        <p class="about-text reveal" data-lang="en">Deeply leverages <strong>AI technology</strong> to enhance product management efficiency. Established an "AI Command System" — with Claude as the core brain orchestrating GPT, Gemini, and other multi-AI Agent collaborative architectures, <strong>reducing the product development cycle from 4 weeks to 2 weeks</strong>. Actively systematizes AI knowledge into training materials and mentoring sessions, serving as an <strong>AI Mentor</strong> to enable teams and partners.</p>
+        <p class="about-text reveal" data-lang="zh">深度運用 <strong>AI 技術</strong>提升產品管理效率，建立「AI 指揮體系」— 以 Claude 作為核心大腦，協調指揮 GPT、Gemini 等多 AI Agent 協作架構，<strong>將產品開發週期從 4 週縮短至 2 週</strong>。同時積極扮演 <strong>AI 導師</strong>角色，將 AI 知識整理成教學文件，一對一指導夥伴上手 AI。</p>
+
+        <p class="about-text reveal" data-lang="en">Practices <strong>people-first leadership</strong> — built mentorship programs, guided teams through organizational transformation, and fostered cross-cultural collaboration across 5 countries. During nearly five years managing <strong>$400M+ in digital assets</strong>, maintained zero losses and zero incidents.</p>
+        <p class="about-text reveal" data-lang="zh">擅長<strong>以人為本的管理風格</strong> — 建立導師制度、帶領團隊度過組織變革、促進五國跨文化協作。在管理超過 <strong>4 億美金數位資產</strong>的近五年期間，維持零損失、零事故的完美紀錄。</p>
+      </div>
+      <div class="reveal">
+        <div class="about-card">
+          <h4 data-lang="en">Profile</h4>
+          <h4 data-lang="zh">個人資料</h4>
+          <div class="info-row"><span class="info-key" data-lang="en">Location</span><span class="info-key" data-lang="zh">所在地</span><span class="info-val">新北市，台灣</span></div>
+          <div class="info-row"><span class="info-key" data-lang="en">Status</span><span class="info-key" data-lang="zh">狀態</span><span class="info-val" style="color:var(--green)" data-lang="en">Open to Work</span><span class="info-val" style="color:var(--green)" data-lang="zh">求職中</span></div>
+          <div class="info-row"><span class="info-key" data-lang="en">Target</span><span class="info-key" data-lang="zh">目標</span><span class="info-val" data-lang="en">Head of Product / Director (AI / Digital Tech)</span><span class="info-val" data-lang="zh">產品總監／產品負責人（AI / 數位科技）</span></div>
+          <div class="info-row"><span class="info-key" data-lang="en">Preferred</span><span class="info-key" data-lang="zh">地點</span><span class="info-val" data-lang="en">Taiwan, SEA, Remote</span><span class="info-val" data-lang="zh">台灣（佳）、東南亞、遠端</span></div>
+          <div class="info-row"><span class="info-key">Email</span><span class="info-val"><a href="mailto:skinnerlee1225@gmail.com">skinnerlee1225@gmail.com</a></span></div>
+          <div class="info-row"><span class="info-key" data-lang="en">Phone</span><span class="info-key" data-lang="zh">電話</span><span class="info-val">0975-191-719</span></div>
+          <div class="info-row"><span class="info-key" data-lang="en">Languages</span><span class="info-key" data-lang="zh">語言</span><span class="info-val" data-lang="en">CN (Native) · EN (Business) · VN (Basic)</span><span class="info-val" data-lang="zh">中文（母語）· 英文（商務）· 越南語（基礎）</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- COMPETENCIES -->
+<section id="competencies">
+  <div class="section-wrap">
+    <div class="section-num reveal">03</div>
+    <h2 class="section-title reveal" data-lang="en">Core Expertise</h2>
+    <h2 class="section-title reveal" data-lang="zh">核心能力</h2>
+    <p class="section-desc reveal" data-lang="en">Eight pillars of product leadership built across AI strategy, people management, and cross-border operations.</p>
+    <p class="section-desc reveal" data-lang="zh">橫跨 AI 策略、團隊領導與跨國營運所建構的八大核心能力。</p>
+
+    <div class="bento">
+      <div class="bento-card featured reveal">
+        <span class="bento-icon">🤖</span>
+        <h3 data-lang="en">AI Command System &amp; Multi-Agent Collaboration</h3>
+        <h3 data-lang="zh">AI 指揮體系與多 Agent 協作</h3>
+        <p data-lang="en">Claude as the core brain orchestrating GPT/Gemini for end-to-end product automation — from analysis, PRD writing, competitor research, multilingual translation, to progress tracking.</p>
+        <p data-lang="zh">以 Claude 為核心大腦，指揮 GPT/Gemini 多 AI 協作，實現產品分析、PRD 撰寫、競品研究、多語翻譯、進度追蹤的全流程自動化。</p>
+        <div class="bento-tags">
+          <span class="bento-tag">Claude Cowork</span><span class="bento-tag">GPT</span><span class="bento-tag">Gemini</span><span class="bento-tag">Prompt Engineering</span><span class="bento-tag">Cowork Skills</span>
+        </div>
+      </div>
+      <div class="bento-card green-accent reveal reveal-delay-1">
+        <span class="bento-icon">🎓</span>
+        <h3 data-lang="en">AI Knowledge Sharing &amp; Enablement</h3>
+        <h3 data-lang="zh">AI 知識傳播與團隊賦能</h3>
+        <p data-lang="en">Systematized AI training materials on Notion, one-on-one AI mentoring for non-technical peers, developed shareable Cowork Skills &amp; Plugins to lower AI adoption barriers.</p>
+        <p data-lang="zh">整理系統化 AI 教學文件於 Notion，一對一指導非技術背景夥伴上手 AI，開發 Cowork Skills 與 Plugins 分享給外部使用。</p>
+      </div>
+      <div class="bento-card reveal reveal-delay-2">
+        <span class="bento-icon">🧭</span>
+        <h3 data-lang="en">Change Leadership &amp; Org Transformation</h3>
+        <h3 data-lang="zh">變革領導力與組織轉型</h3>
+        <p data-lang="en">Guided teams from waterfall to agile, introduced AI tools into daily workflows, used storytelling to reduce resistance to change.</p>
+        <p data-lang="zh">帶領團隊從瀑布流轉型敏捷開發，導入 AI 工具到日常流程，用說故事的方式降低變革抗拒。</p>
+      </div>
+      <div class="bento-card reveal reveal-delay-1">
+        <span class="bento-icon">🌏</span>
+        <h3 data-lang="en">Cross-cultural Team Building</h3>
+        <h3 data-lang="zh">跨文化團隊建設與溝通</h3>
+        <p data-lang="en">30+ engineers across China, Taiwan, Vietnam, India, Cambodia. Built unified communication standards to bridge cultural gaps.</p>
+        <p data-lang="zh">30+ 人跨國團隊（中、台、越、印、柬），建立統一溝通規範，消彌文化差異的協作摩擦。</p>
+      </div>
+      <div class="bento-card reveal reveal-delay-2">
+        <span class="bento-icon">🤝</span>
+        <h3 data-lang="en">Mentorship &amp; Talent Development</h3>
+        <h3 data-lang="zh">導師培訓與人才發展</h3>
+        <p data-lang="en">Built mentorship programs pairing junior engineers with senior mentors. Regular 1-on-1 feedback, multiple promotions achieved.</p>
+        <p data-lang="zh">建立導師制度，為初中階工程師配對資深導師，定期 1-on-1 回饋，多名成員在任內成功晉升。</p>
+      </div>
+      <div class="bento-card reveal reveal-delay-3">
+        <span class="bento-icon">⚙️</span>
+        <h3 data-lang="en">Large-scale Platform Architecture</h3>
+        <h3 data-lang="zh">大型平台架構與系統整合</h3>
+        <p data-lang="en">Fintech platform architecture, White-label system from 0→1, enterprise integration for 1,900-person org.</p>
+        <p data-lang="zh">金融科技平台架構設計、0→1 White-label 系統建設、1,900 人規模企業數位轉型。</p>
+      </div>
+      <div class="bento-card reveal reveal-delay-4">
+        <span class="bento-icon">📊</span>
+        <h3 data-lang="en">Multi-Product &amp; Data-driven Ops</h3>
+        <h3 data-lang="zh">多產品線管理與數據化營運</h3>
+        <p data-lang="en">6+ product lines managed via AI tools. Dashboards, automated reports, risk alerts, $400M+ zero losses.</p>
+        <p data-lang="zh">6+ 條產品線透過 AI 工具管理，儀表板、自動週報、風險預警，$400M+ 零損失。</p>
+      </div>
+      <div class="bento-card reveal">
+        <span class="bento-icon">🛡️</span>
+        <h3 data-lang="en">Asset Security &amp; Risk Control</h3>
+        <h3 data-lang="zh">資產安全與風控管理</h3>
+        <p data-lang="en">Multi-sig authorization, real-time monitoring, $500K+ auto-alerts. ~5 years, $400M+, zero losses.</p>
+        <p data-lang="zh">多簽授權、即時監控、超 50 萬美金自動告警。近五年 $400M+ 零損失。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="section-wrap">
+    <div class="section-num reveal">02</div>
+    <h2 class="section-title reveal" data-lang="en">Work Experience</h2>
+    <h2 class="section-title reveal" data-lang="zh">工作經歷</h2>
+    <p class="section-desc reveal" data-lang="en">17+ years of building products and leading teams across 5 countries.</p>
+    <p class="section-desc reveal" data-lang="zh">17+ 年跨越 5 國的產品構建與團隊領導歷程。</p>
+
+    <!-- FEATURED: Confidential Fintech Group -->
+    <div class="exp-featured reveal">
+      <div class="exp-header">
+        <div>
+          <div class="exp-title" data-lang="en">Head of Product</div>
+          <div class="exp-title" data-lang="zh">產品負責人（Head of Product）</div>
+          <div class="exp-company" data-lang="en">Confidential Fintech Group · Digital Technology Platform · 1,900+ employees</div>
+          <div class="exp-company" data-lang="zh">大型跨國數位金融科技集團 · 1,900 人規模</div>
+        </div>
+        <div class="exp-meta">
+          <div class="exp-period" data-lang="en">Aug 2021 – Apr 2026</div>
+          <div class="exp-period" data-lang="zh">2021/8 – 2026/4</div>
+          <div class="exp-badge" data-lang="en">~5 years · Cambodia · 30+ team</div>
+          <div class="exp-badge" data-lang="zh">近 5 年 · 柬埔寨 · 統籌 30+ 人</div>
+        </div>
+      </div>
+
+      <div class="exp-sub" data-lang="en">Core Responsibilities</div>
+      <div class="exp-sub" data-lang="zh">核心職責與成果</div>
+      <ul class="exp-bullets" data-lang="en">
+        <li>Led full-line fintech platform: digital wallet, trading system, exchange, wealth management, lending, C2C — serving 2M DAU with 2B+ daily DB operations</li>
+        <li>Built White-label system from 0→1: replicable exchange solution with agent/channel/merchant mechanisms, KYC, asset management, trade monitoring, risk control</li>
+        <li>Managed 6+ parallel product lines via AI-built management tools ensuring zero gaps</li>
+        <li>Led 30+ cross-regional engineers (China, Taiwan, Vietnam, India, Cambodia), built mentorship programs and talent development systems</li>
+        <li>Standardized PRD → Prototype → Dev → Launch → Iteration pipeline. 2-week cycle, ~50 releases in one year (1.0→4.9)</li>
+      </ul>
+      <ul class="exp-bullets" data-lang="zh">
+        <li>主導數位金融科技平台全線產品：數位錢包、交易系統、兌換平台、質押、借貸、C2C 交易平台，日活 200 萬，每日讀寫超 20 億筆</li>
+        <li>從 0→1 建立 White-label 系統與營運後台，含代理／渠道／商戶機制、KYC、資產管理、交易監控與風控</li>
+        <li>同時管理 6+ 條產品線，透過 AI 管理工具高效追蹤，確保並行開發不遺漏</li>
+        <li>統籌跨國技術團隊 30+ 人（中、台、越、印、柬），建立導師制度與人才培養體系，多名成員在任內晉升</li>
+        <li>標準化流程：PRD → 原型 → 開發 → 上線 → 迭代，2 週上線週期，一年近 50 版迭代（1.0→4.9）</li>
+      </ul>
+
+      <div class="exp-sub" data-lang="en">AI-driven Product Management</div>
+      <div class="exp-sub" data-lang="zh">AI 驅動的產品管理</div>
+      <ul class="exp-bullets" data-lang="en">
+        <li>"AI Command System" — Claude orchestrating GPT &amp; Gemini for automated analysis, documentation, and data organization</li>
+        <li>Built AI tools: product dashboard, auto weekly reports, priority scoring, task allocation, risk alerts</li>
+        <li>AI Agent automation: scheduled tech trend tracking, daily skill library updates, custom Cowork Skills</li>
+        <li>AI multilingual localization (CN/EN/VN), 80% cost reduction in translation</li>
+      </ul>
+      <ul class="exp-bullets" data-lang="zh">
+        <li>「AI 指揮體系」— Claude 協調 GPT/Gemini 實現產品分析、文件撰寫、數據整理自動化</li>
+        <li>AI 管理工具：進度儀表板、自動週報、需求評分、任務分配、風險預警</li>
+        <li>AI Agent 自動化：排程追蹤科技動態、每日更新技能庫、開發 Cowork Skills</li>
+        <li>AI 多語言在地化（中/英/越），翻譯成本降低 80%</li>
+      </ul>
+
+      <div class="exp-sub" data-lang="en">Asset Security &amp; Risk Control</div>
+      <div class="exp-sub" data-lang="zh">資產安全與風控</div>
+      <ul class="exp-bullets" data-lang="en">
+        <li>Multi-sig authorization + real-time monitoring. Auto-alerts for $500K+ transactions. ~5 years, $400M+, zero losses</li>
+        <li>Risk control: liquidation ratios, multi-sig approval, fund pool thresholds. $100M+/mo volume, fully auditable trails</li>
+      </ul>
+      <ul class="exp-bullets" data-lang="zh">
+        <li>多簽授權 + 即時監控，超 50 萬美金自動告警。近五年 $400M+ 零損失</li>
+        <li>風控體系：清算比例、多簽審批、資金池閾值。月交易量億美金級，每筆可追溯審計</li>
+      </ul>
+
+      <div class="exp-tags">
+        <span class="exp-tag accent">AI Command System</span>
+        <span class="exp-tag green">$400M+ Zero Loss</span>
+        <span class="exp-tag">White-label</span>
+        <span class="exp-tag">2M DAU</span>
+        <span class="exp-tag">50+ Team</span>
+        <span class="exp-tag">~50 Releases/yr</span>
+        <span class="exp-tag">Multi-sig Security</span>
+      </div>
+    </div>
+
+    <!-- Other Experience Grid -->
+    <div class="tl-grid">
+      <div class="tl-card reveal">
+        <h4 data-lang="en">Product Manager</h4><h4 data-lang="zh">產品經理</h4>
+        <div class="company" data-lang="en">Huixin International · UAE</div><div class="company" data-lang="zh">匯信國際 · 阿聯酋</div>
+        <div class="period">2021/1 – 2021/8</div>
+        <ul class="desc" style="list-style:none;padding:0;font-size:1.05rem;color:var(--muted);line-height:1.6;margin-top:10px">
+          <li data-lang="en">0→1 fintech trading platform on Web, ~100K DAU</li><li data-lang="zh">從 0→1 規劃金融科技交易平台，DAU 約 10 萬人</li>
+          <li data-lang="en">US/HK stock integration</li><li data-lang="zh">整合美股與港股交易</li>
+          <li data-lang="en">Digital asset issuance platform design</li><li data-lang="zh">設計數位資產發行平台</li>
+        </ul>
+      </div>
+      <div class="tl-card reveal reveal-delay-1">
+        <h4 data-lang="en">Operations Deputy Manager</h4><h4 data-lang="zh">營運處副理</h4>
+        <div class="company" data-lang="en">Bicheng Technology · Taichung</div><div class="company" data-lang="zh">幣丞科技 · 台中</div>
+        <div class="period">2020/3 – 2020/10</div>
+        <ul class="desc" style="list-style:none;padding:0;font-size:1.05rem;color:var(--muted);line-height:1.6;margin-top:10px">
+          <li data-lang="en">Exchange operations &amp; Taiwan regulatory compliance (partnered with Hua Nan Bank)</li><li data-lang="zh">交易所營運管理，處理台灣合規落地（與華南銀行合作）</li>
+          <li data-lang="en">Exchange data analytics &amp; fund security</li><li data-lang="zh">管理交易所數據與營運資金安全</li>
+          <li data-lang="en">Digital finance training instructor</li><li data-lang="zh">擔任數位金融教育訓練講師</li>
+        </ul>
+      </div>
+      <div class="tl-card reveal reveal-delay-2">
+        <h4 data-lang="en">VP of Marketing &amp; Sales</h4><h4 data-lang="zh">營銷副總經理</h4>
+        <div class="company" data-lang="en">Fandak Inc. · Taipei</div><div class="company" data-lang="zh">粉絲達克 · 台北</div>
+        <div class="period">2019/9 – 2020/2</div>
+        <ul class="desc" style="list-style:none;padding:0;font-size:1.05rem;color:var(--muted);line-height:1.6;margin-top:10px">
+          <li data-lang="en">Led 3D projection equipment product &amp; blockchain digital wallet product</li><li data-lang="zh">主導 3D 投影設備產品與區塊鏈數位錢包產品</li>
+          <li data-lang="en">Cross-border BD: China &amp; HK negotiations</li><li data-lang="zh">赴中國大陸、香港洽談合約</li>
+          <li data-lang="en">Org restructuring: established HK &amp; Shenzhen teams</li><li data-lang="zh">台灣組織重整，建立港深營運團隊</li>
+        </ul>
+      </div>
+      <div class="tl-card reveal reveal-delay-3">
+        <h4 data-lang="en">Deputy Director of Marketing</h4><h4 data-lang="zh">營銷處副處長</h4>
+        <div class="company" data-lang="en">Jiajia You · Taipei</div><div class="company" data-lang="zh">家家有 · 台北</div>
+        <div class="period">2017/9 – 2019/8</div>
+        <ul class="desc" style="list-style:none;padding:0;font-size:1.05rem;color:var(--muted);line-height:1.6;margin-top:10px">
+          <li data-lang="en">Managed e-commerce dept ($300K+ revenue in 2018) &amp; business development dept</li><li data-lang="zh">管理電商部門（2018 年營業額破千萬）與企業發展部</li>
+          <li data-lang="en">Led blockchain wallet development &amp; digital asset projects, NT$80M+ fundraising</li><li data-lang="zh">主導區塊鏈錢包開發與數位資產專案，累計募資 NT$8,000 萬+</li>
+        </ul>
+      </div>
+      <div class="tl-card reveal">
+        <h4>owlpass App <span data-lang="en">BD / Marketing</span><span data-lang="zh">招商 / 行銷</span></h4>
+        <div class="company" data-lang="en">Eastern Broadcasting (EBC) · Taipei</div><div class="company" data-lang="zh">東森電視 · 台北</div>
+        <div class="period">2016/8 – 2017/6</div>
+        <ul class="desc" style="list-style:none;padding:0;font-size:1.05rem;color:var(--muted);line-height:1.6;margin-top:10px">
+          <li data-lang="en">60+ merchants onboarded, 90+ KPI scores</li><li data-lang="zh">開發 60+ 合作店家，KPI 每季 90+</li>
+        </ul>
+      </div>
+      <div class="tl-card reveal reveal-delay-1">
+        <h4 data-lang="en">Earlier Career (2009–2018)</h4><h4 data-lang="zh">早期經歷（2009–2018）</h4>
+        <div class="company" data-lang="en">Dafu Enterprise · Macau Kehai TW</div><div class="company" data-lang="zh">大富企業社 · 澳門商科海台灣分公司</div>
+        <div class="period">2009 – 2018</div>
+        <ul class="desc" style="list-style:none;padding:0;font-size:1.05rem;color:var(--muted);line-height:1.6;margin-top:10px">
+          <li data-lang="en">Operations, training, ~$250K first-year revenue</li><li data-lang="zh">營運管理、教育訓練、首年近 800 萬收入</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-wrap">
+    <div class="section-num reveal">04</div>
+    <h2 class="section-title reveal" data-lang="en">Skills &amp; Tools</h2>
+    <h2 class="section-title reveal" data-lang="zh">技能與工具</h2>
+
+    <div class="skills-grid">
+      <div>
+        <div class="skill-group reveal">
+          <h4>🤖 AI Toolchain</h4>
+          <div class="skill-chips">
+            <span class="chip chip-green">Claude Cowork</span><span class="chip chip-green">OpenAI Codex</span>
+            <span class="chip chip-green">ChatGPT</span><span class="chip chip-green">Gemini</span>
+            <span class="chip chip-green">Antigravity</span>
+            <span class="chip chip-default" data-lang="en">Prompt Engineering</span><span class="chip chip-default" data-lang="zh">Prompt 工程</span>
+            <span class="chip chip-default" data-lang="en">AI Agent Design</span><span class="chip chip-default" data-lang="zh">AI Agent 設計</span>
+            <span class="chip chip-default" data-lang="en">Cowork Skills Dev</span><span class="chip chip-default" data-lang="zh">Cowork Skills 開發</span>
+            <span class="chip chip-default">Python / Node.js</span>
+          </div>
+        </div>
+        <div class="skill-group reveal">
+          <h4 data-lang="en">💰 Fintech</h4><h4 data-lang="zh">💰 金融科技</h4>
+          <div class="skill-chips">
+            <span class="chip chip-default" data-lang="en">Trading System Architecture</span><span class="chip chip-default" data-lang="zh">交易系統架構</span>
+            <span class="chip chip-default" data-lang="en">Digital Wallets</span><span class="chip chip-default" data-lang="zh">數位錢包</span>
+            <span class="chip chip-default" data-lang="en">Multi-sig Wallets</span><span class="chip chip-default" data-lang="zh">多簽錢包</span>
+            <span class="chip chip-default" data-lang="en">Asset Security</span><span class="chip chip-default" data-lang="zh">資產安全管理</span>
+            <span class="chip chip-default">KYC / Risk Control</span>
+          </div>
+        </div>
+        <div class="skill-group reveal">
+          <h4 data-lang="en">🛠 Product Development</h4><h4 data-lang="zh">🛠 產品開發</h4>
+          <div class="skill-chips">
+            <span class="chip chip-default">Axure RP</span><span class="chip chip-default">Xmind</span><span class="chip chip-default">Figma</span>
+            <span class="chip chip-default" data-lang="en">PRD Writing</span><span class="chip chip-default" data-lang="zh">PRD 撰寫</span>
+            <span class="chip chip-default">UI/UX</span>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="skill-group reveal">
+          <h4 data-lang="en">🌏 Leadership &amp; Management</h4><h4 data-lang="zh">🌏 領導與管理</h4>
+          <div class="skill-chips">
+            <span class="chip chip-green" data-lang="en">Mentorship</span><span class="chip chip-green" data-lang="zh">導師培訓</span>
+            <span class="chip chip-green" data-lang="en">Talent Development</span><span class="chip chip-green" data-lang="zh">人才發展</span>
+            <span class="chip chip-green" data-lang="en">Change Management</span><span class="chip chip-green" data-lang="zh">變革管理</span>
+            <span class="chip chip-default" data-lang="en">Cross-border Teams</span><span class="chip chip-default" data-lang="zh">跨國團隊管理</span>
+            <span class="chip chip-default" data-lang="en">Performance Review</span><span class="chip chip-default" data-lang="zh">績效考核制度</span>
+            <span class="chip chip-default" data-lang="en">Org Restructuring</span><span class="chip chip-default" data-lang="zh">組織重整</span>
+          </div>
+        </div>
+        <div class="skill-group reveal">
+          <h4 data-lang="en">💬 Communication &amp; Storytelling</h4><h4 data-lang="zh">💬 溝通與說故事</h4>
+          <div class="skill-chips">
+            <span class="chip chip-green" data-lang="en">Cross-cultural Communication</span><span class="chip chip-green" data-lang="zh">跨文化溝通</span>
+            <span class="chip chip-green" data-lang="en">Executive Storytelling</span><span class="chip chip-green" data-lang="zh">向上管理簡報</span>
+            <span class="chip chip-default" data-lang="en">Training Materials</span><span class="chip chip-default" data-lang="zh">教學文件撰寫</span>
+            <span class="chip chip-default" data-lang="en">Public Speaking</span><span class="chip chip-default" data-lang="zh">公開演說</span>
+          </div>
+        </div>
+        <div class="skill-group reveal">
+          <h4 data-lang="en">💼 Office Tools</h4><h4 data-lang="zh">💼 辦公工具</h4>
+          <div class="skill-chips">
+            <span class="chip chip-ghost">Excel</span><span class="chip chip-ghost">PowerPoint</span>
+            <span class="chip chip-ghost">Keynote</span><span class="chip chip-ghost">Zendesk</span>
+            <span class="chip chip-ghost">Telegram</span><span class="chip chip-ghost">Notion</span><span class="chip chip-ghost">Jira</span>
+          </div>
+        </div>
+        <div class="skill-group reveal">
+          <h4 data-lang="en">🌐 Languages</h4><h4 data-lang="zh">🌐 語言能力</h4>
+          <div class="skill-chips">
+            <span class="chip chip-default" data-lang="en">Chinese (Native)</span><span class="chip chip-default" data-lang="zh">中文（母語）</span>
+            <span class="chip chip-default" data-lang="en">Taiwanese (Mid)</span><span class="chip chip-default" data-lang="zh">台語（中等）</span>
+            <span class="chip chip-default" data-lang="en">English (Intermediate)</span><span class="chip chip-default" data-lang="zh">英文（中等）</span>
+            <span class="chip chip-default" data-lang="en">Vietnamese (Basic)</span><span class="chip chip-default" data-lang="zh">越南語（基礎）</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- PORTFOLIO -->
+<section id="portfolio">
+  <div class="section-wrap">
+    <div class="section-num reveal">—</div>
+    <h2 class="section-title reveal" data-lang="en">Portfolio</h2>
+    <h2 class="section-title reveal" data-lang="zh">作品連結</h2>
+    <div class="port-grid">
+      <div class="port-card reveal">
+        <div class="type">PRD</div>
+        <h3 data-lang="en">Digital Finance DEX Product Plan</h3><h3 data-lang="zh">數位金融 DEX 產品規劃</h3>
+        <p data-lang="en">Comprehensive DEX architecture covering AMM mechanisms, liquidity pool design, and user flows.</p>
+        <p data-lang="zh">完整 DEX 產品架構，涵蓋 AMM 機制、流動性池設計與用戶流程。</p>
+        <a class="port-link" href="https://www.notion.so/Web3-uniswap-33e8a405df4e818da2badfc400c87b30" target="_blank">View on Notion ↗</a>
+      </div>
+      <div class="port-card reveal reveal-delay-1">
+        <div class="type">PRD</div>
+        <h3 data-lang="en">Trading Platform PRD</h3><h3 data-lang="zh">交易平台 PRD</h3>
+        <p data-lang="en">Complete requirements for centralized exchange with trading, orders, and risk control.</p>
+        <p data-lang="zh">中心化交易平台完整產品需求文件，含交易、訂單與風控系統。</p>
+        <a class="port-link" href="https://www.notion.so/CEX-PRD-33e8a405df4e81eda37cf20ade932309" target="_blank">View on Notion ↗</a>
+      </div>
+      <div class="port-card reveal reveal-delay-2">
+        <div class="type" data-lang="en">Prototypes</div><div class="type" data-lang="zh">原型設計</div>
+        <h3 data-lang="en">Trading Platform &amp; Admin Backend</h3><h3 data-lang="zh">交易平台與後台管理原型</h3>
+        <p data-lang="en">Interactive Axure prototypes for trading platform and admin backend system.</p>
+        <p data-lang="zh">交易平台互動原型（Axure）與後台管理系統原型。</p>
+        <a class="port-link" href="https://p9hr8h.axshare.com" target="_blank">Trading ↗</a> &nbsp;
+        <a class="port-link" href="https://mofn9a.axshare.com" target="_blank">Admin ↗</a>
+      </div>
+      <div class="port-card reveal reveal-delay-3">
+        <div class="type">AI Portfolio</div>
+        <h3 data-lang="en">Simon Lee — AI Builder Portfolio</h3><h3 data-lang="zh">Simon Lee — AI Builder 作品集</h3>
+        <p data-lang="en">Comprehensive AI portfolio showcasing hands-on AI tools, prompt systems, agent builds, and AI strategy work.</p>
+        <p data-lang="zh">完整 AI 作品集，展示實作 AI 工具、Prompt 系統、Agent 建構與 AI 策略規劃。</p>
+        <a class="port-link" href="https://www.notion.so/3588a405df4e814c9d7fe9c341a38d2b" target="_blank">View on Notion ↗</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- EDUCATION -->
+<section id="education">
+  <div class="section-wrap">
+    <div class="section-num reveal">—</div>
+    <h2 class="section-title reveal" data-lang="en">Education &amp; Learning</h2>
+    <h2 class="section-title reveal" data-lang="zh">學歷與持續學習</h2>
+    <div class="edu-grid">
+      <div class="edu-card reveal">
+        <h3 data-lang="en">China Institute of Technology</h3><h3 data-lang="zh">中國技術學院</h3>
+        <div class="degree" data-lang="en">Business Administration — Five-Year Junior College</div>
+        <div class="degree" data-lang="zh">企業管理科 | 五年制專科</div>
+        <div class="period">1996 – 2000</div>
+      </div>
+      <div class="edu-card reveal reveal-delay-1">
+        <h3 data-lang="en">Industry Training</h3><h3 data-lang="zh">業界實戰教學</h3>
+        <p data-lang="en">Multiple-time fintech and digital asset training instructor covering digital finance, trading operations, product logic, and asset security management.</p>
+        <p data-lang="zh">多次擔任金融科技教育訓練講師，涵蓋數位金融、交易操作、產品邏輯與資產安全管理。</p>
+      </div>
+      <div class="edu-card reveal reveal-delay-2">
+        <h3 data-lang="en">Continuous Learning</h3><h3 data-lang="zh">自主學習</h3>
+        <p data-lang="en">RWA digitization, AI automation, cross-platform infrastructure. Built personal AI Agent ecosystem with daily scheduled skill library updates.</p>
+        <p data-lang="zh">研究 RWA 數位化、AI 自動化策略、跨平台基礎設施。建立個人 AI Agent 生態系，每日排程更新技能庫。</p>
+      </div>
+      <div class="edu-card reveal reveal-delay-3">
+        <h3 data-lang="en">Management Philosophy</h3><h3 data-lang="zh">管理理念</h3>
+        <p data-lang="en">Empathetic bi-directional management. "Triple-win": on-time delivery, business efficiency, team advancement. Unwavering integrity in asset security.</p>
+        <p data-lang="zh">同理心雙向管理，追求「三贏」：產品準時、營運提升、員工成長。堅守「公司的錢一分不差」原則。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div style="position:relative">
+    <div class="section-num reveal">05</div>
+    <h2 class="section-title reveal" data-lang="en" style="text-align:center">Let's connect</h2>
+    <h2 class="section-title reveal" data-lang="zh" style="text-align:center">歡迎與我聯絡</h2>
+    <p style="color:var(--muted);max-width:480px;margin:0 auto 44px;font-size:1.08rem;text-align:center" class="reveal" data-lang="en">Open to Product Director / Head of Product roles in AI, Digital Technology &amp; Fintech. Preferred: Taiwan, Southeast Asia, or Remote.</p>
+    <p style="color:var(--muted);max-width:480px;margin:0 auto 44px;font-size:1.08rem;text-align:center" class="reveal" data-lang="zh">目標職稱：產品總監／產品負責人（AI 策略／數位科技／金融科技）。希望地點：台灣（佳）、東南亞、全球遠端。</p>
+    <div class="contact-row reveal">
+      <a class="contact-btn" href="mailto:skinnerlee1225@gmail.com">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        skinnerlee1225@gmail.com
+      </a>
+      <a class="contact-btn" href="tel:+886975191719">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.63 3.18C1.64 2.1 2.5 1 3.58 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.56a16 16 0 0 0 6.12 6.12l.97-.97a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        0975-191-719
+      </a>
+      <a class="contact-btn" href="https://www.linkedin.com/in/simon-lee-a0957914b/" target="_blank">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+        LinkedIn
+      </a>
+      <a class="contact-btn" href="https://github.com/skinnerlee1225" target="_blank">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+        GitHub
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 Simon Lee (李仲軒) · Head of Product | AI Strategy &amp; Team Leadership ·
+    <span data-lang="en">Hosted on <a href="https://pages.github.com" target="_blank">GitHub Pages</a></span>
+    <span data-lang="zh">架設於 <a href="https://pages.github.com" target="_blank">GitHub Pages</a></span>
+  </p>
+</footer>
+
+<script>
+let currentLang='en';
+function toggleLang(){currentLang=currentLang==='en'?'zh':'en';applyLang(currentLang)}
+function applyLang(l){
+  const b=document.body,lb=document.getElementById('langLabel');
+  b.classList.remove('lang-en','lang-zh');b.classList.add('lang-'+l);
+  lb.textContent=l==='zh'?'English':'繁體中文';
+  document.documentElement.lang=l==='zh'?'zh-TW':'en';currentLang=l;
+}
+
+// Nav shrink on scroll
+window.addEventListener('scroll',()=>{
+  document.getElementById('nav').classList.toggle('scrolled',window.scrollY>60);
+},{passive:true});
+
+// Scroll reveal
+const observer=new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');observer.unobserve(e.target)}});
+},{threshold:0.08,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+
+// Toast
+function showToast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3000)}
+
+// Local AI translate
+async function aiTranslate(){
+  const tl=currentLang==='en'?'zh':'en';showToast('🤖 連接本地模型中…');
+  try{
+    const r=await fetch('http://localhost:11434/api/generate',{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({model:'llama3',prompt:`Translate to ${tl==='zh'?'Traditional Chinese':'English'}:\n\n${document.querySelector('.hero-mega').innerText}`,stream:false})});
+    if(!r.ok)throw new Error(r.status);showToast('✅ 翻譯完成！');applyLang(tl);
+  }catch(e){showToast('⚡ 使用內建翻譯');applyLang(tl)}
+}
+window.addEventListener('DOMContentLoaded',()=>{
+  if(location.hostname==='localhost'||location.hostname==='127.0.0.1'||location.protocol==='file:'){
+    const li=document.createElement('li');
+    li.innerHTML=`<button class="lang-btn" onclick="aiTranslate()" style="background:rgba(52,211,153,.08);border-color:rgba(52,211,153,.2);color:var(--green)">🤖 AI</button>`;
+    document.querySelector('.nav-links').insertBefore(li,document.querySelector('.nav-links').lastElementChild);
+  }
+});
+</script>
+</body>
+</html>
