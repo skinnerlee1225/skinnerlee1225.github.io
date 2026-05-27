@@ -1,0 +1,1004 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>CEX 中心化交易所 · Product Detail · Simon Lee</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10.6.1/dist/mermaid.min.js"></script>
+<style>
+  :root{
+    --bg: #07080c; --bg-2: #0d0f15; --bg-3: #13161f; --bg-4: #1a1e2a;
+    --line: #1f2330; --line-2: #2a2f3e;
+    --text: #e8eaf0; --text-2: #9097a8; --text-3: #5d6477;
+    --accent: #f5a524;          /* CEX 主色:橘 */
+    --green: #00d395; --red: #f24b3d; --blue: #4f80ff;
+    --serif: 'Noto Sans TC', 'Inter', sans-serif;
+    --mono: 'JetBrains Mono', ui-monospace, monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html,body{background:var(--bg);color:var(--text);font-family:var(--serif);-webkit-font-smoothing:antialiased;line-height:1.7;font-size:16px;}
+  a{color:var(--text);text-decoration:none;}
+  .container{max-width:1240px;margin:0 auto;padding:0 32px;}
+
+  /* NAV */
+  nav.top{position:sticky;top:0;background:rgba(7,8,12,0.9);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);z-index:20;}
+  nav.top .row{display:flex;align-items:center;justify-content:space-between;padding:16px 32px;max-width:1240px;margin:0 auto;}
+  nav.top .left{display:flex;align-items:center;gap:20px;font-family:var(--mono);font-size:13px;}
+  nav.top .left a{color:var(--text-2);}
+  nav.top .left a:hover{color:var(--text);}
+  nav.top .left .sep{color:var(--text-3);}
+  nav.top .left .curr{color:var(--accent);}
+  nav.top .toc{display:flex;gap:24px;list-style:none;font-size:13px;font-family:var(--mono);}
+  nav.top .toc a{color:var(--text-3);}
+  nav.top .toc a:hover{color:var(--text);}
+
+  /* HERO */
+  header.hero{padding:60px 0 50px;border-bottom:1px solid var(--line);}
+  .hero .tag{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:12px;color:var(--accent);background:rgba(245,165,36,0.08);border:1px solid rgba(245,165,36,0.25);padding:7px 14px;border-radius:999px;margin-bottom:20px;text-transform:uppercase;letter-spacing:0.1em;}
+  .hero h1{font-size:54px;line-height:1.1;letter-spacing:-0.025em;font-weight:700;margin-bottom:18px;}
+  .hero h1 .accent{color:var(--accent);}
+  .hero p.sub{font-size:18px;color:var(--text-2);line-height:1.6;max-width:820px;margin-bottom:36px;}
+  .hero .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:32px;padding-top:36px;border-top:1px solid var(--line);}
+  .hero .stats .item .label{font-size:12px;color:var(--text-3);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px;}
+  .hero .stats .item .num{font-family:var(--mono);font-size:28px;font-weight:600;color:var(--text);}
+  .hero .stats .item .num .u{font-size:15px;color:var(--text-2);margin-left:4px;}
+
+  /* SECTION */
+  section{padding:80px 0;border-bottom:1px solid var(--line);}
+  section .sec-head{margin-bottom:40px;}
+  section .sec-head .small{font-family:var(--mono);font-size:12px;color:var(--accent);text-transform:uppercase;letter-spacing:0.12em;margin-bottom:12px;}
+  section h2{font-size:38px;font-weight:700;letter-spacing:-0.02em;line-height:1.15;margin-bottom:14px;}
+  section .desc{color:var(--text-2);font-size:16px;line-height:1.7;max-width:780px;}
+
+  /* PROTOTYPE */
+  .proto-wrapper{background:var(--bg-2);border:1px solid var(--line);border-radius:16px;overflow:hidden;}
+  .proto-bar{display:flex;align-items:center;justify-content:space-between;padding:14px 20px;background:var(--bg-3);border-bottom:1px solid var(--line);font-family:var(--mono);font-size:12px;}
+  .proto-bar .dots{display:flex;gap:6px;}
+  .proto-bar .dots span{width:11px;height:11px;border-radius:50%;background:var(--bg-4);}
+  .proto-bar .dots span:nth-child(1){background:#ff5f57;}
+  .proto-bar .dots span:nth-child(2){background:#febc2e;}
+  .proto-bar .dots span:nth-child(3){background:#28c840;}
+  .proto-bar .url{color:var(--text-2);background:var(--bg-2);padding:5px 14px;border-radius:6px;font-size:11px;}
+  .proto-bar .live{color:var(--green);display:flex;align-items:center;gap:6px;}
+  .proto-bar .live::before{content:'';width:6px;height:6px;background:var(--green);border-radius:50%;animation:blink 1.5s infinite;}
+  @keyframes blink{50%{opacity:0.3}}
+
+  /* CEX TRADING UI */
+  .cex-app{background:#0a0c12;color:var(--text);font-family:var(--serif);}
+  .cex-app .topbar{display:flex;align-items:center;justify-content:space-between;padding:12px 20px;border-bottom:1px solid var(--line);background:var(--bg-2);}
+  .cex-app .topbar .pair{display:flex;align-items:center;gap:14px;}
+  .cex-app .topbar .pair .sym{font-family:var(--mono);font-size:16px;font-weight:600;}
+  .cex-app .topbar .pair .price{font-family:var(--mono);font-size:18px;color:var(--green);font-weight:500;}
+  .cex-app .topbar .pair .chg{font-family:var(--mono);font-size:13px;padding:3px 8px;background:rgba(0,211,149,0.1);color:var(--green);border-radius:5px;}
+  .cex-app .topbar .stats-row{display:flex;gap:24px;font-family:var(--mono);font-size:12px;}
+  .cex-app .topbar .stats-row .s .l{color:var(--text-3);}
+  .cex-app .topbar .stats-row .s .v{color:var(--text);}
+  .cex-app .grid-3{display:grid;grid-template-columns:240px 1fr 320px;height:540px;}
+  .cex-app .col-l, .cex-app .col-c, .cex-app .col-r{display:flex;flex-direction:column;}
+  .cex-app .col-l{border-right:1px solid var(--line);}
+  .cex-app .col-r{border-left:1px solid var(--line);}
+  .cex-app .col-l .tabs, .cex-app .col-r .tabs{display:flex;border-bottom:1px solid var(--line);font-family:var(--mono);font-size:12px;}
+  .cex-app .col-l .tabs .tab, .cex-app .col-r .tabs .tab{padding:10px 14px;color:var(--text-3);cursor:pointer;border-bottom:2px solid transparent;}
+  .cex-app .col-l .tabs .tab.active, .cex-app .col-r .tabs .tab.active{color:var(--text);border-bottom-color:var(--accent);}
+  .cex-app .col-l .pair-list{flex:1;overflow-y:auto;}
+  .cex-app .col-l .pair-list .row{display:grid;grid-template-columns:1fr 80px 60px;padding:8px 14px;font-family:var(--mono);font-size:12px;cursor:pointer;align-items:center;}
+  .cex-app .col-l .pair-list .row:hover{background:var(--bg-2);}
+  .cex-app .col-l .pair-list .row.active{background:var(--bg-3);}
+  .cex-app .col-l .pair-list .row .s{color:var(--text);}
+  .cex-app .col-l .pair-list .row .p{color:var(--text-2);text-align:right;}
+  .cex-app .col-l .pair-list .row .c{text-align:right;font-size:11px;}
+  .cex-app .col-l .pair-list .row .c.up{color:var(--green);}
+  .cex-app .col-l .pair-list .row .c.down{color:var(--red);}
+
+  .cex-app .kline-area{flex:1;padding:16px;display:flex;flex-direction:column;}
+  .cex-app .kline-tools{display:flex;gap:10px;font-family:var(--mono);font-size:11px;margin-bottom:10px;}
+  .cex-app .kline-tools button{background:transparent;color:var(--text-3);border:none;cursor:pointer;padding:4px 8px;border-radius:4px;font-family:inherit;font-size:inherit;}
+  .cex-app .kline-tools button.active{background:var(--bg-3);color:var(--accent);}
+  .cex-app .kline-chart{flex:1;background:var(--bg-2);border-radius:8px;padding:14px;position:relative;}
+
+  .cex-app .ob-area{flex:1;display:flex;flex-direction:column;font-family:var(--mono);font-size:11px;}
+  .cex-app .ob-head{display:grid;grid-template-columns:1fr 1fr 1fr;padding:8px 14px;color:var(--text-3);}
+  .cex-app .ob-head .r{text-align:right;}
+  .cex-app .ob-rows{flex:1;overflow-y:auto;}
+  .cex-app .ob-row{display:grid;grid-template-columns:1fr 1fr 1fr;padding:3px 14px;position:relative;cursor:pointer;}
+  .cex-app .ob-row:hover{background:var(--bg-3);}
+  .cex-app .ob-row .bg{position:absolute;top:0;right:0;bottom:0;opacity:0.12;}
+  .cex-app .ob-row.ask .bg{background:var(--red);}
+  .cex-app .ob-row.bid .bg{background:var(--green);}
+  .cex-app .ob-row .pr{position:relative;z-index:1;}
+  .cex-app .ob-row.ask .pr{color:var(--red);}
+  .cex-app .ob-row.bid .pr{color:var(--green);}
+  .cex-app .ob-row .qty,.cex-app .ob-row .total{text-align:right;position:relative;z-index:1;color:var(--text-2);}
+  .cex-app .ob-mid{padding:8px 14px;background:var(--bg-3);font-size:13px;font-weight:500;display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
+  .cex-app .ob-mid .price{color:var(--green);}
+
+  /* Order panel */
+  .cex-app .order-panel{padding:16px;}
+  .cex-app .order-tabs{display:grid;grid-template-columns:1fr 1fr;background:var(--bg-3);border-radius:8px;padding:3px;margin-bottom:14px;}
+  .cex-app .order-tabs .tab{padding:8px;text-align:center;font-size:13px;cursor:pointer;border-radius:6px;color:var(--text-2);font-weight:500;}
+  .cex-app .order-tabs .tab.active.buy{background:var(--green);color:#000;}
+  .cex-app .order-tabs .tab.active.sell{background:var(--red);color:#fff;}
+  .cex-app .order-type{display:flex;gap:10px;font-family:var(--mono);font-size:12px;margin-bottom:14px;}
+  .cex-app .order-type .opt{cursor:pointer;padding:5px 10px;border-radius:5px;color:var(--text-3);}
+  .cex-app .order-type .opt.active{background:var(--bg-3);color:var(--accent);}
+
+  .cex-app .field{margin-bottom:12px;}
+  .cex-app .field .lbl{font-size:11px;color:var(--text-3);font-family:var(--mono);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:4px;display:flex;justify-content:space-between;}
+  .cex-app .field input{width:100%;background:var(--bg-3);border:1px solid var(--line);color:var(--text);padding:10px 12px;border-radius:6px;font-family:var(--mono);font-size:14px;outline:none;}
+  .cex-app .field input:focus{border-color:var(--accent);}
+  .cex-app .field .with-suffix{position:relative;}
+  .cex-app .field .with-suffix .suffix{position:absolute;right:12px;top:50%;transform:translateY(-50%);font-family:var(--mono);font-size:12px;color:var(--text-3);}
+
+  .cex-app .percent-row{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:14px;}
+  .cex-app .percent-row button{background:var(--bg-3);border:1px solid var(--line);color:var(--text-2);padding:6px;border-radius:5px;font-family:var(--mono);font-size:11px;cursor:pointer;transition:all .15s;}
+  .cex-app .percent-row button:hover{border-color:var(--accent);color:var(--accent);}
+
+  .cex-app .info-row{display:flex;justify-content:space-between;font-family:var(--mono);font-size:11px;padding:5px 0;color:var(--text-3);}
+  .cex-app .info-row .v{color:var(--text-2);}
+
+  .cex-app .submit-btn{width:100%;padding:13px;border:none;border-radius:8px;font-family:var(--serif);font-weight:500;font-size:14px;color:#000;cursor:pointer;margin-top:8px;}
+  .cex-app .submit-btn.buy{background:var(--green);}
+  .cex-app .submit-btn.sell{background:var(--red);color:#fff;}
+  .cex-app .submit-btn:hover{opacity:0.9;}
+
+  .proto-note{background:rgba(245,165,36,0.05);border:1px solid rgba(245,165,36,0.2);border-radius:10px;padding:14px 18px;margin-top:24px;font-family:var(--mono);font-size:12px;color:var(--accent);display:flex;gap:10px;align-items:center;}
+
+  /* PRD content */
+  .prd-section h3{font-size:24px;font-weight:600;margin:32px 0 12px;letter-spacing:-0.01em;color:var(--text);}
+  .prd-section h3 .num{font-family:var(--mono);color:var(--accent);margin-right:10px;}
+  .prd-section h4{font-size:18px;font-weight:500;margin:20px 0 8px;color:var(--text);}
+  .prd-section p{color:var(--text-2);margin-bottom:14px;}
+  .prd-section ul{color:var(--text-2);margin:8px 0 14px 24px;}
+  .prd-section li{margin-bottom:6px;}
+  .prd-section strong{color:var(--text);font-weight:500;}
+  .prd-section table{width:100%;border-collapse:collapse;margin:16px 0;font-size:14px;}
+  .prd-section table th{background:var(--bg-2);text-align:left;padding:10px 14px;font-weight:500;font-size:13px;color:var(--text-2);border-bottom:1px solid var(--line);font-family:var(--mono);text-transform:uppercase;letter-spacing:0.05em;}
+  .prd-section table td{padding:10px 14px;border-bottom:1px solid var(--line);color:var(--text-2);}
+  .prd-section table tr:hover td{background:var(--bg-2);}
+  .prd-section code{font-family:var(--mono);font-size:13px;background:var(--bg-2);padding:2px 6px;border-radius:4px;color:var(--accent);}
+  .prd-section pre{background:var(--bg-2);border:1px solid var(--line);border-radius:10px;padding:18px;overflow-x:auto;margin:14px 0;font-family:var(--mono);font-size:13px;line-height:1.6;color:var(--text-2);}
+  .prd-section pre code{background:transparent;padding:0;color:inherit;}
+
+  /* Mermaid */
+  .mermaid-wrap{background:var(--bg-2);border:1px solid var(--line);border-radius:14px;padding:32px;overflow:auto;margin:24px 0;}
+  .mermaid{font-family:var(--mono) !important;}
+
+  /* Modules grid */
+  .modules{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:20px 0;}
+  .module{background:var(--bg-2);border:1px solid var(--line);border-radius:12px;padding:18px;}
+  .module .num{font-family:var(--mono);font-size:11px;color:var(--accent);margin-bottom:6px;letter-spacing:0.08em;}
+  .module h5{font-size:15px;font-weight:500;margin-bottom:6px;}
+  .module p{font-size:13px;color:var(--text-2);margin:0;line-height:1.55;}
+
+  /* Decision/Highlight */
+  .decisions{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:20px 0;}
+  .decision{background:var(--bg-2);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:10px;padding:18px 22px;}
+  .decision .label{font-family:var(--mono);font-size:11px;color:var(--accent);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px;}
+  .decision h5{font-size:16px;font-weight:500;margin-bottom:6px;}
+  .decision p{font-size:14px;color:var(--text-2);margin:0;}
+
+  /* Bottom nav */
+  .bottom-nav{display:flex;justify-content:space-between;padding:50px 0 80px;gap:20px;}
+  .bottom-nav a{flex:1;background:var(--bg-2);border:1px solid var(--line);border-radius:14px;padding:24px 28px;display:flex;flex-direction:column;gap:8px;transition:all .2s;}
+  .bottom-nav a:hover{border-color:var(--line-2);}
+  .bottom-nav .l{font-family:var(--mono);font-size:11px;color:var(--text-3);text-transform:uppercase;letter-spacing:0.08em;}
+  .bottom-nav .v{font-size:18px;font-weight:500;color:var(--text);}
+  .bottom-nav a.next{text-align:right;}
+
+  /* utilities */
+  .badge{display:inline-block;font-family:var(--mono);font-size:11px;background:var(--bg-3);border:1px solid var(--line);padding:4px 9px;border-radius:5px;margin:2px;color:var(--text-2);}
+  .pill-orange{color:var(--accent);background:rgba(245,165,36,0.1);border-color:rgba(245,165,36,0.3);}
+  .pill-green{color:var(--green);background:rgba(0,211,149,0.1);border-color:rgba(0,211,149,0.3);}
+
+  @media(max-width:980px){
+    .cex-app .grid-3{grid-template-columns:1fr;height:auto;}
+    .cex-app .col-l, .cex-app .col-r{border:none;border-top:1px solid var(--line);}
+    .hero h1{font-size:36px;}
+    .modules{grid-template-columns:1fr;}
+    .decisions{grid-template-columns:1fr;}
+    .bottom-nav{flex-direction:column;}
+  }
+</style>
+</head>
+<body>
+
+<nav class="top">
+  <div class="row">
+    <div class="left">
+      <a href="../" style="color:var(--accent);">← Simon CV</a>
+      <span class="sep">/</span>
+      <a href="index.html">Portfolio</a>
+      <span class="sep">/</span>
+      <span class="curr">CEX 中心化交易所</span>
+    </div>
+    <ul class="toc">
+      <li><a href="#prototype">Prototype</a></li>
+      <li><a href="#overview">Overview</a></li>
+      <li><a href="#architecture">Architecture</a></li>
+      <li><a href="#features">Features</a></li>
+      <li><a href="#flows">Flows</a></li>
+      <li><a href="#risk">Risk</a></li>
+      <li><a href="#mvp">MVP</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="container">
+    <div class="tag">🏦 Centralized Exchange · White Label · v1.0</div>
+    <h1>
+      白標<br/>
+      <span class="accent">All-in-one 中心化交易所</span>。
+    </h1>
+    <p class="sub">
+      涵蓋現貨、合約、理財、資產管理四大核心模組。9 大系統獨立部署、撮合引擎 10 萬 TPS、冷熱錢包分離、KYC 三級分流。一套白標方案可同時服務多個 B 端客戶。團隊規模約 30 人，主導完整 PRD 與系統設計。
+    </p>
+    <div class="stats">
+      <div class="item">
+        <div class="label">撮合 TPS</div>
+        <div class="num">10<span class="u">萬/秒</span></div>
+      </div>
+      <div class="item">
+        <div class="label">合約槓桿</div>
+        <div class="num">125<span class="u">x</span></div>
+      </div>
+      <div class="item">
+        <div class="label">系統模組</div>
+        <div class="num">9<span class="u">大模組</span></div>
+      </div>
+      <div class="item">
+        <div class="label">MVP 時程</div>
+        <div class="num">12<span class="u">週上線</span></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- PROTOTYPE -->
+<section id="prototype">
+  <div class="container">
+    <div class="sec-head">
+      <div class="small">interactive prototype</div>
+      <h2>現貨交易頁原型</h2>
+      <p class="desc">這是我設計的 BTC/USDT 現貨交易頁。你可以選擇交易對、切換限價/市價、輸入數量並按 25%/50%/75%/100% 快捷鍵。Orderbook 每 1.5 秒模擬即時更新。</p>
+    </div>
+
+    <div class="proto-wrapper">
+      <div class="proto-bar">
+        <div class="dots"><span></span><span></span><span></span></div>
+        <div class="url">app.simon-cex.com/trade/BTC_USDT</div>
+        <div class="live">LIVE PROTOTYPE</div>
+      </div>
+
+      <div class="cex-app">
+        <div class="topbar">
+          <div class="pair">
+            <span class="sym">BTC / USDT</span>
+            <span class="price" id="cur-price">67,248.50</span>
+            <span class="chg" id="cur-chg">+2.34%</span>
+          </div>
+          <div class="stats-row">
+            <div class="s"><span class="l">24h High</span> <span class="v">68,920.00</span></div>
+            <div class="s"><span class="l">24h Low</span> <span class="v">65,140.20</span></div>
+            <div class="s"><span class="l">24h Vol (BTC)</span> <span class="v">12,847.32</span></div>
+            <div class="s"><span class="l">24h Vol (USDT)</span> <span class="v">863.4M</span></div>
+          </div>
+        </div>
+
+        <div class="grid-3">
+          <!-- Left: Pair list -->
+          <div class="col-l">
+            <div class="tabs">
+              <div class="tab active">⭐ Favorites</div>
+              <div class="tab">USDT</div>
+              <div class="tab">BTC</div>
+            </div>
+            <div class="pair-list" id="pair-list">
+              <!-- filled by JS -->
+            </div>
+          </div>
+
+          <!-- Center: Chart + Orderbook -->
+          <div class="col-c">
+            <div class="kline-area">
+              <div class="kline-tools">
+                <button>1m</button>
+                <button>5m</button>
+                <button>15m</button>
+                <button class="active">1h</button>
+                <button>4h</button>
+                <button>1D</button>
+                <button>1W</button>
+              </div>
+              <div class="kline-chart">
+                <svg viewBox="0 0 600 280" preserveAspectRatio="none" style="width:100%;height:100%;">
+                  <defs>
+                    <linearGradient id="kg" x1="0" x2="0" y1="0" y2="1">
+                      <stop offset="0%" stop-color="#00d395" stop-opacity="0.4"/>
+                      <stop offset="100%" stop-color="#00d395" stop-opacity="0"/>
+                    </linearGradient>
+                  </defs>
+                  <!-- Grid -->
+                  <line x1="0" y1="70" x2="600" y2="70" stroke="#1f2330" stroke-dasharray="2,4"/>
+                  <line x1="0" y1="140" x2="600" y2="140" stroke="#1f2330" stroke-dasharray="2,4"/>
+                  <line x1="0" y1="210" x2="600" y2="210" stroke="#1f2330" stroke-dasharray="2,4"/>
+                  <!-- Candles -->
+                  <g id="candles"></g>
+                  <!-- MA line -->
+                  <polyline id="ma-line" fill="none" stroke="#f5a524" stroke-width="1.5" opacity="0.7"/>
+                  <!-- Price axis labels -->
+                  <text x="585" y="74" fill="#5d6477" font-size="10" text-anchor="end" font-family="JetBrains Mono">68,500</text>
+                  <text x="585" y="144" fill="#5d6477" font-size="10" text-anchor="end" font-family="JetBrains Mono">67,250</text>
+                  <text x="585" y="214" fill="#5d6477" font-size="10" text-anchor="end" font-family="JetBrains Mono">66,000</text>
+                </svg>
+              </div>
+            </div>
+
+            <div style="display:none"></div>
+          </div>
+
+          <!-- Right: Orderbook + Order Panel -->
+          <div class="col-r">
+            <div class="tabs">
+              <div class="tab active">Order Book</div>
+              <div class="tab">Trades</div>
+            </div>
+
+            <div class="ob-area">
+              <div class="ob-head"><span>Price (USDT)</span><span class="r">Qty (BTC)</span><span class="r">Total</span></div>
+              <div class="ob-rows" id="ob-asks"></div>
+              <div class="ob-mid">
+                <span class="price" id="ob-mid-price">67,248.50</span>
+                <span style="color:var(--text-3);font-size:11px;">≈ $67,250</span>
+              </div>
+              <div class="ob-rows" id="ob-bids"></div>
+            </div>
+
+            <div class="order-panel" style="border-top:1px solid var(--line);">
+              <div class="order-tabs">
+                <div class="tab active buy" data-side="buy">Buy / Long</div>
+                <div class="tab" data-side="sell">Sell / Short</div>
+              </div>
+              <div class="order-type">
+                <div class="opt active" data-type="limit">Limit</div>
+                <div class="opt" data-type="market">Market</div>
+                <div class="opt" data-type="stop">Stop</div>
+              </div>
+              <div class="field">
+                <div class="lbl"><span>Price</span><span>USDT</span></div>
+                <div class="with-suffix">
+                  <input type="text" id="ord-price" value="67,248.50">
+                </div>
+              </div>
+              <div class="field">
+                <div class="lbl"><span>Amount</span><span>BTC</span></div>
+                <div class="with-suffix">
+                  <input type="text" id="ord-amount" value="0.0000">
+                </div>
+              </div>
+              <div class="percent-row">
+                <button onclick="setPct(25)">25%</button>
+                <button onclick="setPct(50)">50%</button>
+                <button onclick="setPct(75)">75%</button>
+                <button onclick="setPct(100)">100%</button>
+              </div>
+              <div class="info-row"><span>Avbl</span><span class="v" id="avbl-text">10,000.00 USDT</span></div>
+              <div class="info-row"><span>Total</span><span class="v" id="total-text">0.00 USDT</span></div>
+              <div class="info-row"><span>Fee</span><span class="v">Maker 0.1% · Taker 0.1%</span></div>
+              <button class="submit-btn buy" id="submit-btn" onclick="placeOrder()">Buy BTC</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="proto-note">⚠️ 這是高保真 UI 原型 — 數據為模擬資料，下單為 demo 提示。完整實作會接撮合引擎 + WebSocket 推送。</div>
+  </div>
+</section>
+
+<!-- OVERVIEW -->
+<section id="overview" class="prd-section">
+  <div class="container">
+    <div class="sec-head">
+      <div class="small">product overview</div>
+      <h2>產品定位與設計挑戰</h2>
+    </div>
+
+    <p style="font-size:17px;line-height:1.75;color:var(--text-2);">
+      這是一個 <strong>白標 (White Label) 中心化交易所</strong> — 一套產品同時服務多個 B 端客戶 (品牌方)，每個客戶可以快速套用、客製化品牌、調整費率、設定地區合規。我們不是 Binance 那種百人+ 工程團隊的規模（團隊約 30 人），但要做到主流 CEX 的功能完整度（現貨 / 合約 / 理財）。設計挑戰是：在資源有限的前提下，每個客戶都要當作獨立交易所運作，但底層共用一套撮合引擎、帳本系統、風控引擎。
+    </p>
+
+    <h3><span class="num">挑戰 01</span>多租戶資料隔離</h3>
+    <p>每個 B 端客戶的用戶資料、交易紀錄、資金帳本必須完全隔離，但又共用同一套撮合引擎與冷熱錢包架構。最終採用 <code>tenant_id</code> 分庫策略 — 業務邏輯層共用，資料層按租戶 sharding。</p>
+
+    <h3><span class="num">挑戰 02</span>撮合引擎的效能極限</h3>
+    <p>單交易對需達 10 萬 TPS、延遲 &lt; 5ms。最終採用記憶體撮合 (Go/Rust 實作) + Kafka 落地 + ClickHouse 行情聚合。前期用 Go 寫第一版，瓶頸時用 Rust 改寫核心。</p>
+
+    <h3><span class="num">挑戰 03</span>合約強平與保險基金</h3>
+    <p>125x 槓桿下，強平機制必須既快又準。設計三層強平：(1) 市價減倉 → (2) 保險基金補足 → (3) ADL 自動減倉。標記價格取三所加權平均，防止單一交易所插針造成不合理強平。</p>
+
+    <div class="decisions">
+      <div class="decision">
+        <div class="label">關鍵決策 #1</div>
+        <h5>Go vs Rust 撮合引擎</h5>
+        <p>第一版選 Go — 團隊熟、開發快、可達 5 萬 TPS。預留 Rust 重寫 hook 點，當壓測瓶頸時可平滑遷移。</p>
+      </div>
+      <div class="decision">
+        <div class="label">關鍵決策 #2</div>
+        <h5>K 線自建 vs TradingView</h5>
+        <p>整合 TradingView Charting Library — 省 3~4 週開發、用戶熟悉度高、技術指標完整。授權成本可接受。</p>
+      </div>
+      <div class="decision">
+        <div class="label">關鍵決策 #3</div>
+        <h5>KYC 自建 vs 第三方</h5>
+        <p>接 SumSub / Jumio 第三方服務 — 省 4+ 週開發、合規覆蓋更廣、人臉辨識精度更高。</p>
+      </div>
+      <div class="decision">
+        <div class="label">關鍵決策 #4</div>
+        <h5>Web 優先 vs Web+App 並行</h5>
+        <p>MVP 階段只做 Web — 省 4+ 週、Web 已覆蓋 70% 交易需求。App 留到 Phase 2 用 Flutter 一次出包雙平台。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ARCHITECTURE -->
+<section id="architecture" class="prd-section">
+  <div class="container">
+    <div class="sec-head">
+      <div class="small">system architecture</div>
+      <h2>9 大系統模組</h2>
+      <p class="desc">每個模組獨立部署、透過內部 API 與 Kafka 消息隊列互通。下方為各模組職責與技術選型。</p>
+    </div>
+
+    <div class="modules">
+      <div class="module"><div class="num">MODULE 01</div><h5>用戶系統 User Service</h5><p>註冊、登入、2FA、KYC 三級、設備管理、API Key。</p></div>
+      <div class="module"><div class="num">MODULE 02</div><h5>資產系統 Asset Service</h5><p>充值、提現、餘額管理、三帳戶劃轉、資產快照。</p></div>
+      <div class="module"><div class="num">MODULE 03</div><h5>現貨交易 Spot Trading</h5><p>記憶體撮合引擎，10 萬 TPS，限價/市價/止盈止損/OCO。</p></div>
+      <div class="module"><div class="num">MODULE 04</div><h5>合約交易 Futures</h5><p>USDT 本位 + 幣本位永續，1x~125x 槓桿，逐倉/全倉。</p></div>
+      <div class="module"><div class="num">MODULE 05</div><h5>理財系統 Earn</h5><p>活期 / 定期 / Staking / 雙幣投資，APY 計息。</p></div>
+      <div class="module"><div class="num">MODULE 06</div><h5>風控系統 Risk</h5><p>KYC / AML / 規則引擎 + ML 模型雙軌並行。</p></div>
+      <div class="module"><div class="num">MODULE 07</div><h5>手續費 Fee Service</h5><p>VIP 分級、Maker/Taker、平台幣抵扣 25% 折扣。</p></div>
+      <div class="module"><div class="num">MODULE 08</div><h5>通知系統 Notification</h5><p>Email / Push / SMS / 站內信，事件驅動推送。</p></div>
+      <div class="module"><div class="num">MODULE 09</div><h5>後台管理 Admin</h5><p>用戶管理、資產監控、交易監控、操作日誌雙人審批。</p></div>
+    </div>
+
+    <h3 style="margin-top:48px;"><span class="num">圖一</span>整體技術架構</h3>
+    <div class="mermaid-wrap">
+      <div class="mermaid">
+graph TB
+    classDef front fill:#0d0f15,stroke:#4f80ff,color:#e8eaf0
+    classDef gw fill:#0d0f15,stroke:#f5a524,color:#e8eaf0
+    classDef svc fill:#0d0f15,stroke:#00d395,color:#e8eaf0
+    classDef db fill:#0d0f15,stroke:#ff66cc,color:#e8eaf0
+    classDef chain fill:#0d0f15,stroke:#a060ff,color:#e8eaf0
+
+    WEB[Web App · React]:::front
+    APP[Mobile · Flutter]:::front
+
+    API[API Gateway · Kong]:::gw
+    WS[WebSocket Gateway]:::gw
+
+    USER[User Service]:::svc
+    ASSET[Asset Service]:::svc
+    MATCH[Matching Engine · Go/Rust]:::svc
+    FUT[Futures Engine]:::svc
+    EARN[Earn Service]:::svc
+    RISK[Risk Engine]:::svc
+    FEE[Fee Service]:::svc
+    NOTIFY[Notification]:::svc
+
+    PG[(PostgreSQL · 用戶/帳本)]:::db
+    TI[(TiDB · 訂單/成交)]:::db
+    CH[(ClickHouse · 行情)]:::db
+    RD[(Redis · 快取)]:::db
+    KF[Kafka · 事件流]:::db
+
+    HOT[Hot Wallet · 線上簽名]:::chain
+    COLD[Cold Wallet · 3/5 多簽]:::chain
+    NODE[區塊鏈節點 · BTC/ETH/TRON]:::chain
+
+    WEB --> API
+    APP --> API
+    WEB --> WS
+    APP --> WS
+
+    API --> USER
+    API --> ASSET
+    API --> MATCH
+    API --> FUT
+    API --> EARN
+
+    MATCH --> ASSET
+    FUT --> RISK
+    FUT --> ASSET
+    EARN --> ASSET
+
+    USER --> PG
+    ASSET --> PG
+    MATCH --> TI
+    MATCH --> CH
+    MATCH --> RD
+    MATCH --> KF
+    KF --> NOTIFY
+    KF --> RISK
+
+    ASSET --> HOT
+    HOT --> COLD
+    HOT --> NODE
+    NODE --> ASSET
+      </div>
+    </div>
+
+    <h3><span class="num">圖二</span>模組依賴關係</h3>
+    <pre>用戶系統 ──→ 所有模組（身份驗證基礎）
+資產系統 ──→ 現貨 / 合約 / 理財（帳本核心）
+撮合引擎 ──→ 資產系統（成交後更新帳本）
+合約引擎 ──→ 資產系統 + 風控系統（保證金 + 強平）
+理財系統 ──→ 資產系統（鎖定/釋放資金）
+風控系統 ──→ 所有交易模組（即時監控）
+手續費系統 ──→ 現貨 + 合約（成交扣費）
+通知系統 ──→ 所有模組（事件驅動）
+後台管理 ──→ 所有模組（監控與干預）</pre>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section id="features" class="prd-section">
+  <div class="container">
+    <div class="sec-head">
+      <div class="small">core features</div>
+      <h2>核心功能設計</h2>
+    </div>
+
+    <h3><span class="num">2.1</span>資產頁 Wallet</h3>
+    <p>頂部「總資產估值」默認 USD 計價、支援 BTC/CNY/EUR 切換；估值基於即時中間價 (Bid+Ask)/2。提供「隱藏小額資產」開關（&lt; $1 自動隱藏）+ 眼睛圖示一鍵隱藏餘額。</p>
+    <h4>三本帳戶分區展示</h4>
+    <table>
+      <tr><th>帳戶類型</th><th>顯示內容</th><th>操作入口</th></tr>
+      <tr><td>現貨帳戶</td><td>各幣種可用 + 凍結餘額</td><td>交易 / 充值 / 提現 / 劃轉</td></tr>
+      <tr><td>合約帳戶</td><td>總保證金 / 可用保證金 / 未實現盈虧</td><td>劃轉 / 交易</td></tr>
+      <tr><td>理財帳戶</td><td>活期 + 定期 + 累計收益</td><td>申購 / 贖回 / 劃轉</td></tr>
+    </table>
+
+    <h3><span class="num">2.2</span>現貨交易 Spot Trading</h3>
+    <p>整合 TradingView 圖表庫，支援 1m/5m/15m/1h/4h/1D/1W。內建 MA/EMA/BOLL/MACD/RSI/VOL 等技術指標。Orderbook WebSocket 推送，延遲 &lt; 50ms，顯示最佳 20 檔買賣價量 + 累計深度條形圖。</p>
+    <h4>四種訂單類型</h4>
+    <table>
+      <tr><th>訂單類型</th><th>說明</th><th>參數</th></tr>
+      <tr><td>限價單 Limit</td><td>指定價格掛單等待成交</td><td>價格 + 數量</td></tr>
+      <tr><td>市價單 Market</td><td>以最優價即時成交</td><td>數量（或金額）</td></tr>
+      <tr><td>止盈止損 Stop-Limit</td><td>觸發價到達後掛限價單</td><td>觸發價 + 限價 + 數量</td></tr>
+      <tr><td>OCO</td><td>限價 + 止損二選一，一方成交另一方自動取消</td><td>限價 + 止損觸發 + 止損 + 數量</td></tr>
+    </table>
+
+    <h3><span class="num">2.3</span>合約交易 Futures Trading</h3>
+    <p>USDT 本位 + 幣本位永續合約。槓桿滑桿 1x~125x，BTC/USDT 最高 125x、山寨幣最高 20~75x。逐倉/全倉模式可在無持倉時切換。</p>
+    <h4>強平與標記價格</h4>
+    <p>持倉面板常駐顯示強平價格 (紅色)。標記價格接近強平價時 (差距 &lt; 5%)，觸發 Push 通知 + 頁面閃爍警告。標記價格 = 三所 (Binance/OKX/Bybit) 加權平均，防插針。</p>
+    <pre>強平價格（逐倉做多）= 開倉價 × (1 - 1/槓桿 + MMR)
+例：BTC $50,000 開多，10x 槓桿，MMR = 0.5%
+強平價 = 50,000 × (1 - 0.1 + 0.005) = $45,250</pre>
+
+    <h3><span class="num">2.4</span>理財 Earn</h3>
+    <p><strong>活期</strong>：T+0 贖回、利率浮動、現貨閒置可自動申購。<strong>定期</strong>：7/14/30/60/90/120 天，到期自動到帳，可勾選自動續期。<strong>Staking</strong>：PoS 鏈原生質押 (ETH/SOL/ADA/DOT)，鎖倉期間每日發放收益。</p>
+    <pre>日收益 = 持倉金額 × APY / 365
+APR vs APY 轉換: APY = (1 + APR/n)^n - 1  （n = 複利頻率）</pre>
+  </div>
+</section>
+
+<!-- FLOWS -->
+<section id="flows" class="prd-section">
+  <div class="container">
+    <div class="sec-head">
+      <div class="small">user flows</div>
+      <h2>核心用戶流程</h2>
+    </div>
+
+    <h3><span class="num">3.1</span>新用戶入金流程</h3>
+    <div class="mermaid-wrap">
+      <div class="mermaid">
+flowchart LR
+    A[註冊·郵箱/手機+密碼]:::s --> B[郵箱驗證·5分鐘有效]:::s
+    B --> C[設定 Google 2FA]:::s
+    C --> D[KYC Lv1·身份證+人臉]:::s
+    D --> E{審核}
+    E -->|自動·5分鐘| F[進入資產頁]:::ok
+    E -->|人工·24h| F
+    F --> G[充值·選幣種+網路]:::s
+    G --> H[鏈上確認·BTC2/ETH12]:::s
+    H --> I[Push通知到帳]:::ok
+    I --> J[開始交易]:::ok
+
+    classDef s fill:#0d0f15,stroke:#f5a524,color:#e8eaf0
+    classDef ok fill:#0d0f15,stroke:#00d395,color:#e8eaf0
+      </div>
+    </div>
+
+    <h3><span class="num">3.2</span>現貨交易流程</h3>
+    <div class="mermaid-wrap">
+      <div class="mermaid">
+flowchart TD
+    A[資產頁·確認餘額]:::s --> B[進入交易頁·選交易對]:::s
+    B --> C[查看 K線+Orderbook+最近成交]:::s
+    C --> D{訂單類型}
+    D -->|限價| E[輸入價格+數量]:::s
+    D -->|市價| F[僅輸入數量/金額]:::s
+    E --> G[顯示預估成交+手續費]:::s
+    F --> G
+    G --> H{確認下單}
+    H -->|限價未成交| I[進入 Orderbook 等待]:::w
+    H -->|市價/限價已成交| J[即時撮合]:::ok
+    I --> J
+    J --> K[資產更新+推送通知]:::ok
+
+    classDef s fill:#0d0f15,stroke:#f5a524,color:#e8eaf0
+    classDef ok fill:#0d0f15,stroke:#00d395,color:#e8eaf0
+    classDef w fill:#0d0f15,stroke:#4f80ff,color:#e8eaf0
+      </div>
+    </div>
+
+    <h3><span class="num">3.3</span>合約強平三層機制</h3>
+    <div class="mermaid-wrap">
+      <div class="mermaid">
+flowchart TD
+    A[標記價格觸及強平價]:::w --> B[Step1: 市價減倉嘗試]:::s
+    B --> C{成功?}
+    C -->|是| OK[平倉完成·虧損自負]:::ok
+    C -->|否| D[Step2: 保險基金補足]:::s
+    D --> E{基金充足?}
+    E -->|是| OK
+    E -->|否| F[Step3: ADL 自動減倉]:::r
+    F --> G[按盈利排名對手方減倉]:::r
+    G --> OK
+
+    classDef s fill:#0d0f15,stroke:#f5a524,color:#e8eaf0
+    classDef ok fill:#0d0f15,stroke:#00d395,color:#e8eaf0
+    classDef w fill:#0d0f15,stroke:#4f80ff,color:#e8eaf0
+    classDef r fill:#0d0f15,stroke:#f24b3d,color:#e8eaf0
+      </div>
+    </div>
+
+    <h3><span class="num">3.4</span>充值資金流轉</h3>
+    <pre>用戶鏈上轉帳
+    ↓
+[區塊鏈節點監聽] → 掃描新區塊，匹配平台地址
+    ↓
+[確認數檢查] → BTC: 2 確認 / ETH: 12 確認 / USDT-TRC20: 20 確認
+    ↓
+[入帳服務]
+    1. asset_ledger 記錄充值流水 (credit)
+    2. 用戶現貨帳戶餘額 +N
+    3. 發送 Kafka 事件: asset.deposit.confirmed
+    ↓
+[歸集] → 定時將用戶充值地址歸集至熱錢包
+        熱錢包餘額超閾值 → 自動轉入冷錢包</pre>
+    <p><strong>核心帳本邏輯：</strong>每筆資產變動都是一條 ledger entry (借/貸)，採複式記帳。帳本操作必須在資料庫事務中完成 (SELECT FOR UPDATE + INSERT + UPDATE balance)，杜絕超發。</p>
+  </div>
+</section>
+
+<!-- RISK -->
+<section id="risk" class="prd-section">
+  <div class="container">
+    <div class="sec-head">
+      <div class="small">risk & security</div>
+      <h2>風控與安全設計</h2>
+    </div>
+
+    <h3><span class="num">6.1</span>KYC 三級分流</h3>
+    <table>
+      <tr><th>等級</th><th>要求</th><th>權限</th></tr>
+      <tr><td>Lv0 (未驗證)</td><td>僅註冊</td><td>瀏覽行情，無法交易/充提</td></tr>
+      <tr><td>Lv1 (基礎)</td><td>身份證 + 人臉辨識</td><td>充提 ≤ 2 BTC/日，合約 ≤ 20x</td></tr>
+      <tr><td>Lv2 (進階)</td><td>地址證明 + 影片驗證</td><td>充提 ≤ 100 BTC/日，合約 ≤ 125x</td></tr>
+      <tr><td>機構帳戶</td><td>營業執照 + 法人 + 受益人</td><td>自定義額度</td></tr>
+    </table>
+
+    <h3><span class="num">6.2</span>冷熱錢包架構</h3>
+    <div class="mermaid-wrap">
+      <div class="mermaid">
+flowchart LR
+    U[用戶充值] --> UA[用戶專屬地址]:::s
+    UA --> HOT[熱錢包·線上·2~5%]:::w
+    HOT -->|餘額超閾值| COLD[冷錢包·離線·95~98%]:::ok
+    COLD -->|提現·3/5多簽| HOT
+    HOT --> OUT[用戶提現]
+
+    classDef s fill:#0d0f15,stroke:#9097a8,color:#e8eaf0
+    classDef w fill:#0d0f15,stroke:#f5a524,color:#e8eaf0
+    classDef ok fill:#0d0f15,stroke:#00d395,color:#e8eaf0
+      </div>
+    </div>
+    <p>熱錢包僅保留平台總資產 2%~5% (滿足日常提現)。冷錢包保管 95%~98%。冷錢包私鑰分片存於不同地理位置 (Shamir's Secret Sharing / MPC 多簽)。每日自動對帳 (鏈上 vs 帳本)，差異即時告警。</p>
+
+    <h3><span class="num">6.3</span>合約風險限額分級</h3>
+    <p>倉位越大，最大可用槓桿越低（階梯式限額），防止巨鯨單方向操縱市場。</p>
+    <table>
+      <tr><th>倉位名義價值 (USDT)</th><th>最大槓桿</th><th>維持保證金率</th></tr>
+      <tr><td>0 ~ 50,000</td><td>125x</td><td>0.4%</td></tr>
+      <tr><td>50,000 ~ 250,000</td><td>100x</td><td>0.5%</td></tr>
+      <tr><td>250,000 ~ 1,000,000</td><td>50x</td><td>1.0%</td></tr>
+      <tr><td>1,000,000 ~ 5,000,000</td><td>20x</td><td>2.5%</td></tr>
+      <tr><td>&gt; 5,000,000</td><td>10x</td><td>5.0%</td></tr>
+    </table>
+
+    <h3><span class="num">6.4</span>提現風控三層防線</h3>
+    <p><strong>第一層 用戶端：</strong>2FA 雙重驗證、提現白名單、防釣魚碼。</p>
+    <p><strong>第二層 系統端：</strong>新地址 24h 鎖定、累計提現限額 (按 KYC 等級)、異常行為偵測。</p>
+    <p><strong>第三層 人工端：</strong>大額 (&gt; $10K) 人工審核 (2h SLA)、可疑交易人工複查、凍結帳號需雙人審批。</p>
+  </div>
+</section>
+
+<!-- MVP -->
+<section id="mvp" class="prd-section">
+  <div class="container">
+    <div class="sec-head">
+      <div class="small">mvp roadmap</div>
+      <h2>12 週 MVP 上線規劃</h2>
+      <p class="desc">在「白標」這個情境下，MVP 的標準不是「能跑」，而是「對 B 端客戶可交付」。以下是我規劃的 12 週實施路線。</p>
+    </div>
+
+    <h3><span class="num">7.1</span>第一版必做範圍</h3>
+    <table>
+      <tr><th>模組</th><th>MVP 範圍</th><th>備註</th></tr>
+      <tr><td>用戶系統</td><td>郵箱註冊 + Google 2FA + KYC Lv1</td><td>手機號註冊延後</td></tr>
+      <tr><td>資產系統</td><td>充值 + 提現 + 餘額查看</td><td>僅 BTC/ETH/USDT 三幣種</td></tr>
+      <tr><td>現貨交易</td><td>限價單 + 市價單 + K 線 + Orderbook</td><td>初期 5~10 個交易對</td></tr>
+      <tr><td>手續費</td><td>統一 Maker 0.1% / Taker 0.1%</td><td>VIP 體系延後</td></tr>
+      <tr><td>風控</td><td>提現限額 + 基本 AML</td><td>規則引擎優先，ML 延後</td></tr>
+      <tr><td>通知</td><td>Email (安全 + 成交)</td><td>Push/SMS 延後</td></tr>
+      <tr><td>後台</td><td>用戶管理 + KYC 審核 + 基礎報表</td><td>高級監控延後</td></tr>
+      <tr><td>錢包</td><td>熱錢包 + 基礎歸集</td><td>冷錢包用硬體多簽手動操作</td></tr>
+    </table>
+
+    <h3><span class="num">7.2</span>12 週實施甘特圖</h3>
+    <div class="mermaid-wrap">
+      <div class="mermaid">
+gantt
+    title CEX MVP 12 週 Roadmap
+    dateFormat YYYY-MM-DD
+    axisFormat W%V
+    section 基礎建設
+    K8s + DB + Kafka + CI/CD     :done, infra, 2023-07-01, 2w
+    User Service + 2FA           :done, user, after infra, 2w
+    section 資產層
+    區塊鏈節點 BTC/ETH/TRON      :active, node, after infra, 2w
+    熱錢包服務                   :hot, after node, 1w
+    Asset Service + 帳本          :asset, after node, 2w
+    section 交易層
+    撮合引擎開發                  :match, after user, 3w
+    現貨交易 API + WS            :api, after match, 1w
+    前端交易頁                    :ui, after api, 2w
+    section 上線
+    風控引擎 + 後台 MVP          :risk, after ui, 1w
+    全流程聯調 + 滲透測試         :test, after risk, 1w
+    灰度上線 + 監控完善           :gtm, after test, 1w
+      </div>
+    </div>
+
+    <h3><span class="num">7.3</span>Phase 2 / Phase 3 延後功能</h3>
+    <p><strong>Phase 2 (上線 1~3 個月)：</strong>合約交易 (USDT 本位永續)、理財活期、Mobile App (Flutter)、止盈止損 + OCO、VIP 手續費體系、Push 通知、多幣種擴充至 20+。</p>
+    <p><strong>Phase 3 (上線 3~6 個月)：</strong>幣本位合約、定期理財 + Staking、自動複利、冷錢包 MPC 多簽自動化、ML 風控模型、API 交易、子帳戶體系、多語言。</p>
+  </div>
+</section>
+
+<!-- BOTTOM NAV -->
+<div class="container">
+  <div class="bottom-nav">
+    <a href="index.html">
+      <div class="l">← Back</div>
+      <div class="v">回作品集首頁</div>
+    </a>
+    <a href="product-dex.html" class="next">
+      <div class="l">Next →</div>
+      <div class="v">DEX 錢包 + Swap</div>
+    </a>
+  </div>
+</div>
+
+<footer style="padding:40px 0;text-align:center;color:var(--text-3);font-size:13px;border-top:1px solid var(--line);font-family:var(--mono);">
+  Simon Lee · CEX Product Detail · v1.0 · 2026
+</footer>
+
+<script>
+  // Mermaid init - dark theme
+  mermaid.initialize({
+    startOnLoad: true,
+    theme: 'base',
+    themeVariables: {
+      darkMode: true,
+      background: '#0d0f15',
+      primaryColor: '#0d0f15',
+      primaryTextColor: '#e8eaf0',
+      primaryBorderColor: '#f5a524',
+      lineColor: '#5d6477',
+      secondaryColor: '#13161f',
+      tertiaryColor: '#1a1e2a',
+      fontFamily: 'JetBrains Mono, ui-monospace, monospace',
+      fontSize: '13px',
+    },
+    flowchart:{ curve:'basis', padding:20 },
+    gantt:{ fontSize:11 }
+  });
+
+  // ===== INTERACTIVE PROTOTYPE =====
+  // K-line candles
+  const candleData = [
+    {o:66200,h:66800,l:65900,c:66700},{o:66700,h:67100,l:66400,c:66900},
+    {o:66900,h:67000,l:66500,c:66600},{o:66600,h:67200,l:66400,c:67100},
+    {o:67100,h:67400,l:66800,c:66900},{o:66900,h:67300,l:66700,c:67250},
+    {o:67250,h:67600,l:67100,c:67500},{o:67500,h:67800,l:67300,c:67700},
+    {o:67700,h:67900,l:67100,c:67200},{o:67200,h:67400,l:66800,c:67000},
+    {o:67000,h:67500,l:66900,c:67450},{o:67450,h:67700,l:67200,c:67300},
+    {o:67300,h:67500,l:66900,c:67100},{o:67100,h:67400,l:66700,c:66900},
+    {o:66900,h:67200,l:66400,c:67000},{o:67000,h:67300,l:66800,c:67250},
+    {o:67250,h:67500,l:67100,c:67450},{o:67450,h:67800,l:67300,c:67700},
+    {o:67700,h:68000,l:67400,c:67500},{o:67500,h:67800,l:67200,c:67400},
+    {o:67400,h:67700,l:67100,c:67200},{o:67200,h:67500,l:66900,c:67100},
+    {o:67100,h:67400,l:66900,c:67300},{o:67300,h:67600,l:67100,c:67500},
+    {o:67500,h:67900,l:67200,c:67800},{o:67800,h:68200,l:67500,c:67900},
+    {o:67900,h:68100,l:67400,c:67500},{o:67500,h:67700,l:67100,c:67250},
+    {o:67250,h:67500,l:66800,c:67000},{o:67000,h:67300,l:66700,c:67248}
+  ];
+
+  function renderCandles(){
+    const g = document.getElementById('candles');
+    g.innerHTML = '';
+    const minP = 65800, maxP = 68500;
+    const range = maxP - minP;
+    const w = 16, gap = 4;
+    const totalW = 600;
+    const startX = totalW - candleData.length * (w + gap);
+    let maPoints = [];
+    candleData.forEach((c, i) => {
+      const x = startX + i * (w + gap);
+      const oY = 280 - ((c.o - minP) / range) * 280;
+      const cY = 280 - ((c.c - minP) / range) * 280;
+      const hY = 280 - ((c.h - minP) / range) * 280;
+      const lY = 280 - ((c.l - minP) / range) * 280;
+      const up = c.c >= c.o;
+      const color = up ? '#00d395' : '#f24b3d';
+      // wick
+      g.innerHTML += `<line x1="${x+w/2}" y1="${hY}" x2="${x+w/2}" y2="${lY}" stroke="${color}" stroke-width="1"/>`;
+      // body
+      const bodyY = Math.min(oY, cY);
+      const bodyH = Math.max(2, Math.abs(cY - oY));
+      g.innerHTML += `<rect x="${x}" y="${bodyY}" width="${w}" height="${bodyH}" fill="${color}"/>`;
+      // MA (close avg)
+      maPoints.push(`${x + w/2},${cY}`);
+    });
+    document.getElementById('ma-line').setAttribute('points', maPoints.join(' '));
+  }
+
+  // Pair list
+  const pairs = [
+    {sym:'BTC/USDT', price:'67,248.50', chg:'+2.34', up:true},
+    {sym:'ETH/USDT', price:'3,248.30', chg:'+1.82', up:true},
+    {sym:'BNB/USDT', price:'612.45', chg:'-0.45', up:false},
+    {sym:'SOL/USDT', price:'168.92', chg:'+4.21', up:true},
+    {sym:'XRP/USDT', price:'0.6234', chg:'-1.12', up:false},
+    {sym:'DOGE/USDT', price:'0.1632', chg:'+8.45', up:true},
+    {sym:'ADA/USDT', price:'0.4218', chg:'-2.30', up:false},
+    {sym:'AVAX/USDT', price:'38.92', chg:'+3.12', up:true},
+    {sym:'MATIC/USDT', price:'0.7234', chg:'+1.45', up:true},
+    {sym:'DOT/USDT', price:'6.234', chg:'-0.85', up:false},
+  ];
+  function renderPairs(){
+    const list = document.getElementById('pair-list');
+    list.innerHTML = pairs.map((p,i) => `
+      <div class="row ${i===0?'active':''}">
+        <span class="s">${p.sym}</span>
+        <span class="p">${p.price}</span>
+        <span class="c ${p.up?'up':'down'}">${p.chg}%</span>
+      </div>`).join('');
+  }
+
+  // Orderbook
+  function genOrderbook(){
+    const midPrice = 67248.50 + (Math.random() - 0.5) * 20;
+    document.getElementById('cur-price').textContent = midPrice.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
+    document.getElementById('ob-mid-price').textContent = midPrice.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
+
+    const asks = [], bids = [];
+    let cumA = 0, cumB = 0;
+    for(let i=0;i<10;i++){
+      const askP = midPrice + 5 + i*5 + Math.random()*3;
+      const askQ = Math.random() * 2.5 + 0.1;
+      cumA += askQ;
+      asks.unshift({p:askP, q:askQ, t:cumA});
+
+      const bidP = midPrice - 5 - i*5 - Math.random()*3;
+      const bidQ = Math.random() * 2.5 + 0.1;
+      cumB += bidQ;
+      bids.push({p:bidP, q:bidQ, t:cumB});
+    }
+
+    const maxA = Math.max(...asks.map(r => r.t));
+    const maxB = Math.max(...bids.map(r => r.t));
+
+    document.getElementById('ob-asks').innerHTML = asks.map(r => {
+      const pct = (r.t / maxA) * 100;
+      return `<div class="ob-row ask" onclick="fillPrice(${r.p.toFixed(2)})">
+        <span class="bg" style="width:${pct}%"></span>
+        <span class="pr">${r.p.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})}</span>
+        <span class="qty">${r.q.toFixed(4)}</span>
+        <span class="total">${r.t.toFixed(2)}</span>
+      </div>`;
+    }).join('');
+
+    document.getElementById('ob-bids').innerHTML = bids.map(r => {
+      const pct = (r.t / maxB) * 100;
+      return `<div class="ob-row bid" onclick="fillPrice(${r.p.toFixed(2)})">
+        <span class="bg" style="width:${pct}%"></span>
+        <span class="pr">${r.p.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})}</span>
+        <span class="qty">${r.q.toFixed(4)}</span>
+        <span class="total">${r.t.toFixed(2)}</span>
+      </div>`;
+    }).join('');
+  }
+
+  function fillPrice(p){
+    document.getElementById('ord-price').value = p.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
+    recalcTotal();
+  }
+
+  // Order panel
+  let currentSide = 'buy';
+  document.querySelectorAll('.order-tabs .tab').forEach(t => {
+    t.onclick = () => {
+      document.querySelectorAll('.order-tabs .tab').forEach(x => x.classList.remove('active','buy','sell'));
+      t.classList.add('active');
+      currentSide = t.dataset.side;
+      t.classList.add(currentSide);
+      const btn = document.getElementById('submit-btn');
+      btn.className = 'submit-btn ' + currentSide;
+      btn.textContent = (currentSide === 'buy' ? 'Buy BTC' : 'Sell BTC');
+    };
+  });
+
+  document.querySelectorAll('.order-type .opt').forEach(t => {
+    t.onclick = () => {
+      document.querySelectorAll('.order-type .opt').forEach(x => x.classList.remove('active'));
+      t.classList.add('active');
+    };
+  });
+
+  function setPct(pct){
+    const price = parseFloat(document.getElementById('ord-price').value.replace(/,/g,''));
+    const avbl = 10000;
+    if(currentSide === 'buy'){
+      const amount = (avbl * pct / 100) / price;
+      document.getElementById('ord-amount').value = amount.toFixed(4);
+    } else {
+      const amount = (1 * pct / 100);
+      document.getElementById('ord-amount').value = amount.toFixed(4);
+    }
+    recalcTotal();
+  }
+
+  function recalcTotal(){
+    const price = parseFloat(document.getElementById('ord-price').value.replace(/,/g,'')) || 0;
+    const amount = parseFloat(document.getElementById('ord-amount').value) || 0;
+    const total = price * amount;
+    document.getElementById('total-text').textContent = total.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2}) + ' USDT';
+  }
+
+  document.getElementById('ord-price').addEventListener('input', recalcTotal);
+  document.getElementById('ord-amount').addEventListener('input', recalcTotal);
+
+  function placeOrder(){
+    const price = document.getElementById('ord-price').value;
+    const amount = document.getElementById('ord-amount').value;
+    alert(`🎯 Demo Order Placed\n\nSide: ${currentSide.toUpperCase()}\nPair: BTC/USDT\nPrice: ${price} USDT\nAmount: ${amount} BTC\n\n（這是 demo，實際會送到撮合引擎）`);
+  }
+
+  // INIT
+  renderCandles();
+  renderPairs();
+  genOrderbook();
+  setInterval(genOrderbook, 1800);
+</script>
+
+</body>
+</html>

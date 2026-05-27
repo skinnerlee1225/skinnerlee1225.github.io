@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>DeFi 理財平台 · Product Detail · Simon Lee</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10.6.1/dist/mermaid.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+  :root{
+    --bg: #07080c; --bg-2: #0d0f15; --bg-3: #13161f; --bg-4: #1a1e2a;
+    --line: #1f2330; --line-2: #2a2f3e;
+    --text: #e8eaf0; --text-2: #9097a8; --text-3: #5d6477;
+    --accent: #00d395;          /* DeFi 主色 綠 */
+    --green: #00d395; --red: #f24b3d; --blue: #4f80ff; --orange: #f5a524; --purple: #a060ff; --pink: #ff66cc;
+    --serif: 'Noto Sans TC', 'Inter', sans-serif;
+    --mono: 'JetBrains Mono', ui-monospace, monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html,body{background:var(--bg);color:var(--text);font-family:var(--serif);-webkit-font-smoothing:antialiased;line-height:1.7;font-size:16px;}
+  a{color:var(--text);text-decoration:none;}
+  .container{max-width:1240px;margin:0 auto;padding:0 32px;}
+
+  /* NAV */
+  nav.top{position:sticky;top:0;background:rgba(7,8,12,0.9);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);z-index:20;}
+  nav.top .row{display:flex;align-items:center;justify-content:space-between;padding:16px 32px;max-width:1240px;margin:0 auto;}
+  nav.top .left{display:flex;align-items:center;gap:20px;font-family:var(--mono);font-size:13px;}
+  nav.top .left a{color:var(--text-2);}
+  nav.top .left a:hover{color:var(--text);}
+  nav.top .left .sep{color:var(--text-3);}
+  nav.top .left .curr{color:var(--accent);}
+  nav.top .toc{display:flex;gap:24px;list-style:none;font-size:13px;font-family:var(--mono);}
+  nav.top .toc a{color:var(--text-3);}
+  nav.top .toc a:hover{color:var(--text);}
+
+  /* HERO */
+  header.hero{padding:60px 0 50px;border-bottom:1px solid var(--line);}
+  .hero .tag{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:12px;color:var(--accent);background:rgba(0,211,149,0.08);border:1px solid rgba(0,211,149,0.25);padding:7px 14px;border-radius:999px;margin-bottom:20px;text-transform:uppercase;letter-spacing:0.1em;}
+  .hero h1{font-size:54px;line-height:1.1;letter-spacing:-0.025em;font-weight:700;margin-bottom:18px;}
+  .hero h1 .accent{color:var(--accent);}
+  .hero p.sub{font-size:18px;color:var(--text-2);line-height:1.6;max-width:820px;margin-bottom:36px;}
+  .hero .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:32px;padding-top:36px;border-top:1px solid var(--line);}
+  .hero .stats .item .label{font-size:12px;color:var(--text-3);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px;}
+  .hero .stats .item .num{font-family:var(--mono);font-size:28px;font-weight:600;}
+  .hero .stats .item .num .u{font-size:15px;color:var(--text-2);margin-left:4px;}
+
+  /* SECTION */
+  section{padding:80px 0;border-bottom:1px solid var(--line);}
+  section .sec-head{margin-bottom:40px;}
+  section .sec-head .small{font-family:var(--mono);font-size:12px;color:var(--accent);text-transform:uppercase;letter-spacing:0.12em;margin-bottom:12px;}
+  section h2{font-size:38px;font-weight:700;letter-spacing:-0.02em;line-height:1.15;margin-bottom:14px;}
+  section .desc{color:var(--text-2);font-size:16px;line-height:1.7;max-width:780px;}
+
+  /* PROTO frame */
+  .proto-wrapper{background:var(--bg-2);border:1px solid var(--line);border-radius:16px;overflow:hidden;}
+  .proto-bar{display:flex;align-items:center;justify-content:space-between;padding:14px 20px;background:var(--bg-3);border-bottom:1px solid var(--line);font-family:var(--mono);font-size:12px;}
+  .proto-bar .dots{display:flex;gap:6px;}
+  .proto-bar .dots span{width:11px;height:11px;border-radius:50%;background:var(--bg-4);}
+  .proto-bar .dots span:nth-child(1){background:#ff5f57;}
+  .proto-bar .dots span:nth-child(2){background:#febc2e;}
+  .proto-bar .dots span:nth-child(3){background:#28c840;}
+  .proto-bar .url{color:var(--text-2);background:var(--bg-2);padding:5px 14px;border-radius:6px;font-size:11px;}
+  .proto-bar .live{color:var(--accent);display:flex;align-items:center;gap:6px;}
+  .proto-bar .live::before{content:'';width:6px;height:6px;background:var(--accent);border-radius:50%;animation:blink 1.5s infinite;}
+  @keyframes blink{50%{opacity:0.3}}
+
+  /* DeFi APP */
+  .defi-app{background:#0a0c12;padding:30px;}
+  .defi-app .tabs{display:flex;gap:8px;border-bottom:1px solid var(--line);margin-bottom:24px;font-family:var(--mono);font-size:13px;}
+  .defi-app .tabs .t{padding:12px 18px;color:var(--text-3);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;}
+  .defi-app .tabs .t.active{color:var(--accent);border-bottom-color:var(--accent);}
+  .defi-app .panel{display:none;}
+  .defi-app .panel.active{display:block;}
+
+  /* CALCULATOR */
+  .calc-grid{display:grid;grid-template-columns:1fr 1.4fr;gap:24px;}
+  .calc-left{background:var(--bg-2);border:1px solid var(--line);border-radius:14px;padding:24px;}
+  .calc-right{background:var(--bg-2);border:1px solid var(--line);border-radius:14px;padding:24px;}
+  .calc-left h4, .calc-right h4{font-family:var(--mono);font-size:12px;color:var(--text-3);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:18px;}
+
+  .input-group{margin-bottom:16px;}
+  .input-group .lbl{font-size:13px;color:var(--text-2);margin-bottom:6px;display:flex;justify-content:space-between;}
+  .input-group .lbl .v{color:var(--accent);font-family:var(--mono);}
+  .input-group input[type="number"]{width:100%;background:var(--bg-3);border:1px solid var(--line);color:var(--text);padding:10px 14px;border-radius:8px;font-family:var(--mono);font-size:15px;outline:none;}
+  .input-group input[type="number"]:focus{border-color:var(--accent);}
+  .input-group input[type="range"]{width:100%;-webkit-appearance:none;appearance:none;height:6px;background:var(--bg-3);border-radius:3px;outline:none;}
+  .input-group input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;background:var(--accent);border-radius:50%;cursor:pointer;border:2px solid var(--bg);}
+
+  .vip-tier-row{display:grid;grid-template-columns:repeat(10,1fr);gap:4px;margin-top:8px;}
+  .vip-tier-row .tier{padding:6px;text-align:center;border-radius:4px;font-family:var(--mono);font-size:10px;cursor:pointer;background:var(--bg-3);border:1px solid var(--line);color:var(--text-3);}
+  .vip-tier-row .tier.active{background:var(--accent);color:#000;border-color:var(--accent);font-weight:600;}
+
+  /* Output */
+  .result-list .row{display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--line);font-family:var(--mono);font-size:14px;}
+  .result-list .row:last-child{border:none;}
+  .result-list .row .lbl{color:var(--text-2);}
+  .result-list .row .v{color:var(--text);font-weight:500;}
+  .result-list .row.highlight{background:rgba(0,211,149,0.06);margin:0 -10px;padding:14px 10px;border-radius:8px;border:none;}
+  .result-list .row.highlight .v{color:var(--accent);font-size:18px;}
+
+  /* TREE viz */
+  .tree-viz{padding:30px;background:var(--bg-3);border-radius:12px;display:flex;flex-direction:column;align-items:center;gap:14px;font-family:var(--mono);}
+  .tree-node{padding:8px 16px;border-radius:8px;border:1px solid;font-size:12px;font-weight:500;text-align:center;min-width:120px;cursor:pointer;transition:all .2s;}
+  .tree-node:hover{transform:scale(1.05);}
+  .tree-node .vip{font-size:13px;font-weight:600;}
+  .tree-node .pct{font-size:11px;opacity:0.85;}
+  .tree-v9{color:#a060ff;border-color:#a060ff;background:rgba(160,96,255,0.1);}
+  .tree-v7{color:var(--pink);border-color:var(--pink);background:rgba(255,102,204,0.1);}
+  .tree-v5{color:var(--blue);border-color:var(--blue);background:rgba(79,128,255,0.1);}
+  .tree-v3{color:var(--orange);border-color:var(--orange);background:rgba(245,165,36,0.1);}
+  .tree-v1{color:var(--green);border-color:var(--green);background:rgba(0,211,149,0.1);}
+  .tree-line{color:var(--text-3);font-size:10px;}
+  .tree-row{display:flex;gap:20px;align-items:center;}
+
+  /* VIP cards (PROTOTYPE level overview) */
+  .vip-cards{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:24px;}
+  .vip-card{background:var(--bg-2);border:1px solid var(--line);border-radius:10px;padding:14px;text-align:center;cursor:pointer;transition:all .2s;}
+  .vip-card:hover{border-color:var(--accent);}
+  .vip-card.active{background:rgba(0,211,149,0.08);border-color:var(--accent);}
+  .vip-card .lvl{font-family:var(--mono);font-size:14px;font-weight:600;color:var(--accent);}
+  .vip-card .pct{font-family:var(--mono);font-size:11px;color:var(--text-3);margin-top:4px;}
+  .vip-card .label{font-size:12px;color:var(--text-2);margin-top:6px;}
+
+  /* Bonus example */
+  .bonus-example{padding:20px;background:var(--bg-3);border-radius:12px;}
+  .bonus-chain{display:flex;align-items:center;gap:10px;font-family:var(--mono);font-size:13px;margin-bottom:18px;flex-wrap:wrap;}
+  .bonus-chain .arr{color:var(--text-3);}
+  .bonus-table{width:100%;border-collapse:collapse;font-family:var(--mono);font-size:13px;}
+  .bonus-table th{text-align:left;padding:8px 10px;font-weight:500;font-size:11px;color:var(--text-3);text-transform:uppercase;letter-spacing:0.08em;border-bottom:1px solid var(--line);}
+  .bonus-table td{padding:10px;border-bottom:1px solid var(--line);color:var(--text-2);}
+  .bonus-table tr:last-child td{border:none;}
+  .bonus-table td.amt{color:var(--accent);font-weight:500;text-align:right;}
+  .bonus-table td.cut{color:var(--red);text-align:right;}
+
+  /* RATIO chart */
+  .chart-wrap{padding:20px;background:var(--bg-2);border:1px solid var(--line);border-radius:14px;margin:20px 0;position:relative;height:300px;}
+
+  .proto-note{background:rgba(0,211,149,0.05);border:1px solid rgba(0,211,149,0.2);border-radius:10px;padding:14px 18px;margin-top:24px;font-family:var(--mono);font-size:12px;color:var(--accent);}
+
+  /* PRD reuse */
+  .prd-section h3{font-size:24px;font-weight:600;margin:32px 0 12px;letter-spacing:-0.01em;}
+  .prd-section h3 .num{font-family:var(--mono);color:var(--accent);margin-right:10px;}
+  .prd-section h4{font-size:18px;font-weight:500;margin:20px 0 8px;color:var(--text);}
+  .prd-section p{color:var(--text-2);margin-bottom:14px;}
+  .prd-section ul{color:var(--text-2);margin:8px 0 14px 24px;}
+  .prd-section li{margin-bottom:6px;}
+  .prd-section strong{color:var(--text);font-weight:500;}
+  .prd-section table{width:100%;border-collapse:collapse;margin:16px 0;font-size:14px;}
+  .prd-section table th{background:var(--bg-2);text-align:left;padding:10px 14px;font-weight:500;font-size:13px;color:var(--text-2);border-bottom:1px solid var(--line);font-family:var(--mono);text-transform:uppercase;letter-spacing:0.05em;}
+  .prd-section table td{padding:10px 14px;border-bottom:1px solid var(--line);color:var(--text-2);}
+  .prd-section table tr:hover td{background:var(--bg-2);}
+  .prd-section code{font-family:var(--mono);font-size:13px;background:var(--bg-2);padding:2px 6px;border-radius:4px;color:var(--accent);}
+  .prd-section pre{background:var(--bg-2);border:1px solid var(--line);border-radius:10px;padding:18px;overflow-x:auto;margin:14px 0;font-family:var(--mono);font-size:13px;line-height:1.6;color:var(--text-2);}
+
+  .mermaid-wrap{background:var(--bg-2);border:1px solid var(--line);border-radius:14px;padding:32px;overflow:auto;margin:24px 0;}
+
+  .decisions{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:20px 0;}
+  .decision{background:var(--bg-2);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:10px;padding:18px 22px;}
+  .decision .label{font-family:var(--mono);font-size:11px;color:var(--accent);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px;}
+  .decision h5{font-size:16px;font-weight:500;margin-bottom:6px;}
+  .decision p{font-size:14px;color:var(--text-2);margin:0;}
+
+  .bottom-nav{display:flex;justify-content:space-between;padding:50px 0 80px;gap:20px;}
+  .bottom-nav a{flex:1;background:var(--bg-2);border:1px solid var(--line);border-radius:14px;padding:24px 28px;display:flex;flex-direction:column;gap:8px;transition:all .2s;}
+  .bottom-nav a:hover{border-color:var(--line-2);}
+  .bottom-nav .l{font-family:var(--mono);font-size:11px;color:var(--text-3);text-transform:uppercase;letter-spacing:0.08em;}
+  .bottom-nav .v{font-size:18px;font-weight:500;}
+  .bottom-nav a.next{text-align:right;}
+
+  @media(max-width:980px){
+    .calc-grid{grid-template-columns:1fr;}
+    .vip-cards{grid-template-columns:repeat(2,1fr);}
+    .hero h1{font-size:36px;}
+    .decisions{grid-template-columns:1fr;}
+    .bottom-nav{flex-direction:column;}
+  }
+</style>
+</head>
+<body>
+
+<nav class="top">
+  <div class="row">
+    <div class="left">
+      <a href="../" style="color:var(--accent);">← Simon CV</a>
+      <span class="sep">/</span>
+      <a href="index.html">Portfolio</a>
+      <span class="sep">/</span>
+      <span class="curr">DeFi 理財平台</span>
+    </div>
+    <ul class="toc">
+      <li><a href="#prototype">Prototype</a></li>
+      <li><a href="#overview">Overview</a></li>
+      <li><a href="#vip">VIP System</a></li>
+      <li><a href="#bonus">Bonus</a></li>
+      <li><a href="#ratio">Ratio</a></li>
+      <li><a href="#risk">Risk</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="container">
+    <div class="tag">💎 Earn Module · VIP × Referral × Yield · v1.1</div>
+    <h1>
+      USDT 理財模組 +<br/>
+      <span class="accent">9 級 VIP 裂變獎勵</span>。
+    </h1>
+    <p class="sub">
+      10% 年化日配息 + 9 級 VIP 體系 + 級差獎金 + 收益封頂 Cap 機制。整套設計確保<strong style="color:var(--text)">平台撥比可控在 12.5% 以內</strong>，平台年化淨收益空間 2.5%~3.7%。<br/><br/>
+      <strong style="color:var(--accent)">📦 模組可雙向部署：</strong>嵌入中心化交易所 (CEX) 作為 Earn 子產品（活期/定期）；在去中心化場景則對應 <strong style="color:var(--text)">LP 質押 (Liquidity Provider Staking)</strong> 形式 — 用戶提供流動性換取收益分潤。
+    </p>
+    <div class="stats">
+      <div class="item">
+        <div class="label">VIP 等級</div>
+        <div class="num" style="color:var(--accent)">9<span class="u">級分層</span></div>
+      </div>
+      <div class="item">
+        <div class="label">最高撥比</div>
+        <div class="num" style="color:var(--accent)">12.5<span class="u">%</span></div>
+      </div>
+      <div class="item">
+        <div class="label">日結算</div>
+        <div class="num" style="color:var(--accent)">00:00<span class="u">UTC</span></div>
+      </div>
+      <div class="item">
+        <div class="label">收益封頂</div>
+        <div class="num" style="color:var(--accent)">2<span class="u">倍本金</span></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- PROTOTYPE -->
+<section id="prototype">
+  <div class="container">
+    <div class="sec-head">
+      <div class="small">interactive prototype</div>
+      <h2>互動撥比計算器 + 推薦樹</h2>
+      <p class="desc">這是我為 PM 面試官設計的「能跑數據」原型：左邊輸入投資金額 + 拖動 VIP 等級，右邊即時看到該用戶的日收益、級差獎金、Cap 剩餘、平台撥比。下方可切換看推薦樹結構與級差獎金分配範例。</p>
+    </div>
+
+    <div class="proto-wrapper">
+      <div class="proto-bar">
+        <div class="dots"><span></span><span></span><span></span></div>
+        <div class="url">earn.simon-defi.com/dashboard</div>
+        <div class="live">LIVE PROTOTYPE</div>
+      </div>
+
+      <div class="defi-app">
+        <div class="tabs">
+          <div class="t active" data-tab="calc">💰 撥比計算器</div>
+          <div class="t" data-tab="tree">🌲 推薦樹結構</div>
+          <div class="t" data-tab="bonus">⚡ 級差獎金範例</div>
+        </div>
+
+        <!-- CALC -->
+        <div class="panel active" id="tab-calc">
+          <div class="calc-grid">
+            <div class="calc-left">
+              <h4>📥 輸入參數</h4>
+
+              <div class="input-group">
+                <div class="lbl"><span>個人投資金額</span><span class="v" id="amt-val">10,000 USDT</span></div>
+                <input type="range" id="amt" min="1000" max="100000" step="1000" value="10000">
+              </div>
+
+              <div class="input-group">
+                <div class="lbl"><span>VIP 等級</span><span class="v" id="vip-val">VIP6 · 16%</span></div>
+                <div class="vip-tier-row" id="vip-tiers"></div>
+              </div>
+
+              <div class="input-group">
+                <div class="lbl"><span>下級團隊日收益</span><span class="v" id="team-val">500 USDT</span></div>
+                <input type="range" id="team" min="0" max="5000" step="50" value="500">
+              </div>
+
+              <div class="input-group">
+                <div class="lbl"><span>下級 VIP 等級（推薦鏈）</span><span class="v" id="dn-val">VIP3 · 10%</span></div>
+                <input type="range" id="dn" min="0" max="9" step="1" value="3">
+              </div>
+
+              <div class="proto-note" style="margin-top:12px;">
+                💡 撥比公式 = 個人收益 + 級差獎金 + 同級獎勵 / 投資本金
+              </div>
+            </div>
+
+            <div class="calc-right">
+              <h4>📊 即時計算結果</h4>
+              <div class="result-list">
+                <div class="row">
+                  <span class="lbl">個人日收益（10% APY）</span>
+                  <span class="v" id="r-personal">2.74 USDT</span>
+                </div>
+                <div class="row">
+                  <span class="lbl">個人年收益</span>
+                  <span class="v" id="r-personal-y">1,000.00 USDT</span>
+                </div>
+                <div class="row">
+                  <span class="lbl">級差比例（自己 - 下級）</span>
+                  <span class="v" id="r-spread">6%</span>
+                </div>
+                <div class="row">
+                  <span class="lbl">每日級差獎金</span>
+                  <span class="v" id="r-bonus">30.00 USDT</span>
+                </div>
+                <div class="row">
+                  <span class="lbl">每日總收益（個人 + 級差）</span>
+                  <span class="v" id="r-total">32.74 USDT</span>
+                </div>
+                <div class="row">
+                  <span class="lbl">Cap 上限（投資 × 2）</span>
+                  <span class="v" id="r-cap">20,000 USDT</span>
+                </div>
+                <div class="row">
+                  <span class="lbl">達到 Cap 預估時間</span>
+                  <span class="v" id="r-days">1.7 年</span>
+                </div>
+                <div class="row highlight">
+                  <span class="lbl">⚡ 平台年化撥比（針對該用戶）</span>
+                  <span class="v" id="r-ratio">11.95%</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TREE -->
+        <div class="panel" id="tab-tree">
+          <div style="display:grid;grid-template-columns:1fr 1.4fr;gap:24px;">
+            <div>
+              <h4 style="font-family:var(--mono);font-size:12px;color:var(--text-3);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:18px;">🌲 9 級 VIP 推薦樹</h4>
+              <p style="color:var(--text-2);font-size:14px;line-height:1.7;margin-bottom:18px;">每個節點只有一個直接上級（唯一推薦鏈）。橫向擴張 = 直推數量（廣度），縱向深度 = 間推層級（深度）。級差獎金沿推薦鏈由下往上結算。</p>
+              <div style="background:var(--bg-3);padding:18px;border-radius:10px;font-family:var(--mono);font-size:12px;color:var(--text-2);line-height:1.8;">
+                <div style="color:var(--accent);margin-bottom:8px;">公式：TV(A) = Σ 所有下線的有效投資額</div>
+                <div>· A 本人的投資 <span style="color:var(--text-3)">不</span>計入自己的團隊業績</div>
+                <div>· 但<span style="color:var(--accent)">計入上級的</span>團隊業績</div>
+                <div>· 同筆訂單向上穿透計入每層上級</div>
+                <div>· 每用戶只計一次（去重）</div>
+              </div>
+            </div>
+            <div class="tree-viz">
+              <div class="tree-node tree-v9"><div class="vip">VIP9</div><div class="pct">20% · 全球合夥人</div></div>
+              <div class="tree-line">┌────────┼────────┐</div>
+              <div class="tree-row">
+                <div class="tree-node tree-v7"><div class="vip">VIP7</div><div class="pct">18%</div></div>
+                <div class="tree-node tree-v7"><div class="vip">VIP7</div><div class="pct">18%</div></div>
+                <div class="tree-node tree-v5"><div class="vip">VIP5</div><div class="pct">14%</div></div>
+              </div>
+              <div class="tree-line">┌────┴────┐</div>
+              <div class="tree-row">
+                <div class="tree-node tree-v5"><div class="vip">VIP5</div><div class="pct">14%</div></div>
+                <div class="tree-node tree-v3"><div class="vip">VIP3</div><div class="pct">10%</div></div>
+              </div>
+              <div class="tree-line">│</div>
+              <div class="tree-node tree-v1"><div class="vip">VIP1</div><div class="pct">5% · 入門</div></div>
+              <div class="tree-line" style="font-size:11px;color:var(--accent);margin-top:8px;">↑ 級差獎金沿鏈向上結算</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- BONUS -->
+        <div class="panel" id="tab-bonus">
+          <h4 style="font-family:var(--mono);font-size:12px;color:var(--text-3);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:18px;">⚡ 級差獎金分配（多層級範例）</h4>
+
+          <div class="bonus-example">
+            <div class="bonus-chain">
+              <div class="tree-node tree-v6" style="color:var(--accent);border-color:var(--accent);background:rgba(0,211,149,0.1);"><div class="vip">Alice VIP6</div><div class="pct">16%</div></div>
+              <span class="arr">→</span>
+              <div class="tree-node tree-v3"><div class="vip">Bob VIP4</div><div class="pct">12%</div></div>
+              <span class="arr">→</span>
+              <div class="tree-node" style="color:var(--pink);border-color:var(--pink);background:rgba(255,102,204,0.1);"><div class="vip">Charlie VIP2</div><div class="pct">8%</div></div>
+              <span class="arr">→</span>
+              <div class="tree-node tree-v1"><div class="vip">Dave VIP1</div><div class="pct">5%</div></div>
+            </div>
+
+            <p style="font-size:13px;color:var(--text-2);margin-bottom:14px;">Dave 持倉日收益產生 <strong style="color:var(--accent)">500 USDT</strong>，按級差比例向上結算：</p>
+
+            <table class="bonus-table">
+              <tr><th>受益人</th><th>當前等級</th><th>級差計算</th><th class="amt">獎金</th></tr>
+              <tr>
+                <td>Dave （產生者）</td>
+                <td>VIP1 · 5%</td>
+                <td>個人收益</td>
+                <td class="amt">500 USDT</td>
+              </tr>
+              <tr>
+                <td>Charlie</td>
+                <td>VIP2 · 8%</td>
+                <td>(8% - 5%) × 500</td>
+                <td class="amt">15 USDT</td>
+              </tr>
+              <tr>
+                <td>Bob</td>
+                <td>VIP4 · 12%</td>
+                <td>(12% - 8%) × 500</td>
+                <td class="amt">20 USDT</td>
+              </tr>
+              <tr>
+                <td>Alice</td>
+                <td>VIP6 · 16%</td>
+                <td>(16% - 12%) × 500</td>
+                <td class="amt">20 USDT</td>
+              </tr>
+              <tr>
+                <td colspan="3" style="color:var(--text-3);font-style:italic;">— 累計向上結算 —</td>
+                <td class="amt" style="font-size:15px;">55 USDT</td>
+              </tr>
+            </table>
+
+            <div class="proto-note" style="margin-top:16px;">
+              ⚠️ 關鍵設計：Alice 不是吃 (16% - 5%) = 11%，而是「<strong>只吃 4% 差額</strong>」(16%-12%)。Bob 已經截斷了 4% 的差額。這保證每層只吃到下一級的「差額」，避免重複計算膨脹。
+            </div>
+
+            <h4 style="margin-top:24px;font-family:var(--mono);font-size:12px;color:var(--text-3);text-transform:uppercase;letter-spacing:0.1em;">🔒 同級截斷案例</h4>
+            <p style="font-size:13px;color:var(--text-2);margin:10px 0;">當推薦鏈出現相同 VIP 等級時：</p>
+
+            <div class="bonus-chain">
+              <div class="tree-node tree-v5"><div class="vip">A · VIP5</div><div class="pct">14%</div></div>
+              <span class="arr">→</span>
+              <div class="tree-node tree-v5"><div class="vip">B · VIP5</div><div class="pct">14%</div></div>
+              <span class="arr">→</span>
+              <div class="tree-node tree-v3"><div class="vip">C · VIP3</div><div class="pct">10%</div></div>
+            </div>
+            <table class="bonus-table">
+              <tr><th>受益人</th><th>計算</th><th class="amt">結果</th></tr>
+              <tr><td>B 從 C</td><td>(14% - 10%) × 1,000</td><td class="amt">40 USDT</td></tr>
+              <tr><td>A 從 B</td><td>(14% - 14%) × 1,000</td><td class="cut">0 USDT（同級截斷）</td></tr>
+              <tr><td>A 同級管理獎</td><td>1% × 1,000 （B 是直推）</td><td class="amt">10 USDT</td></tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="proto-note">⚠️ 撥比計算器使用 10% 年化、Cap = 投資 × 2 為固定參數。所有計算邏輯與真實系統一致 — 你可以直接拖動數值驗證每個邊界條件。</div>
+  </div>
+</section>
+
+<!-- OVERVIEW -->
+<section id="overview" class="prd-section">
+  <div class="container">
+    <div class="sec-head">
+      <div class="small">product overview</div>
+      <h2>產品定位與設計挑戰</h2>
+    </div>
+
+    <p style="font-size:17px;line-height:1.75;color:var(--text-2);">
+      這是一個結合<strong>理財收益 + 推薦裂變</strong>的模組化產品。最大挑戰是：如何設計獎勵機制讓用戶持續推薦，但平台成本可控？9 級 VIP + 級差獎金 + 同級壓縮 + 收益封頂 Cap 四個機制環環相扣，最終撥比鎖定在 12.5% 以內。
+    </p>
+
+    <div style="background:rgba(0,211,149,0.05);border:1px solid rgba(0,211,149,0.25);border-radius:14px;padding:22px 26px;margin:24px 0;">
+      <div style="font-family:var(--mono);font-size:11px;color:var(--accent);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:10px;">📦 模組部署場景</div>
+      <p style="font-size:15px;color:var(--text);margin-bottom:10px;font-weight:500;">同一套理財邏輯，兩種部署形式</p>
+      <p style="color:var(--text-2);font-size:14px;line-height:1.7;margin:0;">
+        <strong style="color:var(--text);">中心化 (CEX 版本)：</strong>直接嵌入交易所作為 Earn 子產品 — 活期 / 定期 / VIP 推薦獎勵共用同一個帳本與結算引擎。資金集中保管、用戶體驗最佳。<br/>
+        <strong style="color:var(--text);">去中心化 (DEX 版本)：</strong>對應 <strong style="color:var(--accent);">LP 質押 (Liquidity Provider Staking)</strong> — 用戶提供 token 對流動性，獎勵改為「池子手續費分潤 + 平台代幣獎勵」，VIP 體系改為鏈上 NFT/SBT 等級憑證。
+      </p>
+    </div>
+
+    <h3><span class="num">挑戰 01</span>用戶激勵 vs 平台成本</h3>
+    <p>傳統 MLM 容易讓平台成本失控 (撥比可能 25%+)。我設計的<strong>級差獎金（只吃差額）</strong>讓每層只吃「自己等級 - 下級等級」的差額，9 級加總正好 20%。再加上「20% 是日收益的 20%」而非「本金的 20%」，換算到本金成本只有 2%。</p>
+
+    <h3><span class="num">挑戰 02</span>同級截斷的數學設計</h3>
+    <p>若兩個同級節點相連，級差 = 0%，自然不發獎。但這會讓上級無收益不公平。設計「同級管理獎」— 直推同級可額外吃 1%（僅限直推），補償激勵但維持平台成本可控。</p>
+
+    <h3><span class="num">挑戰 03</span>Cap 機制防止無限提取</h3>
+    <p>頂級用戶 (VIP9) 可能透過大量下線獲得超額獎金。設計「個人累計收益 ≤ 投資 × 2」的硬上限。達到 Cap 後該用戶不再獲得任何獎金。這是 DeFi 行業合理區間（業界主流 1.5~3 倍）。</p>
+
+    <div class="decisions">
+      <div class="decision">
+        <div class="label">關鍵決策 #1</div>
+        <h5>級差獎金 vs 全額獎金</h5>
+        <p>選擇「只吃差額」而非「按層級全額分」。原因：可數學證明 9 層加總不超過 VIP9 最高比例（20%），平台成本天花板鎖死。</p>
+      </div>
+      <div class="decision">
+        <div class="label">關鍵決策 #2</div>
+        <h5>9 級 vs 5 級</h5>
+        <p>9 級而非更少，是因為每級的「直推 + 業績門檻」要拉開差距才能激勵升級。級差太小（如 5%→7%）用戶感受不到升級價值。</p>
+      </div>
+      <div class="decision">
+        <div class="label">關鍵決策 #3</div>
+        <h5>Cap = 2 倍而非 1.5 倍</h5>
+        <p>2 倍 Cap 是 DeFi 業界主流。低於 2 倍頂級用戶會跑、高於 3 倍平台長期不可持續。2 倍是平衡點，且配合降級機制保持團隊活躍。</p>
+      </div>
+      <div class="decision">
+        <div class="label">關鍵決策 #4</div>
+        <h5>每日結算 vs 即時結算</h5>
+        <p>每日 UTC 00:00 統一結算 — 結算成本可控、用戶體驗一致、出錯時可批量回滾。即時結算成本高 10 倍且 race condition 風險大。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VIP -->
+<section id="vip" class="prd-section">
+  <div class="container">
+    <div class="sec-head">
+      <div class="small">VIP system</div>
+      <h2>VIP 0~9 完整等級表</h2>
+      <p class="desc">每一級的投資門檻、直推要求、業績門檻、級差比例都經過精算 — 確保升級難度漸增 + 平台成本天花板。</p>
+    </div>
+
+    <table>
+      <tr>
+        <th>等級</th><th>個人投資門檻</th><th>直推人數</th><th>直推 VIP 節點</th><th>團隊總業績</th><th>級差比例</th>
+      </tr>
+      <tr><td><strong style="color:#888;">VIP0</strong></td><td>0 USDT（註冊即得）</td><td>—</td><td>—</td><td>—</td><td>0%</td></tr>
+      <tr><td><strong style="color:var(--green);">VIP1</strong></td><td>≥ 1,000 USDT</td><td>—</td><td>—</td><td>—</td><td>5%</td></tr>
+      <tr><td><strong style="color:var(--green);">VIP2</strong></td><td>≥ 1,000 USDT</td><td>≥ 5 人</td><td>—</td><td>—</td><td>8%</td></tr>
+      <tr><td><strong style="color:var(--orange);">VIP3</strong></td><td>≥ 1,000 USDT</td><td>≥ 5 人</td><td>≥ 2 個 VIP1</td><td>≥ 30,000 USDT</td><td>10%</td></tr>
+      <tr><td><strong style="color:var(--orange);">VIP4</strong></td><td>≥ 3,000 USDT</td><td>≥ 8 人</td><td>≥ 3 個 VIP2</td><td>≥ 100,000 USDT</td><td>12%</td></tr>
+      <tr><td><strong style="color:var(--blue);">VIP5</strong></td><td>≥ 5,000 USDT</td><td>≥ 12 人</td><td>≥ 3 個 VIP3</td><td>≥ 300,000 USDT</td><td>14%</td></tr>
+      <tr><td><strong style="color:var(--blue);">VIP6</strong></td><td>≥ 10,000 USDT</td><td>≥ 15 人</td><td>≥ 3 個 VIP4</td><td>≥ 1,000,000 USDT</td><td>16%</td></tr>
+      <tr><td><strong style="color:var(--pink);">VIP7</strong></td><td>≥ 20,000 USDT</td><td>≥ 20 人</td><td>≥ 4 個 VIP5</td><td>≥ 3,000,000 USDT</td><td>18%</td></tr>
+      <tr><td><strong style="color:var(--pink);">VIP8</strong></td><td>≥ 50,000 USDT</td><td>≥ 25 人</td><td>≥ 4 個 VIP6</td><td>≥ 10,000,000 USDT</td><td>19%</td></tr>
+      <tr><td><strong style="color:var(--purple);">VIP9</strong></td><td>≥ 100,000 USDT</td><td>≥ 30 人</td><td>≥ 5 個 VIP7</td><td>≥ 30,000,000 USDT</td><td>20%</td></tr>
+    </table>
+
+    <h3><span class="num">2.1</span>金字塔增長模型特徵</h3>
+    <ul>
+      <li><strong>個人投資門檻：</strong>VIP1~VIP3 為低門檻吸引大眾；VIP4 起逐步拉高，篩選真正的核心節點。</li>
+      <li><strong>直推人數：</strong>0 → 5 → 8 → 12 → 15 → 20 → 25 → 30 逐步遞增，確保每一層的裂變動能。</li>
+      <li><strong>VIP 節點要求：</strong>從 VIP3 開始要求擁有「高級直推」，保證團隊深度結構健康。</li>
+      <li><strong>團隊業績門檻：</strong>採用約 3 倍增長（30K → 100K → 300K → 1M → 3M → 10M → 30M），符合自然裂變曲線。</li>
+      <li><strong>級差獎金比例：</strong>5% → 8% → 10% → 12% → 14% → 16% → 18% → 19% → 20%，越高等級邊際遞減，控制平台成本。</li>
+    </ul>
+
+    <h3><span class="num">2.2</span>降級機制</h3>
+    <p>每日 UTC 00:00 系統快照審核，若不滿足當前等級條件，進入「<strong>觀察期 30 天</strong>」。觀察期結束仍不達標 → 自動降一級。降級僅影響級差獎金比例，<strong>不影響已獲得的歷史收益</strong>。</p>
+  </div>
+</section>
+
+<!-- BONUS -->
+<section id="bonus" class="prd-section">
+  <div class="container">
+    <div class="sec-head">
+      <div class="small">bonus formula</div>
+      <h2>級差獎金計算機制</h2>
+    </div>
+
+    <h3><span class="num">3.1</span>核心公式</h3>
+    <pre>級差獎金(上級) = (上級獎金比例 - 下級獎金比例) × 下級團隊產生的日收益
+
+⚠️ 只吃差額，不吃全額。</pre>
+
+    <h3><span class="num">3.2</span>多層級差計算流程</h3>
+    <pre>步驟 1：從產生收益的節點開始，沿推薦鏈向上遍歷
+步驟 2：記錄每一層遇到的 VIP 等級
+步驟 3：計算相鄰兩個「不同等級」節點之間的差額
+步驟 4：將差額 × 該下級團隊收益 = 該上級節點的級差獎金
+步驟 5：遇到 VIP9（20%）後停止向上，或推薦鏈到頂後停止</pre>
+
+    <h3><span class="num">3.3</span>每日結算流程</h3>
+    <div class="mermaid-wrap">
+      <div class="mermaid">
+flowchart TD
+    A[UTC 00:00 觸發每日結算]:::s --> B[快照所有用戶的有效投資]:::s
+    B --> C[計算每位用戶的個人收益]:::s
+    C --> D[遍歷推薦樹 · 葉節點向根節點]:::s
+    D --> E[計算每層級差獎金]:::s
+    E --> F[判定同級截斷與壓縮]:::w
+    F --> G[檢查每位用戶的 Cap 剩餘額度]:::w
+    G --> H{獎金 > Cap?}
+    H -->|是| I[截斷至 Cap 上限]:::r
+    H -->|否| J[正常發放]:::ok
+    I --> K[風控規則過濾]:::w
+    J --> K
+    K --> L[發放至用戶帳戶]:::ok
+    L --> M[同步執行 VIP 升降級判定]:::ok
+
+    classDef s fill:#0d0f15,stroke:#00d395,color:#e8eaf0
+    classDef w fill:#0d0f15,stroke:#f5a524,color:#e8eaf0
+    classDef ok fill:#0d0f15,stroke:#00d395,color:#e8eaf0
+    classDef r fill:#0d0f15,stroke:#f24b3d,color:#e8eaf0
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RATIO -->
+<section id="ratio" class="prd-section">
+  <div class="container">
+    <div class="sec-head">
+      <div class="small">platform cost model</div>
+      <h2>撥比建模 — 每 100 USDT 平台支出</h2>
+      <p class="desc">這是整份設計的精華 — 透過數學建模證明：無論用戶結構多複雜，平台每 100 USDT 投資的年化最高成本不超過 12.5%。</p>
+    </div>
+
+    <h3><span class="num">4.1</span>基礎參數</h3>
+    <table>
+      <tr><th>參數</th><th>數值</th></tr>
+      <tr><td>理財年化收益率</td><td>10%</td></tr>
+      <tr><td>日化收益率</td><td>10% ÷ 365 ≈ 0.0274%</td></tr>
+      <tr><td>每 100 USDT 日收益</td><td>0.0274 USDT</td></tr>
+      <tr><td>級差獎金最高比例（VIP9）</td><td>20%（基於日收益）</td></tr>
+      <tr><td>同級管理獎</td><td>1%（基於日收益，僅直推同級）</td></tr>
+      <tr><td>收益封頂 Cap</td><td>個人投資 × 2</td></tr>
+    </table>
+
+    <h3><span class="num">4.2</span>級差獎金最大分配（完整鏈）</h3>
+    <table>
+      <tr><th>層級</th><th>級差計算</th><th>佔日收益比例</th></tr>
+      <tr><td>VIP1 從 VIP0</td><td>5% - 0%</td><td>5%</td></tr>
+      <tr><td>VIP2 從 VIP1</td><td>8% - 5%</td><td>3%</td></tr>
+      <tr><td>VIP3 從 VIP2</td><td>10% - 8%</td><td>2%</td></tr>
+      <tr><td>VIP4 從 VIP3</td><td>12% - 10%</td><td>2%</td></tr>
+      <tr><td>VIP5 從 VIP4</td><td>14% - 12%</td><td>2%</td></tr>
+      <tr><td>VIP6 從 VIP5</td><td>16% - 14%</td><td>2%</td></tr>
+      <tr><td>VIP7 從 VIP6</td><td>18% - 16%</td><td>2%</td></tr>
+      <tr><td>VIP8 從 VIP7</td><td>19% - 18%</td><td>1%</td></tr>
+      <tr><td>VIP9 從 VIP8</td><td>20% - 19%</td><td>1%</td></tr>
+      <tr><td colspan="2"><strong>合計</strong></td><td><strong style="color:var(--accent)">20%</strong></td></tr>
+    </table>
+
+    <h3><span class="num">4.3</span>四種情境的年化撥比</h3>
+    <table>
+      <tr><th>場景</th><th>個人收益</th><th>級差獎金</th><th>同級獎</th><th>年化撥比</th></tr>
+      <tr><td>A. 純個人投資者（無團隊）</td><td>10.00%</td><td>0%</td><td>0%</td><td><strong style="color:var(--green);">10.00%</strong></td></tr>
+      <tr><td>B. 典型情況（級差 ~12%，1 次同級）</td><td>10.00%</td><td>1.20%</td><td>0.10%</td><td><strong style="color:var(--orange);">11.30%</strong></td></tr>
+      <tr><td>C. 最差情況（完整鏈，3 次同級）</td><td>10.00%</td><td>2.00%</td><td>0.30%</td><td><strong style="color:var(--red);">12.30%</strong></td></tr>
+      <tr><td>D. 極端最差（完整鏈，5 次同級）</td><td>10.00%</td><td>2.00%</td><td>0.50%</td><td><strong style="color:var(--red);">12.50%</strong></td></tr>
+    </table>
+
+    <h3><span class="num">4.4</span>視覺化撥比分布</h3>
+    <div class="chart-wrap">
+      <canvas id="ratioChart"></canvas>
+    </div>
+
+    <h3><span class="num">4.5</span>核心結論</h3>
+    <pre>每收 100 USDT，平台年度最高總支出 = 12.50 USDT
+
+最低撥比 = 10.00%（純個人投資者）
+典型撥比 ≈ 11.00% ~ 11.50%
+最高撥比 ≈ 12.00% ~ 12.50%（極端情況）</pre>
+    <p><strong>為什麼撥比只有 12.5% 而非 30%？</strong>因為級差獎金的 20% 是「日收益的 20%」，而非「本金的 20%」。換算到本金：20% × 10% 年化 = 僅 2% 本金成本。</p>
+
+    <h3><span class="num">4.6</span>平台盈虧平衡</h3>
+    <table>
+      <tr><th>平台資金池年化收益</th><th>最差撥比 12.5%</th><th>典型撥比 11.3%</th><th>淨利潤</th></tr>
+      <tr><td>15%</td><td>盈利</td><td>盈利</td><td>+2.5% / +3.7%</td></tr>
+      <tr><td>13%</td><td>盈利</td><td>盈利</td><td>+0.5% / +1.7%</td></tr>
+      <tr><td>12.5%</td><td>打平</td><td>盈利</td><td>0% / +1.2%</td></tr>
+      <tr><td>10%</td><td>虧損</td><td>虧損</td><td>-2.5% / -1.3%</td></tr>
+    </table>
+    <p><strong>建議：</strong>平台資金池目標年化收益應 ≥ 15%。低於 13% 時觸發風險預警；低於 12.5% 觸發降息提案。</p>
+  </div>
+</section>
+
+<!-- RISK -->
+<section id="risk" class="prd-section">
+  <div class="container">
+    <div class="sec-head">
+      <div class="small">risk control</div>
+      <h2>防作弊風控設計</h2>
+    </div>
+
+    <h3><span class="num">5.1</span>防自刷（Self-Farming）</h3>
+    <table>
+      <tr><th>風控措施</th><th>說明</th></tr>
+      <tr><td>KYC 綁定</td><td>同一身份證件只能註冊 1 個帳號</td></tr>
+      <tr><td>設備指紋</td><td>同一設備最多關聯 2 個帳號</td></tr>
+      <tr><td>錢包關聯分析</td><td>同一鏈上錢包地址充值標記為「疑似關聯」</td></tr>
+      <tr><td>推薦鏈異常偵測</td><td>短時間大量推薦鏈註冊觸發人工審核</td></tr>
+      <tr><td>最低投資週期</td><td>訂單需持有至少 7 天方可計入有效投資</td></tr>
+    </table>
+
+    <h3><span class="num">5.2</span>防虛假投資（充提套利）</h3>
+    <table>
+      <tr><th>風控措施</th><th>說明</th></tr>
+      <tr><td>鎖倉計算規則</td><td>訂單須「持有中」才計入團隊業績</td></tr>
+      <tr><td>提幣冷卻期</td><td>充值後 72 小時內不可提幣</td></tr>
+      <tr><td>業績回溯扣除</td><td>提前贖回即時從上級團隊業績中扣除</td></tr>
+      <tr><td>異常大額警報</td><td>單筆 &gt; 50,000 USDT 需 24 小時延遲確認</td></tr>
+      <tr><td>充提比監控</td><td>充值/提幣比例 &gt; 0.9 降低業績計算權重</td></tr>
+    </table>
+
+    <h3><span class="num">5.3</span>異常行為偵測</h3>
+    <table>
+      <tr><th>偵測項目</th><th>觸發條件</th><th>處理方式</th></tr>
+      <tr><td>集中註冊</td><td>24h 內新增 &gt; 20 直推</td><td>暫停獎金結算，人工審核</td></tr>
+      <tr><td>循環充值</td><td>A→B→C→A 鏈上轉帳</td><td>全部標記，凍結獎金</td></tr>
+      <tr><td>殭屍帳號</td><td>僅最低投資無操作</td><td>不計入有效直推</td></tr>
+      <tr><td>獎金異常</td><td>單日 &gt; 歷史平均 5 倍</td><td>延遲發放，人工審核</td></tr>
+    </table>
+
+    <h3><span class="num">5.4</span>資料庫核心表結構</h3>
+    <pre>users: id, wallet_address, kyc_status, vip_level, level_achieved_at,
+       referred_by, personal_investment, total_earnings, cap_remaining
+
+orders: id, user_id, amount, status, created_at, locked_until, is_valid
+
+referral_tree: user_id, parent_id, depth, path (materialized path)
+
+daily_settlements: date, user_id, personal_yield, differential_bonus,
+                   same_level_bonus, total, cap_applied
+
+risk_flags: user_id, flag_type, detected_at, status, reviewed_by</pre>
+    <p><strong>關鍵索引：</strong></p>
+    <ul>
+      <li><code>referral_tree.path</code> — 快速遍歷推薦鏈（用 materialized path）</li>
+      <li><code>users.vip_level + level_achieved_at</code> — 同級判定優先級</li>
+      <li><code>orders.user_id + status</code> — 有效投資快速查詢</li>
+    </ul>
+  </div>
+</section>
+
+<!-- BOTTOM NAV -->
+<div class="container">
+  <div class="bottom-nav">
+    <a href="product-dex.html">
+      <div class="l">← Previous</div>
+      <div class="v">DEX 錢包 + Swap</div>
+    </a>
+    <a href="product-h5.html" class="next">
+      <div class="l">Next →</div>
+      <div class="v">H5 活動頁規格</div>
+    </a>
+  </div>
+</div>
+
+<footer style="padding:40px 0;text-align:center;color:var(--text-3);font-size:13px;border-top:1px solid var(--line);font-family:var(--mono);">
+  Simon Lee · DeFi Earn Product Detail · v1.1 · 2026
+</footer>
+
+<script>
+  mermaid.initialize({
+    startOnLoad: true,
+    theme: 'base',
+    themeVariables: {
+      darkMode: true,
+      background: '#0d0f15',
+      primaryColor: '#0d0f15',
+      primaryTextColor: '#e8eaf0',
+      primaryBorderColor: '#00d395',
+      lineColor: '#5d6477',
+      secondaryColor: '#13161f',
+      fontFamily: 'JetBrains Mono, ui-monospace, monospace',
+      fontSize: '13px',
+    },
+    flowchart:{ curve:'basis', padding:20 }
+  });
+
+  // Tab switching
+  document.querySelectorAll('.defi-app .tabs .t').forEach(t => {
+    t.onclick = () => {
+      document.querySelectorAll('.defi-app .tabs .t').forEach(x => x.classList.remove('active'));
+      t.classList.add('active');
+      document.querySelectorAll('.defi-app .panel').forEach(p => p.classList.remove('active'));
+      document.getElementById('tab-' + t.dataset.tab).classList.add('active');
+    };
+  });
+
+  // VIP tiers
+  const vipData = [
+    {l:'V0', pct:0, c:'#888'}, {l:'V1', pct:5, c:'#00d395'}, {l:'V2', pct:8, c:'#00d395'},
+    {l:'V3', pct:10, c:'#f5a524'}, {l:'V4', pct:12, c:'#f5a524'}, {l:'V5', pct:14, c:'#4f80ff'},
+    {l:'V6', pct:16, c:'#4f80ff'}, {l:'V7', pct:18, c:'#ff66cc'}, {l:'V8', pct:19, c:'#ff66cc'},
+    {l:'V9', pct:20, c:'#a060ff'}
+  ];
+
+  let currentVip = 6;
+  function renderVips(){
+    document.getElementById('vip-tiers').innerHTML = vipData.map((v,i) =>
+      `<div class="tier ${i===currentVip?'active':''}" data-i="${i}" style="${i===currentVip?'':'color:'+v.c}">${v.l}</div>`
+    ).join('');
+    document.querySelectorAll('.vip-tier-row .tier').forEach(t => {
+      t.onclick = () => { currentVip = parseInt(t.dataset.i); renderVips(); recalc(); };
+    });
+    document.getElementById('vip-val').textContent = `VIP${currentVip} · ${vipData[currentVip].pct}%`;
+  }
+  renderVips();
+
+  // Calculator
+  function recalc(){
+    const amt = parseInt(document.getElementById('amt').value);
+    const teamDaily = parseInt(document.getElementById('team').value);
+    const dnVip = parseInt(document.getElementById('dn').value);
+
+    document.getElementById('amt-val').textContent = amt.toLocaleString('en-US') + ' USDT';
+    document.getElementById('team-val').textContent = teamDaily.toLocaleString('en-US') + ' USDT';
+    document.getElementById('dn-val').textContent = `VIP${dnVip} · ${vipData[dnVip].pct}%`;
+
+    const personalDaily = amt * 0.10 / 365;
+    const personalYear = amt * 0.10;
+
+    const myPct = vipData[currentVip].pct;
+    const dnPct = vipData[dnVip].pct;
+    const spread = Math.max(0, myPct - dnPct);
+    const bonusDaily = teamDaily * spread / 100;
+    const totalDaily = personalDaily + bonusDaily;
+    const cap = amt * 2;
+    const capDays = cap / totalDaily;
+    const capYears = capDays / 365;
+    const annualRatio = ((totalDaily * 365) / amt) * 100;
+
+    document.getElementById('r-personal').textContent = personalDaily.toFixed(2) + ' USDT';
+    document.getElementById('r-personal-y').textContent = personalYear.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2}) + ' USDT';
+    document.getElementById('r-spread').textContent = spread + '%';
+    document.getElementById('r-bonus').textContent = bonusDaily.toFixed(2) + ' USDT';
+    document.getElementById('r-total').textContent = totalDaily.toFixed(2) + ' USDT';
+    document.getElementById('r-cap').textContent = cap.toLocaleString('en-US') + ' USDT';
+    document.getElementById('r-days').textContent = (capYears < 1 ? capDays.toFixed(0) + ' 天' : capYears.toFixed(1) + ' 年');
+    document.getElementById('r-ratio').textContent = annualRatio.toFixed(2) + '%';
+  }
+
+  document.getElementById('amt').oninput = recalc;
+  document.getElementById('team').oninput = recalc;
+  document.getElementById('dn').oninput = recalc;
+
+  recalc();
+
+  // Chart
+  window.addEventListener('load', () => {
+    const ctx = document.getElementById('ratioChart').getContext('2d');
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: ['A 純個人', 'B 典型情況', 'C 最差情況', 'D 極端最差'],
+        datasets: [{
+          label: '個人收益',
+          data: [10, 10, 10, 10],
+          backgroundColor: 'rgba(0,211,149,0.7)',
+          stack: 'stack0'
+        },{
+          label: '級差獎金',
+          data: [0, 1.2, 2, 2],
+          backgroundColor: 'rgba(245,165,36,0.7)',
+          stack: 'stack0'
+        },{
+          label: '同級獎',
+          data: [0, 0.1, 0.3, 0.5],
+          backgroundColor: 'rgba(255,102,204,0.7)',
+          stack: 'stack0'
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { labels: { color: '#e8eaf0', font: { family: 'JetBrains Mono', size: 12 } } },
+          tooltip: { titleColor:'#e8eaf0', bodyColor:'#9097a8', backgroundColor:'#13161f', borderColor:'#1f2330', borderWidth:1 }
+        },
+        scales: {
+          x: { ticks: { color: '#9097a8', font: { family: 'Noto Sans TC', size: 13 } }, grid: { color: '#1f2330' } },
+          y: { ticks: { color: '#9097a8', callback: v => v + '%', font: { family: 'JetBrains Mono' } }, grid: { color: '#1f2330' }, title: { display:true, text:'年化撥比 (%)', color: '#9097a8' } }
+        }
+      }
+    });
+  });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Product Showcase · Simon Lee · Crypto / Web3 PM</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #07080c;
+    --bg-2: #0d0f15;
+    --bg-3: #13161f;
+    --bg-4: #1a1e2a;
+    --line: #1f2330;
+    --line-2: #2a2f3e;
+    --text: #e8eaf0;
+    --text-2: #9097a8;
+    --text-3: #5d6477;
+    --accent: #00d395;
+    --accent-2: #4f80ff;
+    --orange: #f5a524;
+    --pink: #ff66cc;
+    --green: #00d395;
+    --blue: #4f80ff;
+    --danger: #f24b3d;
+    --serif: 'Noto Sans TC', 'Inter', sans-serif;
+    --mono: 'JetBrains Mono', ui-monospace, monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html,body{background:var(--bg);color:var(--text);font-family:var(--serif);-webkit-font-smoothing:antialiased;line-height:1.7;font-size:17px;}
+  a{color:var(--text);text-decoration:none;}
+  .container{max-width:1240px;margin:0 auto;padding:0 32px;}
+
+  /* NAV */
+  nav.top{position:sticky;top:0;background:rgba(7,8,12,0.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);z-index:10;}
+  nav.top .row{display:flex;align-items:center;justify-content:space-between;padding:18px 32px;max-width:1240px;margin:0 auto;}
+  nav.top .logo{font-family:var(--mono);font-size:14px;letter-spacing:-0.02em;color:var(--text);display:flex;align-items:center;gap:12px;}
+  nav.top .logo .dot{width:8px;height:8px;background:var(--accent);border-radius:50%;display:inline-block;animation:pulse 2s infinite;}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
+  nav.top ul{display:flex;gap:32px;list-style:none;font-size:14px;font-family:var(--mono);}
+  nav.top ul a{color:var(--text-2);transition:color .2s;}
+  nav.top ul a:hover{color:var(--text);}
+
+  /* HERO (簡潔版) */
+  .hero{padding:80px 0 60px;border-bottom:1px solid var(--line);}
+  .hero .tag{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:12px;color:var(--accent);background:rgba(0,211,149,0.08);border:1px solid rgba(0,211,149,0.25);padding:7px 14px;border-radius:999px;margin-bottom:24px;text-transform:uppercase;letter-spacing:0.1em;}
+  .hero .tag::before{content:'';width:6px;height:6px;background:var(--accent);border-radius:50%;}
+  .hero h1{font-size:54px;line-height:1.1;letter-spacing:-0.025em;font-weight:700;margin-bottom:20px;}
+  .hero h1 .grad{background:linear-gradient(90deg,#00d395 0%,#4f80ff 50%,#a060ff 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+  .hero h1 .quick-link{text-decoration:none;background:linear-gradient(90deg,#00d395 0%,#4f80ff 50%,#a060ff 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;position:relative;display:inline-block;transition:transform .2s;}
+  .hero h1 .quick-link::after{content:'';position:absolute;left:0;right:0;bottom:-4px;height:3px;background:currentColor;opacity:0;transform:scaleX(0);transform-origin:left;transition:all .25s;border-radius:2px;}
+  .hero h1 .qlink-cex::after{background:#f5a524;}
+  .hero h1 .qlink-dex::after{background:#ff66cc;}
+  .hero h1 .qlink-defi::after{background:#00d395;}
+  .hero h1 .qlink-h5::after{background:#4f80ff;}
+  .hero h1 .quick-link:hover{transform:translateY(-3px);}
+  .hero h1 .quick-link:hover::after{opacity:1;transform:scaleX(1);}
+  .hero h1 .hero-sep{color:var(--text-3);margin:0 8px;font-weight:300;-webkit-text-fill-color:var(--text-3);}
+  .hero p.sub{font-size:19px;color:var(--text-2);line-height:1.55;max-width:760px;margin-bottom:32px;}
+
+  /* Quick-jump pills under hero */
+  .hero .quick-jump{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:8px;}
+  .hero .qj-label{font-family:var(--mono);font-size:12px;color:var(--text-3);margin-right:4px;letter-spacing:0.05em;}
+  .hero .qj-pill{display:inline-flex;align-items:center;gap:8px;padding:9px 16px;border-radius:999px;background:var(--bg-2);border:1px solid var(--line);text-decoration:none;color:var(--text-2);font-size:13px;font-weight:500;transition:all .2s cubic-bezier(.16,1,.3,1);}
+  .hero .qj-pill .qj-ic{font-size:15px;}
+  .hero .qj-pill .qj-arr{color:var(--text-3);font-size:13px;transition:transform .2s;}
+  .hero .qj-pill:hover{transform:translateY(-2px);background:var(--bg-3);color:var(--text);}
+  .hero .qj-pill:hover .qj-arr{transform:translateX(3px);}
+  .hero .qj-cex:hover{border-color:#f5a524;color:#f5a524;}
+  .hero .qj-cex:hover .qj-arr{color:#f5a524;}
+  .hero .qj-dex:hover{border-color:#ff66cc;color:#ff66cc;}
+  .hero .qj-dex:hover .qj-arr{color:#ff66cc;}
+  .hero .qj-defi:hover{border-color:#00d395;color:#00d395;}
+  .hero .qj-defi:hover .qj-arr{color:#00d395;}
+  .hero .qj-h5:hover{border-color:#4f80ff;color:#4f80ff;}
+  .hero .qj-h5:hover .qj-arr{color:#4f80ff;}
+
+  .hero .helpers{display:flex;gap:24px;align-items:center;font-family:var(--mono);font-size:13px;color:var(--text-3);}
+  .hero .helpers span{display:flex;align-items:center;gap:8px;}
+  .hero .helpers .k{color:var(--accent);}
+
+  /* WORK GRID (展廳風格) */
+  section.showcase{padding:60px 0 100px;}
+  .showcase-head{display:flex;justify-content:space-between;align-items:end;margin-bottom:48px;gap:40px;}
+  .showcase-head .left h2{font-size:38px;font-weight:700;letter-spacing:-0.02em;line-height:1.15;margin-bottom:8px;}
+  .showcase-head .left .small{font-family:var(--mono);font-size:12px;color:var(--accent);text-transform:uppercase;letter-spacing:0.12em;margin-bottom:14px;}
+  .showcase-head .right{color:var(--text-2);font-size:15px;max-width:380px;text-align:right;line-height:1.65;}
+
+  .works{display:grid;grid-template-columns:1fr 1fr;gap:24px;}
+  .work{background:var(--bg-2);border:1px solid var(--line);border-radius:20px;overflow:hidden;cursor:pointer;transition:all .25s;display:flex;flex-direction:column;}
+  .work:hover{border-color:var(--line-2);transform:translateY(-3px);}
+  .work .preview{height:240px;background:var(--bg-3);position:relative;overflow:hidden;border-bottom:1px solid var(--line);}
+  .work .body{padding:28px 32px 32px;}
+
+  /* CEX preview mini */
+  .pv-cex{background:linear-gradient(180deg,#0d0f15 0%,#13161f 100%);padding:18px;}
+  .pv-cex .kline{height:120px;background:var(--bg-2);border-radius:8px;padding:8px;position:relative;}
+  .pv-cex .kline svg{width:100%;height:100%;}
+  .pv-cex .ob{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px;}
+  .pv-cex .ob .col{background:var(--bg-2);border-radius:6px;padding:10px;font-family:var(--mono);font-size:11px;}
+  .pv-cex .ob .row-x{display:flex;justify-content:space-between;padding:2px 0;}
+  .pv-cex .ob .green{color:var(--accent);}
+  .pv-cex .ob .red{color:var(--danger);}
+
+  /* DEX preview mini */
+  .pv-dex{background:linear-gradient(180deg,#0d0f15 0%,#13161f 100%);padding:18px;display:flex;align-items:center;justify-content:center;}
+  .pv-dex .swap{background:var(--bg-2);border-radius:14px;padding:14px;width:260px;}
+  .pv-dex .from,.pv-dex .to{background:var(--bg-3);border-radius:10px;padding:10px 12px;margin-bottom:6px;}
+  .pv-dex .from .lbl,.pv-dex .to .lbl{font-size:11px;color:var(--text-3);}
+  .pv-dex .from .num,.pv-dex .to .num{font-family:var(--mono);font-size:18px;font-weight:600;display:flex;justify-content:space-between;align-items:center;margin-top:4px;}
+  .pv-dex .from .num .tok,.pv-dex .to .num .tok{font-size:12px;background:var(--bg-4);padding:4px 8px;border-radius:6px;display:flex;align-items:center;gap:5px;}
+  .pv-dex .arr{text-align:center;font-size:14px;color:var(--text-2);margin:2px 0;}
+  .pv-dex .btn{background:var(--blue);color:#fff;border-radius:10px;padding:8px;text-align:center;font-size:12px;font-weight:500;margin-top:8px;}
+
+  /* DeFi preview mini */
+  .pv-defi{background:linear-gradient(180deg,#0d0f15 0%,#13161f 100%);padding:18px;}
+  .pv-defi h4{font-size:11px;color:var(--text-3);font-family:var(--mono);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:10px;}
+  .pv-defi .tree{display:flex;flex-direction:column;align-items:center;gap:6px;}
+  .pv-defi .node{font-family:var(--mono);font-size:10px;padding:5px 10px;border-radius:6px;border:1px solid;}
+  .pv-defi .n9{color:#a060ff;border-color:rgba(160,96,255,0.4);background:rgba(160,96,255,0.08);}
+  .pv-defi .n7{color:var(--pink);border-color:rgba(255,102,204,0.4);background:rgba(255,102,204,0.08);}
+  .pv-defi .n5{color:var(--blue);border-color:rgba(79,128,255,0.4);background:rgba(79,128,255,0.08);}
+  .pv-defi .n3{color:var(--orange);border-color:rgba(245,165,36,0.4);background:rgba(245,165,36,0.08);}
+  .pv-defi .row-tree{display:flex;gap:10px;}
+  .pv-defi .lines{color:var(--text-3);font-family:var(--mono);font-size:8px;}
+
+  /* H5 preview mini */
+  .pv-h5{background:linear-gradient(180deg,#0d0f15 0%,#13161f 100%);padding:18px;display:flex;flex-direction:column;justify-content:center;}
+  .pv-h5 .ranks{background:var(--bg-2);border-radius:10px;padding:14px;}
+  .pv-h5 .ranks .ttl{font-size:11px;color:var(--text-3);text-transform:uppercase;font-family:var(--mono);letter-spacing:0.08em;margin-bottom:10px;}
+  .pv-h5 .rank{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid var(--line);font-family:var(--mono);font-size:11px;}
+  .pv-h5 .rank:last-child{border-bottom:none;}
+  .pv-h5 .rank .left{display:flex;align-items:center;gap:8px;}
+  .pv-h5 .rank .pos{width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;}
+  .pv-h5 .rank .pos.gold{background:var(--orange);color:#000;}
+  .pv-h5 .rank .pos.silver{background:#c0c0c0;color:#000;}
+  .pv-h5 .rank .pos.bronze{background:#cd7f32;color:#fff;}
+  .pv-h5 .rank .amt{color:var(--accent);}
+
+  /* WORK BODY */
+  .work .badge{display:inline-block;font-family:var(--mono);font-size:11px;background:rgba(255,255,255,0.04);border:1px solid var(--line);padding:5px 10px;border-radius:6px;letter-spacing:0.05em;margin-bottom:16px;}
+  .work.cex .badge{color:var(--orange);}
+  .work.dex .badge{color:var(--pink);}
+  .work.defi .badge{color:var(--green);}
+  .work.h5 .badge{color:var(--blue);}
+  .work h3{font-size:24px;font-weight:600;letter-spacing:-0.015em;margin-bottom:10px;}
+  .work .desc{color:var(--text-2);font-size:15px;line-height:1.65;margin-bottom:20px;}
+  .work .meta{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px;}
+  .work .meta span{font-family:var(--mono);font-size:11px;color:var(--text-2);background:var(--bg-3);border:1px solid var(--line);padding:5px 9px;border-radius:5px;}
+  .work .footer{display:flex;justify-content:space-between;align-items:center;padding-top:18px;border-top:1px solid var(--line);font-size:13px;color:var(--text-3);font-family:var(--mono);}
+  .work .footer .arrow{font-size:18px;transition:transform .2s;}
+  .work.cex .footer .arrow{color:var(--orange);}
+  .work.dex .footer .arrow{color:var(--pink);}
+  .work.defi .footer .arrow{color:var(--green);}
+  .work.h5 .footer .arrow{color:var(--blue);}
+  .work:hover .footer .arrow{transform:translateX(6px);}
+
+  /* WHITE LABEL */
+  section.whitelabel{padding:96px 0;border-top:1px solid var(--line);background:linear-gradient(180deg,var(--bg) 0%,#0a0c12 100%);}
+  .whitelabel .grid{display:grid;grid-template-columns:1fr 1.4fr;gap:80px;align-items:center;}
+  .whitelabel .left h2{font-size:42px;line-height:1.15;letter-spacing:-0.02em;margin-bottom:20px;font-weight:700;}
+  .whitelabel .left h2 em{font-style:normal;color:var(--accent);}
+  .whitelabel .left .small{font-family:var(--mono);font-size:12px;color:var(--accent);text-transform:uppercase;letter-spacing:0.12em;margin-bottom:14px;}
+  .whitelabel .left p{color:var(--text-2);font-size:16px;line-height:1.7;}
+  .whitelabel .right ul{list-style:none;display:grid;gap:14px;}
+  .whitelabel .right li{padding:22px 24px;background:var(--bg-2);border:1px solid var(--line);border-radius:14px;display:flex;gap:18px;align-items:flex-start;}
+  .whitelabel .right li .n{font-family:var(--mono);font-size:13px;color:var(--accent);min-width:32px;font-weight:500;}
+  .whitelabel .right li .ct .title{font-weight:500;font-size:16px;margin-bottom:4px;}
+  .whitelabel .right li .ct .sub{color:var(--text-2);font-size:14px;line-height:1.6;}
+
+  /* FOOTER */
+  footer{padding:50px 0;text-align:center;color:var(--text-3);font-size:13px;border-top:1px solid var(--line);font-family:var(--mono);}
+
+  @media(max-width:780px){
+    .hero h1{font-size:36px;}
+    .hero h1 .hero-sep{margin:0 4px;}
+    .hero p.sub{font-size:17px;}
+    .hero .quick-jump{gap:8px;}
+    .hero .qj-pill{padding:8px 12px;font-size:12px;}
+    .hero .qj-label{width:100%;margin-bottom:4px;}
+    .works{grid-template-columns:1fr;}
+    .whitelabel .grid{grid-template-columns:1fr;gap:40px;}
+    .showcase-head{flex-direction:column;align-items:flex-start;gap:20px;}
+    .showcase-head .right{text-align:left;}
+  }
+</style>
+</head>
+<body>
+
+<nav class="top">
+  <div class="row">
+    <div class="logo"><span class="dot"></span>SIMON · CRYPTO PM PORTFOLIO</div>
+    <ul>
+      <li><a href="../" style="color:var(--accent);">← Simon CV</a></li>
+      <li><a href="#showcase">Products</a></li>
+      <li><a href="#whitelabel">White Label</a></li>
+      <li><a href="mailto:skinnerlee1225@gmail.com">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="container">
+    <div class="tag">Live product prototypes · 4 projects</div>
+    <h1>
+      <a href="product-cex.html" class="quick-link qlink-cex">CEX</a><span class="hero-sep">·</span><a href="product-dex.html" class="quick-link qlink-dex">DEX</a><span class="hero-sep">·</span><a href="product-defi.html" class="quick-link qlink-defi">DeFi</a><span class="hero-sep">·</span><a href="product-h5.html" class="quick-link qlink-h5">H5</a><br/>
+      四個我從 0 設計的 Crypto 產品。
+    </h1>
+    <p class="sub">
+      點進任何一個產品 — 你會看到實際可操作的原型 demo、完整 PRD 規格書，以及背後的系統架構與數據流圖。<br/>
+      不只是文字，是讓你「親手摸到」我做的產品。
+    </p>
+    <div class="quick-jump">
+      <span class="qj-label">⚡ 快速跳轉：</span>
+      <a href="product-cex.html" class="qj-pill qj-cex"><span class="qj-ic">🏦</span><span class="qj-name">CEX 中心化交易所</span><span class="qj-arr">→</span></a>
+      <a href="product-dex.html" class="qj-pill qj-dex"><span class="qj-ic">🦄</span><span class="qj-name">DEX 錢包 + Swap</span><span class="qj-arr">→</span></a>
+      <a href="product-defi.html" class="qj-pill qj-defi"><span class="qj-ic">💎</span><span class="qj-name">理財模組 + VIP</span><span class="qj-arr">→</span></a>
+      <a href="product-h5.html" class="qj-pill qj-h5"><span class="qj-ic">🎯</span><span class="qj-name">H5 拉新活動</span><span class="qj-arr">→</span></a>
+    </div>
+    <div class="helpers" style="margin-top:24px;">
+      <span><span class="k">→</span> 點擊作品卡進入產品 demo</span>
+      <span><span class="k">⌘</span> 每個產品含完整 PRD + 互動原型 + 視覺化圖表</span>
+    </div>
+  </div>
+</header>
+
+<section class="showcase" id="showcase">
+  <div class="container">
+    <div class="showcase-head">
+      <div class="left">
+        <div class="small">selected works · 2023 — 2026</div>
+        <h2>產品展示廳</h2>
+      </div>
+      <div class="right">
+        每一個都是真實落地的白標方案 — 點擊進入操作原型，並查看背後完整的 PRD、系統架構、用戶流程與風控設計。
+      </div>
+    </div>
+
+    <div class="works">
+
+      <!-- CEX -->
+      <a href="product-cex.html" class="work cex">
+        <div class="preview pv-cex">
+          <div class="kline">
+            <svg viewBox="0 0 280 100" preserveAspectRatio="none">
+              <polyline points="0,70 20,60 40,65 60,45 80,50 100,30 120,40 140,25 160,35 180,20 200,28 220,15 240,22 260,10 280,18" fill="none" stroke="#00d395" stroke-width="1.5"/>
+              <polyline points="0,70 20,60 40,65 60,45 80,50 100,30 120,40 140,25 160,35 180,20 200,28 220,15 240,22 260,10 280,18 280,100 0,100" fill="url(#gradGreen)" opacity="0.3"/>
+              <defs>
+                <linearGradient id="gradGreen" x1="0" x2="0" y1="0" y2="1">
+                  <stop offset="0%" stop-color="#00d395" stop-opacity="0.5"/>
+                  <stop offset="100%" stop-color="#00d395" stop-opacity="0"/>
+                </linearGradient>
+              </defs>
+            </svg>
+          </div>
+          <div class="ob">
+            <div class="col">
+              <div class="row-x"><span>67,245</span><span class="green">0.82</span></div>
+              <div class="row-x"><span>67,240</span><span class="green">1.15</span></div>
+              <div class="row-x"><span>67,235</span><span class="green">2.43</span></div>
+            </div>
+            <div class="col">
+              <div class="row-x"><span>67,260</span><span class="red">0.65</span></div>
+              <div class="row-x"><span>67,265</span><span class="red">1.32</span></div>
+              <div class="row-x"><span>67,270</span><span class="red">0.91</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="body">
+          <div class="badge">CENTRALIZED EXCHANGE · 2023</div>
+          <h3>CEX 中心化交易所</h3>
+          <div class="desc">白標 All-in-one 中心化交易所，涵蓋現貨、合約、理財、資產管理。9 大系統模組獨立部署，30 人團隊交付主流 CEX 功能完整度。</div>
+          <div class="meta">
+            <span>現貨 + 合約</span>
+            <span>125x 槓桿</span>
+            <span>冷熱錢包</span>
+            <span>KYC / AML</span>
+          </div>
+          <div class="footer">
+            <span>9 modules · 50+ pages PRD</span>
+            <span class="arrow">→</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- DEX -->
+      <a href="product-dex.html" class="work dex">
+        <div class="preview pv-dex">
+          <div class="swap">
+            <div class="from">
+              <div class="lbl">From</div>
+              <div class="num">
+                <span>1.5</span>
+                <span class="tok">⟠ ETH</span>
+              </div>
+            </div>
+            <div class="arr">⇅</div>
+            <div class="to">
+              <div class="lbl">To (estimated)</div>
+              <div class="num">
+                <span style="color:var(--accent);">4,872.30</span>
+                <span class="tok">$ USDC</span>
+              </div>
+            </div>
+            <div class="btn">Confirm Swap</div>
+          </div>
+        </div>
+        <div class="body">
+          <div class="badge">DEX WALLET · 2025</div>
+          <h3>Web3 錢包 + DEX 聚合器</h3>
+          <div class="desc">去中心化錢包 + DEX 聚合器。BIP39 助記詞、HD 派生、wagmi/viem 整合、多鏈 Swap、合約風險偵測。</div>
+          <div class="meta">
+            <span>BIP39 / BIP44</span>
+            <span>EIP-1193</span>
+            <span>WalletConnect V2</span>
+            <span>多鏈支援</span>
+          </div>
+          <div class="footer">
+            <span>10 pages · 完整原型互動</span>
+            <span class="arrow">→</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- DeFi -->
+      <a href="product-defi.html" class="work defi">
+        <div class="preview pv-defi">
+          <h4>9-tier VIP referral tree</h4>
+          <div class="tree">
+            <div class="node n9">VIP9 · 20%</div>
+            <div class="lines">┌──┴──┐</div>
+            <div class="row-tree">
+              <div class="node n7">VIP7 · 18%</div>
+              <div class="node n7">VIP7 · 18%</div>
+              <div class="node n5">VIP5 · 14%</div>
+            </div>
+            <div class="lines">┌─┴─┐</div>
+            <div class="row-tree">
+              <div class="node n3">VIP3 · 10%</div>
+              <div class="node n3">VIP3 · 10%</div>
+            </div>
+          </div>
+        </div>
+        <div class="body">
+          <div class="badge">EARN MODULE · CEX / DEX · 2025</div>
+          <h3>理財模組 + VIP 裂變</h3>
+          <div class="desc">USDT 理財 + 9 級 VIP + 團隊裂變獎勵。<strong style="color:var(--text);">可嵌入 CEX 作為 Earn 子產品，DEX 場景對應 LP 質押。</strong>撥比可控在 12.5% 以內。</div>
+          <div class="meta">
+            <span>VIP0 ~ VIP9</span>
+            <span>級差獎金</span>
+            <span>撥比建模</span>
+            <span>防自刷風控</span>
+          </div>
+          <div class="footer">
+            <span>v1.1 · 含撥比計算器原型</span>
+            <span class="arrow">→</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- H5 -->
+      <a href="product-h5.html" class="work h5">
+        <div class="preview pv-h5">
+          <div class="ranks">
+            <div class="ttl">📊 Today's Top 5</div>
+            <div class="rank">
+              <div class="left"><span class="pos gold">1</span><span>Kin***ng</span></div>
+              <div class="amt">+42,800 USDT</div>
+            </div>
+            <div class="rank">
+              <div class="left"><span class="pos silver">2</span><span>Wal***er</span></div>
+              <div class="amt">+38,200 USDT</div>
+            </div>
+            <div class="rank">
+              <div class="left"><span class="pos bronze">3</span><span>Mar***ie</span></div>
+              <div class="amt">+29,500 USDT</div>
+            </div>
+            <div class="rank">
+              <div class="left"><span class="pos" style="background:var(--bg-3);color:var(--text-2);">4</span><span>Eth***io</span></div>
+              <div class="amt">+18,300 USDT</div>
+            </div>
+          </div>
+        </div>
+        <div class="body">
+          <div class="badge">H5 GROWTH CAMPAIGN · 2026</div>
+          <h3>H5 活動頁規格</h3>
+          <div class="desc">USDT 理財平台的拉新活動 — 社群報銷、VIP 挑戰賽、每日排行榜三大活動，含完整反作弊與業績計算規則。</div>
+          <div class="meta">
+            <span>100K USDT 獎池</span>
+            <span>5 分鐘刷新</span>
+            <span>三大活動</span>
+            <span>反作弊機制</span>
+          </div>
+          <div class="footer">
+            <span>3 campaigns · 完整資料表</span>
+            <span class="arrow">→</span>
+          </div>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<section class="whitelabel" id="whitelabel">
+  <div class="container">
+    <div class="grid">
+      <div class="left">
+        <div class="small">why this matters</div>
+        <h2>不是自營 —<br/>是 <em>白標基礎設施</em>。</h2>
+        <p>
+          這 4 個產品都是「白標 (White Label)」方案 — 同一套引擎要服務多個 B 端客戶，每個客戶的品牌、合規地區、費率結構都不同。挑戰遠高於自營交易所：必須讓所有東西都「參數化、可配置、可隔離」。
+        </p>
+      </div>
+      <div class="right">
+        <ul>
+          <li>
+            <div class="n">01</div>
+            <div class="ct">
+              <div class="title">服務多個 B 端客戶</div>
+              <div class="sub">同一套撮合 + 帳本，需支援不同品牌、地區、合規要求，做到客戶間資料完全隔離。</div>
+            </div>
+          </li>
+          <li>
+            <div class="n">02</div>
+            <div class="ct">
+              <div class="title">參數化的風控與費率</div>
+              <div class="sub">VIP 分級、Maker/Taker 費率、提現限額、強平閾值都需可配置而非寫死。</div>
+            </div>
+          </li>
+          <li>
+            <div class="n">03</div>
+            <div class="ct">
+              <div class="title">高可用 + 高安全</div>
+              <div class="sub">冷熱錢包分離、3/5 多簽、每日對帳 — 任何一個客戶出事都是公司風險。</div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    Built 2026 · Open to Crypto / Web3 PM opportunities · skinnerlee1225@gmail.com
+  </div>
+</footer>
+
+</body>
+</html>

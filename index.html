@@ -146,6 +146,57 @@
     }
     .btn-outline:hover{border-color:var(--accent2);color:var(--accent2);transform:translateY(-2px)}
 
+    /* Crypto Portfolio CTA on hero */
+    .btn-showcase{
+      display:inline-flex;align-items:center;gap:10px;padding:14px 26px;
+      background:linear-gradient(135deg,rgba(52,211,153,0.15) 0%,rgba(124,58,237,0.15) 100%);
+      border:1.5px solid rgba(52,211,153,0.45);
+      color:#fff;border-radius:50px;font-weight:600;font-size:1.05rem;
+      transition:all .3s cubic-bezier(.16,1,.3,1);cursor:pointer;text-decoration:none;
+      position:relative;overflow:hidden;
+    }
+    .btn-showcase .bs-icons{font-size:1rem;letter-spacing:-3px;filter:saturate(1.2);}
+    .btn-showcase .bs-arr{font-size:1.15rem;transition:transform .25s;color:var(--green);}
+    .btn-showcase:hover{
+      transform:translateY(-2px);
+      border-color:var(--green);
+      background:linear-gradient(135deg,rgba(52,211,153,0.25) 0%,rgba(124,58,237,0.2) 100%);
+      box-shadow:0 12px 40px rgba(52,211,153,0.2),0 0 60px rgba(124,58,237,0.15);
+      color:#fff;
+    }
+    .btn-showcase:hover .bs-arr{transform:translateX(5px);}
+
+    /* Nav Portfolio link (highlight) */
+    .nav-portfolio{
+      display:inline-flex !important;align-items:center;gap:8px;
+      padding:8px 18px !important;
+      background:rgba(52,211,153,0.1);
+      border:1px solid rgba(52,211,153,0.35);
+      border-radius:50px;
+      color:var(--green) !important;
+      font-weight:600 !important;font-size:0.86rem !important;
+      letter-spacing:0.06em !important;text-transform:none !important;
+      transition:all .25s;
+    }
+    .nav-portfolio .np-dot{
+      width:7px;height:7px;background:var(--green);border-radius:50%;
+      display:inline-block;animation:np-pulse 2s infinite;
+    }
+    @keyframes np-pulse{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(52,211,153,0.5)}50%{opacity:0.5;box-shadow:0 0 0 6px rgba(52,211,153,0)}}
+    .nav-portfolio .np-arr{color:var(--green);font-size:0.9rem;transition:transform .2s;}
+    .nav-portfolio:hover{
+      background:rgba(52,211,153,0.18);
+      border-color:var(--green);
+      color:#fff !important;
+      transform:translateY(-1px);
+    }
+    .nav-portfolio:hover .np-arr{transform:translate(2px,-2px);}
+    @media(max-width:900px){
+      .nav-portfolio{padding:6px 12px !important;font-size:0.75rem !important;}
+      .nav-portfolio .np-arr{display:none;}
+      .nav-links li.nav-li-portfolio{display:list-item !important;}
+    }
+
     /* SECTIONS */
     .section-wrap{max-width:1120px;margin:0 auto;padding:100px 5vw}
     .section-num{font-family:var(--font-head);font-size:1.05rem;font-weight:700;color:var(--accent2);letter-spacing:.15em;margin-bottom:8px}
@@ -283,6 +334,17 @@
     .port-card p{font-size:1.08rem;color:var(--muted);line-height:1.7;margin-bottom:14px}
     .port-link{font-size:1.05rem;color:var(--accent2);font-weight:500}
 
+    /* FEATURED SHOWCASE */
+    .featured-showcase:hover > div{border-color:rgba(124,58,237,0.55) !important;transform:translateY(-3px);box-shadow:0 20px 60px rgba(124,58,237,0.18),0 0 80px rgba(52,211,153,0.05)}
+    .featured-showcase > div{box-shadow:0 8px 30px rgba(0,0,0,0.2)}
+    .featured-showcase:hover [style*="background:var(--accent)"]{background:#a78bfa !important;transform:translateX(4px)}
+    @media(max-width:780px){
+      .featured-showcase > div{padding:28px 24px !important}
+      .featured-showcase h3{font-size:1.5rem !important}
+      .featured-showcase [style*="grid-template-columns:repeat(4,1fr)"]{grid-template-columns:repeat(2,1fr) !important}
+      .featured-showcase [style*="justify-content:space-between"]{flex-direction:column !important;align-items:flex-start !important}
+    }
+
     /* EDUCATION */
     #education{background:var(--surface)}
     .edu-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
@@ -339,6 +401,14 @@
     <li><a href="#competencies"><span class="nav-num" data-lang="en">03</span><span data-lang="en">Expertise</span><span class="nav-num" data-lang="zh">03</span><span data-lang="zh">專長</span></a></li>
     <li><a href="#skills"><span class="nav-num" data-lang="en">04</span><span data-lang="en">Skills</span><span class="nav-num" data-lang="zh">04</span><span data-lang="zh">技能</span></a></li>
     <li><a href="#contact"><span class="nav-num" data-lang="en">05</span><span data-lang="en">Contact</span><span class="nav-num" data-lang="zh">05</span><span data-lang="zh">聯絡</span></a></li>
+    <li class="nav-li-portfolio">
+      <a href="crypto-portfolio/" class="nav-portfolio">
+        <span class="np-dot"></span>
+        <span data-lang="en">Crypto Portfolio</span>
+        <span data-lang="zh">Crypto 作品集</span>
+        <span class="np-arr">↗</span>
+      </a>
+    </li>
     <li>
       <button class="lang-btn" onclick="toggleLang()">
         <span style="font-size:1.05rem">🌐</span>
@@ -397,6 +467,12 @@
       </div>
 
       <div class="hero-cta reveal reveal-delay-4">
+        <a href="crypto-portfolio/" class="btn-showcase">
+          <span class="bs-icons">🏦 🦄 💎 🎯</span>
+          <span data-lang="en">View Crypto Portfolio</span>
+          <span data-lang="zh">看 Crypto 作品集</span>
+          <span class="bs-arr">→</span>
+        </a>
         <a href="#contact" class="btn-primary" data-lang="en">Get in Touch</a>
         <a href="#contact" class="btn-primary" data-lang="zh">立即聯絡</a>
         <a href="https://www.linkedin.com/in/simon-lee-a0957914b/" target="_blank" class="btn-outline">LinkedIn ↗</a>
@@ -805,6 +881,66 @@
     <div class="section-num reveal">—</div>
     <h2 class="section-title reveal" data-lang="en">Portfolio</h2>
     <h2 class="section-title reveal" data-lang="zh">作品連結</h2>
+
+    <!-- FEATURED SHOWCASE -->
+    <a href="crypto-portfolio/" class="featured-showcase reveal" style="display:block;text-decoration:none;color:inherit;margin-bottom:40px;">
+      <div style="background:linear-gradient(135deg,rgba(124,58,237,0.12) 0%,rgba(52,211,153,0.08) 100%);border:1px solid rgba(124,58,237,0.3);border-radius:24px;padding:40px 44px;position:relative;overflow:hidden;transition:all .3s cubic-bezier(.16,1,.3,1);">
+        <div style="position:absolute;top:-40px;right:-40px;width:240px;height:240px;border-radius:50%;background:radial-gradient(circle,rgba(124,58,237,0.18) 0%,transparent 70%);pointer-events:none;"></div>
+
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:18px;position:relative;">
+          <span style="display:inline-flex;align-items:center;gap:8px;font-family:var(--font-head);font-size:0.78rem;font-weight:700;color:var(--green);background:rgba(52,211,153,0.12);border:1px solid rgba(52,211,153,0.3);padding:6px 14px;border-radius:50px;letter-spacing:0.12em;text-transform:uppercase;">
+            <span style="width:7px;height:7px;background:var(--green);border-radius:50%;display:inline-block;"></span>NEW · Featured Showcase
+          </span>
+          <span style="font-family:var(--font-head);font-size:0.78rem;color:var(--muted2);letter-spacing:0.1em;">2026</span>
+        </div>
+
+        <h3 style="font-family:var(--font-head);font-size:2rem;font-weight:700;color:#fff;line-height:1.2;letter-spacing:-0.01em;margin-bottom:10px;position:relative;" data-lang="en">4 Crypto Products · From 0 to 1</h3>
+        <h3 style="font-family:var(--font-head);font-size:2rem;font-weight:700;color:#fff;line-height:1.2;letter-spacing:-0.01em;margin-bottom:10px;position:relative;" data-lang="zh">4 個從 0 設計的 Crypto 產品</h3>
+
+        <p style="font-size:1.08rem;color:var(--muted2);line-height:1.6;max-width:720px;margin-bottom:28px;position:relative;" data-lang="en">A complete interactive showcase — White-label CEX, DEX wallet, Earn module (CEX/LP), and H5 growth campaign. Each product includes a live prototype, full PRD, system architecture diagrams, and decision rationale.</p>
+        <p style="font-size:1.08rem;color:var(--muted2);line-height:1.6;max-width:720px;margin-bottom:28px;position:relative;" data-lang="zh">完整互動式作品展示廳 — 白標 CEX、去中心化錢包、理財模組（CEX / LP 質押）、H5 拉新活動。每個產品都包含可操作原型、完整 PRD、系統架構圖與關鍵決策思考。</p>
+
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:28px;position:relative;">
+          <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:18px 16px;text-align:center;">
+            <div style="font-size:32px;margin-bottom:8px;">🏦</div>
+            <div style="font-family:var(--font-head);font-weight:600;font-size:0.95rem;color:#fff;letter-spacing:0.02em;">CEX</div>
+            <div style="font-size:0.78rem;color:var(--muted);margin-top:3px;letter-spacing:0.06em;text-transform:uppercase;">交易所</div>
+          </div>
+          <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:18px 16px;text-align:center;">
+            <div style="font-size:32px;margin-bottom:8px;">🦄</div>
+            <div style="font-family:var(--font-head);font-weight:600;font-size:0.95rem;color:#fff;letter-spacing:0.02em;">DEX</div>
+            <div style="font-size:0.78rem;color:var(--muted);margin-top:3px;letter-spacing:0.06em;text-transform:uppercase;">去中心錢包</div>
+          </div>
+          <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:18px 16px;text-align:center;">
+            <div style="font-size:32px;margin-bottom:8px;">💎</div>
+            <div style="font-family:var(--font-head);font-weight:600;font-size:0.95rem;color:#fff;letter-spacing:0.02em;">Earn</div>
+            <div style="font-size:0.78rem;color:var(--muted);margin-top:3px;letter-spacing:0.06em;text-transform:uppercase;">理財/LP 質押</div>
+          </div>
+          <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:18px 16px;text-align:center;">
+            <div style="font-size:32px;margin-bottom:8px;">🎯</div>
+            <div style="font-family:var(--font-head);font-weight:600;font-size:0.95rem;color:#fff;letter-spacing:0.02em;">H5</div>
+            <div style="font-size:0.78rem;color:var(--muted);margin-top:3px;letter-spacing:0.06em;text-transform:uppercase;">拉新活動</div>
+          </div>
+        </div>
+
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;position:relative;">
+          <div style="display:flex;gap:24px;font-size:0.92rem;color:var(--muted2);flex-wrap:wrap;">
+            <span data-lang="en"><span style="color:var(--accent2);font-weight:600;">●</span> Live prototypes</span>
+            <span data-lang="zh"><span style="color:var(--accent2);font-weight:600;">●</span> 可操作原型</span>
+            <span data-lang="en"><span style="color:var(--green);font-weight:600;">●</span> Full PRDs</span>
+            <span data-lang="zh"><span style="color:var(--green);font-weight:600;">●</span> 完整 PRD</span>
+            <span data-lang="en"><span style="color:#fbbf24;font-weight:600;">●</span> System diagrams</span>
+            <span data-lang="zh"><span style="color:#fbbf24;font-weight:600;">●</span> 系統架構圖</span>
+          </div>
+          <div style="display:inline-flex;align-items:center;gap:8px;background:var(--accent);color:#fff;padding:13px 24px;border-radius:50px;font-family:var(--font-head);font-weight:600;font-size:0.98rem;letter-spacing:0.04em;transition:all .25s;">
+            <span data-lang="en">Explore showcase</span>
+            <span data-lang="zh">進入作品展示廳</span>
+            <span style="font-size:1.1rem;">→</span>
+          </div>
+        </div>
+      </div>
+    </a>
+
     <div class="port-grid">
       <div class="port-card reveal">
         <div class="type">PRD</div>

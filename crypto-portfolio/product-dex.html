@@ -1,0 +1,974 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Web3 錢包 + DEX · Product Detail · Simon Lee</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10.6.1/dist/mermaid.min.js"></script>
+<style>
+  :root{
+    --bg: #07080c; --bg-2: #0d0f15; --bg-3: #13161f; --bg-4: #1a1e2a;
+    --line: #1f2330; --line-2: #2a2f3e;
+    --text: #e8eaf0; --text-2: #9097a8; --text-3: #5d6477;
+    --accent: #ff66cc;          /* DEX 主色 粉紅 */
+    --green: #00d395; --red: #f24b3d; --blue: #4f80ff; --orange: #f5a524;
+    --serif: 'Noto Sans TC', 'Inter', sans-serif;
+    --mono: 'JetBrains Mono', ui-monospace, monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html,body{background:var(--bg);color:var(--text);font-family:var(--serif);-webkit-font-smoothing:antialiased;line-height:1.7;font-size:16px;}
+  a{color:var(--text);text-decoration:none;}
+  .container{max-width:1240px;margin:0 auto;padding:0 32px;}
+
+  /* NAV */
+  nav.top{position:sticky;top:0;background:rgba(7,8,12,0.9);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);z-index:20;}
+  nav.top .row{display:flex;align-items:center;justify-content:space-between;padding:16px 32px;max-width:1240px;margin:0 auto;}
+  nav.top .left{display:flex;align-items:center;gap:20px;font-family:var(--mono);font-size:13px;}
+  nav.top .left a{color:var(--text-2);}
+  nav.top .left a:hover{color:var(--text);}
+  nav.top .left .sep{color:var(--text-3);}
+  nav.top .left .curr{color:var(--accent);}
+  nav.top .toc{display:flex;gap:24px;list-style:none;font-size:13px;font-family:var(--mono);}
+  nav.top .toc a{color:var(--text-3);}
+  nav.top .toc a:hover{color:var(--text);}
+
+  /* HERO */
+  header.hero{padding:60px 0 50px;border-bottom:1px solid var(--line);}
+  .hero .tag{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:12px;color:var(--accent);background:rgba(255,102,204,0.08);border:1px solid rgba(255,102,204,0.25);padding:7px 14px;border-radius:999px;margin-bottom:20px;text-transform:uppercase;letter-spacing:0.1em;}
+  .hero h1{font-size:54px;line-height:1.1;letter-spacing:-0.025em;font-weight:700;margin-bottom:18px;}
+  .hero h1 .accent{color:var(--accent);}
+  .hero p.sub{font-size:18px;color:var(--text-2);line-height:1.6;max-width:820px;margin-bottom:36px;}
+  .hero .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:32px;padding-top:36px;border-top:1px solid var(--line);}
+  .hero .stats .item .label{font-size:12px;color:var(--text-3);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px;}
+  .hero .stats .item .num{font-family:var(--mono);font-size:28px;font-weight:600;color:var(--text);}
+  .hero .stats .item .num .u{font-size:15px;color:var(--text-2);margin-left:4px;}
+
+  /* SECTION */
+  section{padding:80px 0;border-bottom:1px solid var(--line);}
+  section .sec-head{margin-bottom:40px;}
+  section .sec-head .small{font-family:var(--mono);font-size:12px;color:var(--accent);text-transform:uppercase;letter-spacing:0.12em;margin-bottom:12px;}
+  section h2{font-size:38px;font-weight:700;letter-spacing:-0.02em;line-height:1.15;margin-bottom:14px;}
+  section .desc{color:var(--text-2);font-size:16px;line-height:1.7;max-width:780px;}
+
+  /* PROTO frame */
+  .proto-wrapper{background:var(--bg-2);border:1px solid var(--line);border-radius:16px;overflow:hidden;}
+  .proto-bar{display:flex;align-items:center;justify-content:space-between;padding:14px 20px;background:var(--bg-3);border-bottom:1px solid var(--line);font-family:var(--mono);font-size:12px;}
+  .proto-bar .dots{display:flex;gap:6px;}
+  .proto-bar .dots span{width:11px;height:11px;border-radius:50%;background:var(--bg-4);}
+  .proto-bar .dots span:nth-child(1){background:#ff5f57;}
+  .proto-bar .dots span:nth-child(2){background:#febc2e;}
+  .proto-bar .dots span:nth-child(3){background:#28c840;}
+  .proto-bar .url{color:var(--text-2);background:var(--bg-2);padding:5px 14px;border-radius:6px;font-size:11px;}
+  .proto-bar .live{color:var(--accent);display:flex;align-items:center;gap:6px;}
+  .proto-bar .live::before{content:'';width:6px;height:6px;background:var(--accent);border-radius:50%;animation:blink 1.5s infinite;}
+  @keyframes blink{50%{opacity:0.3}}
+
+  /* DEX APP */
+  .dex-app{background:#0a0c12;display:grid;grid-template-columns:280px 1fr;min-height:680px;}
+  .dex-sidebar{background:var(--bg-2);border-right:1px solid var(--line);padding:24px 18px;display:flex;flex-direction:column;}
+  .dex-sidebar .acct{background:var(--bg-3);border:1px solid var(--line);border-radius:12px;padding:14px;margin-bottom:18px;}
+  .dex-sidebar .acct .row1{display:flex;justify-content:space-between;align-items:center;}
+  .dex-sidebar .acct .avatar{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,#ff66cc 0%,#4f80ff 100%);display:flex;align-items:center;justify-content:center;font-weight:600;font-size:14px;color:#fff;}
+  .dex-sidebar .acct .name{font-size:13px;font-weight:500;margin-top:8px;}
+  .dex-sidebar .acct .addr{font-family:var(--mono);font-size:11px;color:var(--text-3);margin-top:2px;}
+  .dex-sidebar .acct .switch{color:var(--text-3);font-size:12px;cursor:pointer;}
+  .dex-sidebar .chain{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;background:var(--bg-3);border:1px solid var(--line);border-radius:10px;font-family:var(--mono);font-size:12px;margin-bottom:18px;cursor:pointer;}
+  .dex-sidebar .chain .lf{display:flex;align-items:center;gap:8px;}
+  .dex-sidebar .chain .lf::before{content:'';width:8px;height:8px;background:#627eea;border-radius:50%;}
+  .dex-sidebar .nav{display:flex;flex-direction:column;gap:4px;}
+  .dex-sidebar .nav .item{display:flex;align-items:center;gap:10px;padding:11px 14px;border-radius:10px;color:var(--text-2);font-size:14px;cursor:pointer;transition:all .15s;}
+  .dex-sidebar .nav .item:hover{background:var(--bg-3);color:var(--text);}
+  .dex-sidebar .nav .item.active{background:rgba(255,102,204,0.1);color:var(--accent);}
+  .dex-sidebar .nav .item .ic{font-size:18px;width:20px;}
+  .dex-sidebar .bottom-info{margin-top:auto;padding-top:18px;border-top:1px solid var(--line);font-family:var(--mono);font-size:11px;color:var(--text-3);}
+
+  .dex-content{padding:28px 36px;overflow-y:auto;max-height:680px;}
+  .dex-content .panel{display:none;}
+  .dex-content .panel.active{display:block;}
+
+  /* WALLET panel */
+  .panel-wallet h2{font-size:14px;font-family:var(--mono);text-transform:uppercase;letter-spacing:0.1em;color:var(--text-3);margin-bottom:14px;}
+  .wallet-total{background:linear-gradient(135deg,rgba(255,102,204,0.08) 0%,rgba(79,128,255,0.08) 100%);border:1px solid var(--line);border-radius:16px;padding:26px 28px;margin-bottom:18px;}
+  .wallet-total .label{font-size:13px;color:var(--text-2);}
+  .wallet-total .val{font-family:var(--mono);font-size:42px;font-weight:600;letter-spacing:-0.02em;margin-top:4px;display:flex;align-items:baseline;gap:8px;}
+  .wallet-total .val .ccy{font-size:18px;color:var(--text-2);font-weight:400;}
+  .wallet-total .chg{display:inline-block;margin-top:8px;font-family:var(--mono);font-size:13px;color:var(--green);background:rgba(0,211,149,0.1);padding:3px 9px;border-radius:5px;}
+  .wallet-actions{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:18px;}
+  .wallet-actions .btn{background:var(--bg-3);border:1px solid var(--line);padding:12px;border-radius:10px;text-align:center;cursor:pointer;transition:all .2s;}
+  .wallet-actions .btn .ic{font-size:18px;display:block;margin-bottom:4px;}
+  .wallet-actions .btn .lbl{font-size:11px;font-family:var(--mono);color:var(--text-2);}
+  .wallet-actions .btn:hover{border-color:var(--accent);}
+
+  .wallet-tabs{display:flex;gap:24px;border-bottom:1px solid var(--line);margin:24px 0 14px;font-family:var(--mono);font-size:13px;}
+  .wallet-tabs .t{padding:10px 0;color:var(--text-3);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;}
+  .wallet-tabs .t.active{color:var(--accent);border-bottom-color:var(--accent);}
+
+  .token-list .row{display:grid;grid-template-columns:36px 1fr auto auto;align-items:center;gap:14px;padding:14px 0;border-bottom:1px solid var(--line);cursor:pointer;}
+  .token-list .row:hover{background:var(--bg-2);margin:0 -16px;padding:14px 16px;border-radius:8px;}
+  .token-list .icon{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:600;font-size:13px;color:#fff;}
+  .token-list .icon.eth{background:#627eea;}
+  .token-list .icon.usdc{background:#2775ca;}
+  .token-list .icon.usdt{background:#26a17b;}
+  .token-list .icon.wbtc{background:#f7931a;}
+  .token-list .icon.uni{background:#ff007a;}
+  .token-list .icon.link{background:#2a5ada;}
+  .token-list .nm .n{font-size:14px;font-weight:500;}
+  .token-list .nm .b{font-size:12px;color:var(--text-3);font-family:var(--mono);margin-top:2px;}
+  .token-list .v{text-align:right;font-family:var(--mono);font-size:14px;}
+  .token-list .c{text-align:right;font-family:var(--mono);font-size:12px;}
+  .token-list .c.up{color:var(--green);}
+  .token-list .c.down{color:var(--red);}
+
+  /* SWAP panel */
+  .swap-page{max-width:480px;margin:0 auto;}
+  .swap-card{background:var(--bg-2);border:1px solid var(--line);border-radius:20px;padding:20px;}
+  .swap-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;}
+  .swap-header .title{font-size:18px;font-weight:600;}
+  .swap-header .settings{width:32px;height:32px;background:var(--bg-3);border:1px solid var(--line);border-radius:8px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:14px;color:var(--text-2);}
+  .swap-slippage{background:var(--bg-3);border:1px solid var(--line);border-radius:10px;padding:14px;margin-bottom:14px;display:none;}
+  .swap-slippage.show{display:block;}
+  .swap-slippage .row{display:flex;justify-content:space-between;align-items:center;}
+  .swap-slippage .lbl{font-size:13px;color:var(--text-2);}
+  .swap-slippage .opts{display:flex;gap:6px;}
+  .swap-slippage .opt{padding:5px 10px;background:var(--bg-2);border:1px solid var(--line);border-radius:6px;font-family:var(--mono);font-size:11px;cursor:pointer;color:var(--text-2);}
+  .swap-slippage .opt.active{background:var(--accent);color:#fff;border-color:var(--accent);}
+
+  .swap-block{background:var(--bg-3);border:1px solid var(--line);border-radius:14px;padding:16px;margin-bottom:6px;}
+  .swap-block .lbl{display:flex;justify-content:space-between;font-size:12px;color:var(--text-3);margin-bottom:8px;}
+  .swap-block .input-row{display:flex;align-items:center;justify-content:space-between;gap:10px;}
+  .swap-block input{flex:1;background:transparent;border:none;color:var(--text);font-family:var(--mono);font-size:28px;font-weight:500;outline:none;width:100%;}
+  .swap-block input::placeholder{color:var(--text-3);}
+  .swap-block .tok{display:flex;align-items:center;gap:8px;background:var(--bg-2);border:1px solid var(--line);padding:7px 12px;border-radius:999px;cursor:pointer;font-size:14px;font-weight:500;flex-shrink:0;}
+  .swap-block .tok .ti{width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;color:#fff;font-weight:700;}
+  .swap-block .usd{font-size:12px;color:var(--text-3);font-family:var(--mono);margin-top:6px;}
+
+  .swap-flip{display:flex;justify-content:center;margin:-10px 0;position:relative;z-index:2;}
+  .swap-flip .btn{width:36px;height:36px;background:var(--bg-2);border:3px solid var(--bg);border-radius:10px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:16px;color:var(--accent);}
+
+  .swap-details{margin:14px 0;padding:14px;background:var(--bg-3);border:1px solid var(--line);border-radius:12px;font-family:var(--mono);font-size:12px;}
+  .swap-details .row{display:flex;justify-content:space-between;padding:4px 0;color:var(--text-3);}
+  .swap-details .row .v{color:var(--text-2);}
+  .swap-details .row .v.g{color:var(--green);}
+  .swap-details .row .v.r{color:var(--red);}
+
+  .swap-cta{width:100%;padding:15px;background:linear-gradient(135deg,#ff66cc 0%,#4f80ff 100%);color:#fff;border:none;border-radius:12px;font-family:var(--serif);font-weight:500;font-size:15px;cursor:pointer;transition:opacity .2s;}
+  .swap-cta:hover{opacity:0.9;}
+  .swap-cta:disabled{opacity:0.4;cursor:not-allowed;}
+
+  .route-info{background:rgba(255,102,204,0.06);border:1px solid rgba(255,102,204,0.2);border-radius:10px;padding:12px 14px;margin-top:12px;font-family:var(--mono);font-size:11px;color:var(--accent);}
+  .route-info strong{color:var(--accent);}
+
+  /* CREATE WALLET panel */
+  .create-card{background:var(--bg-2);border:1px solid var(--line);border-radius:20px;padding:32px;max-width:500px;margin:0 auto;}
+  .create-card .step{font-family:var(--mono);font-size:11px;color:var(--accent);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:14px;}
+  .create-card h3{font-size:24px;font-weight:600;margin-bottom:8px;}
+  .create-card .help{color:var(--text-2);font-size:14px;margin-bottom:24px;line-height:1.6;}
+  .create-card .warn{background:rgba(245,165,36,0.08);border:1px solid rgba(245,165,36,0.3);border-radius:10px;padding:14px 16px;font-size:13px;color:var(--orange);margin-bottom:20px;display:flex;gap:10px;align-items:flex-start;}
+  .seed-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:20px;}
+  .seed-grid .word{background:var(--bg-3);border:1px solid var(--line);border-radius:8px;padding:10px 12px;font-family:var(--mono);font-size:13px;display:flex;gap:8px;align-items:center;}
+  .seed-grid .word .n{color:var(--text-3);font-size:11px;min-width:14px;}
+  .create-stepper{display:flex;align-items:center;gap:8px;margin-bottom:24px;font-family:var(--mono);font-size:11px;color:var(--text-3);}
+  .create-stepper .dot{width:8px;height:8px;background:var(--bg-3);border-radius:50%;}
+  .create-stepper .dot.active{background:var(--accent);}
+  .create-stepper .dot.done{background:var(--green);}
+  .create-btn{width:100%;padding:13px;background:var(--accent);color:#fff;border:none;border-radius:10px;font-family:var(--serif);font-weight:500;font-size:14px;cursor:pointer;}
+
+  /* DApp panel */
+  .dapp-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;}
+  .dapp-card{background:var(--bg-2);border:1px solid var(--line);border-radius:14px;padding:18px;display:flex;gap:14px;align-items:center;cursor:pointer;transition:all .2s;}
+  .dapp-card:hover{border-color:var(--accent);}
+  .dapp-card .ic{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-weight:700;color:#fff;font-size:16px;flex-shrink:0;}
+  .dapp-card .nm{font-size:15px;font-weight:500;}
+  .dapp-card .ds{font-size:12px;color:var(--text-3);margin-top:2px;}
+  .dapp-card .hot{display:inline-block;margin-left:6px;font-family:var(--mono);font-size:10px;color:var(--red);background:rgba(242,75,61,0.1);padding:2px 6px;border-radius:4px;}
+
+  .proto-note{background:rgba(255,102,204,0.05);border:1px solid rgba(255,102,204,0.2);border-radius:10px;padding:14px 18px;margin-top:24px;font-family:var(--mono);font-size:12px;color:var(--accent);display:flex;gap:10px;align-items:center;}
+
+  /* PRD reuse */
+  .prd-section h3{font-size:24px;font-weight:600;margin:32px 0 12px;letter-spacing:-0.01em;}
+  .prd-section h3 .num{font-family:var(--mono);color:var(--accent);margin-right:10px;}
+  .prd-section h4{font-size:18px;font-weight:500;margin:20px 0 8px;color:var(--text);}
+  .prd-section p{color:var(--text-2);margin-bottom:14px;}
+  .prd-section ul{color:var(--text-2);margin:8px 0 14px 24px;}
+  .prd-section li{margin-bottom:6px;}
+  .prd-section strong{color:var(--text);font-weight:500;}
+  .prd-section table{width:100%;border-collapse:collapse;margin:16px 0;font-size:14px;}
+  .prd-section table th{background:var(--bg-2);text-align:left;padding:10px 14px;font-weight:500;font-size:13px;color:var(--text-2);border-bottom:1px solid var(--line);font-family:var(--mono);text-transform:uppercase;letter-spacing:0.05em;}
+  .prd-section table td{padding:10px 14px;border-bottom:1px solid var(--line);color:var(--text-2);}
+  .prd-section table tr:hover td{background:var(--bg-2);}
+  .prd-section code{font-family:var(--mono);font-size:13px;background:var(--bg-2);padding:2px 6px;border-radius:4px;color:var(--accent);}
+  .prd-section pre{background:var(--bg-2);border:1px solid var(--line);border-radius:10px;padding:18px;overflow-x:auto;margin:14px 0;font-family:var(--mono);font-size:13px;line-height:1.6;color:var(--text-2);}
+  .prd-section pre code{background:transparent;padding:0;color:inherit;}
+
+  .mermaid-wrap{background:var(--bg-2);border:1px solid var(--line);border-radius:14px;padding:32px;overflow:auto;margin:24px 0;}
+
+  .modules{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:20px 0;}
+  .module{background:var(--bg-2);border:1px solid var(--line);border-radius:12px;padding:18px;}
+  .module .num{font-family:var(--mono);font-size:11px;color:var(--accent);margin-bottom:6px;letter-spacing:0.08em;}
+  .module h5{font-size:15px;font-weight:500;margin-bottom:6px;}
+  .module p{font-size:13px;color:var(--text-2);margin:0;line-height:1.55;}
+
+  .decisions{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:20px 0;}
+  .decision{background:var(--bg-2);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:10px;padding:18px 22px;}
+  .decision .label{font-family:var(--mono);font-size:11px;color:var(--accent);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px;}
+  .decision h5{font-size:16px;font-weight:500;margin-bottom:6px;}
+  .decision p{font-size:14px;color:var(--text-2);margin:0;}
+
+  .bottom-nav{display:flex;justify-content:space-between;padding:50px 0 80px;gap:20px;}
+  .bottom-nav a{flex:1;background:var(--bg-2);border:1px solid var(--line);border-radius:14px;padding:24px 28px;display:flex;flex-direction:column;gap:8px;transition:all .2s;}
+  .bottom-nav a:hover{border-color:var(--line-2);}
+  .bottom-nav .l{font-family:var(--mono);font-size:11px;color:var(--text-3);text-transform:uppercase;letter-spacing:0.08em;}
+  .bottom-nav .v{font-size:18px;font-weight:500;color:var(--text);}
+  .bottom-nav a.next{text-align:right;}
+
+  @media(max-width:980px){
+    .dex-app{grid-template-columns:1fr;}
+    .dex-sidebar{border-right:none;border-bottom:1px solid var(--line);}
+    .hero h1{font-size:36px;}
+    .modules{grid-template-columns:1fr;}
+    .decisions{grid-template-columns:1fr;}
+    .bottom-nav{flex-direction:column;}
+  }
+</style>
+</head>
+<body>
+
+<nav class="top">
+  <div class="row">
+    <div class="left">
+      <a href="../" style="color:var(--accent);">← Simon CV</a>
+      <span class="sep">/</span>
+      <a href="index.html">Portfolio</a>
+      <span class="sep">/</span>
+      <span class="curr">Web3 錢包 + DEX</span>
+    </div>
+    <ul class="toc">
+      <li><a href="#prototype">Prototype</a></li>
+      <li><a href="#overview">Overview</a></li>
+      <li><a href="#architecture">Architecture</a></li>
+      <li><a href="#features">Features</a></li>
+      <li><a href="#security">Security</a></li>
+      <li><a href="#mvp">MVP</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="container">
+    <div class="tag">🦄 Web3 Wallet + DEX Aggregator · v1.0</div>
+    <h1>
+      <span class="accent">去中心化錢包</span><br/>
+      + DEX 聚合器。
+    </h1>
+    <p class="sub">
+      內建錢包（BIP39 助記詞、HD 派生、AES-256 本地加密）+ DEX 聚合器（Uniswap V2/V3 Router）。私鑰永遠不離開用戶裝置，支援 MetaMask 與 WalletConnect V2 連接外部錢包，多鏈 (Ethereum / Polygon / BSC / Arbitrum)。
+    </p>
+    <div class="stats">
+      <div class="item">
+        <div class="label">支援鏈數</div>
+        <div class="num">4+<span class="u">條鏈</span></div>
+      </div>
+      <div class="item">
+        <div class="label">頁面總數</div>
+        <div class="num">10<span class="u">個頁面</span></div>
+      </div>
+      <div class="item">
+        <div class="label">私鑰加密</div>
+        <div class="num">AES-<span class="u">256</span></div>
+      </div>
+      <div class="item">
+        <div class="label">KDF 強度</div>
+        <div class="num">262K<span class="u">次 scrypt</span></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- PROTOTYPE -->
+<section id="prototype">
+  <div class="container">
+    <div class="sec-head">
+      <div class="small">interactive prototype</div>
+      <h2>多畫面錢包原型</h2>
+      <p class="desc">點擊左側導航在「資產 / Swap / DApp / 錢包創建」之間切換。Swap 頁可即時換算匯率（ETH/USDC 真實匯率模擬）並計算滑點，按 Swap 會 demo 交易簽名流程。</p>
+    </div>
+
+    <div class="proto-wrapper">
+      <div class="proto-bar">
+        <div class="dots"><span></span><span></span><span></span></div>
+        <div class="url">app.simon-wallet.com</div>
+        <div class="live">LIVE PROTOTYPE</div>
+      </div>
+
+      <div class="dex-app">
+        <!-- Sidebar -->
+        <aside class="dex-sidebar">
+          <div class="acct">
+            <div class="row1">
+              <div>
+                <div class="avatar">S</div>
+                <div class="name">Simon's Wallet</div>
+                <div class="addr">0x8a2e...3f41</div>
+              </div>
+              <div class="switch">⌄</div>
+            </div>
+          </div>
+          <div class="chain">
+            <span class="lf">Ethereum</span>
+            <span style="color:var(--text-3);">⌄</span>
+          </div>
+          <nav class="nav">
+            <div class="item active" data-panel="wallet">
+              <span class="ic">💰</span><span>資產</span>
+            </div>
+            <div class="item" data-panel="swap">
+              <span class="ic">⇄</span><span>Swap 兌換</span>
+            </div>
+            <div class="item" data-panel="dapp">
+              <span class="ic">🌐</span><span>DApp 瀏覽器</span>
+            </div>
+            <div class="item" data-panel="send">
+              <span class="ic">↗</span><span>發送 / 接收</span>
+            </div>
+            <div class="item" data-panel="create">
+              <span class="ic">+</span><span>錢包創建</span>
+            </div>
+          </nav>
+          <div class="bottom-info">
+            v1.0 · 內建多鏈 · 私鑰本地加密
+          </div>
+        </aside>
+
+        <!-- Content -->
+        <div class="dex-content">
+          <!-- WALLET -->
+          <div class="panel panel-wallet active" id="p-wallet">
+            <div class="wallet-total">
+              <div class="label">總資產價值 (USD)</div>
+              <div class="val">24,982.46<span class="ccy">USD</span></div>
+              <span class="chg">▲ +812.30 (3.36%) · 24h</span>
+              <div class="wallet-actions">
+                <div class="btn"><span class="ic">↗</span><span class="lbl">SEND</span></div>
+                <div class="btn"><span class="ic">↙</span><span class="lbl">RECEIVE</span></div>
+                <div class="btn"><span class="ic">⇄</span><span class="lbl">SWAP</span></div>
+                <div class="btn"><span class="ic">+</span><span class="lbl">BUY</span></div>
+              </div>
+            </div>
+            <div class="wallet-tabs">
+              <div class="t active">資產</div>
+              <div class="t">NFT</div>
+              <div class="t">交易記錄</div>
+            </div>
+            <div class="token-list">
+              <div class="row">
+                <div class="icon eth">⟠</div>
+                <div class="nm"><div class="n">Ethereum</div><div class="b">3.245 ETH</div></div>
+                <div class="v">10,541.50</div>
+                <div class="c up">+3.82%</div>
+              </div>
+              <div class="row">
+                <div class="icon usdc">$</div>
+                <div class="nm"><div class="n">USD Coin</div><div class="b">8,234.56 USDC</div></div>
+                <div class="v">8,234.56</div>
+                <div class="c up">+0.01%</div>
+              </div>
+              <div class="row">
+                <div class="icon usdt">₮</div>
+                <div class="nm"><div class="n">Tether</div><div class="b">3,180.00 USDT</div></div>
+                <div class="v">3,180.00</div>
+                <div class="c down">-0.02%</div>
+              </div>
+              <div class="row">
+                <div class="icon wbtc">₿</div>
+                <div class="nm"><div class="n">Wrapped Bitcoin</div><div class="b">0.045 WBTC</div></div>
+                <div class="v">3,026.40</div>
+                <div class="c up">+2.45%</div>
+              </div>
+              <div class="row">
+                <div class="icon link">L</div>
+                <div class="nm"><div class="n">Chainlink</div><div class="b">82 LINK</div></div>
+                <div class="v">1,247.20</div>
+                <div class="c up">+5.13%</div>
+              </div>
+              <div class="row">
+                <div class="icon uni">U</div>
+                <div class="nm"><div class="n">Uniswap</div><div class="b">98 UNI</div></div>
+                <div class="v">752.80</div>
+                <div class="c down">-1.24%</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- SWAP -->
+          <div class="panel" id="p-swap">
+            <div class="swap-page">
+              <div class="swap-card">
+                <div class="swap-header">
+                  <span class="title">Swap</span>
+                  <span class="settings" onclick="document.getElementById('slip').classList.toggle('show')">⚙</span>
+                </div>
+                <div class="swap-slippage" id="slip">
+                  <div class="row">
+                    <div class="lbl">滑點容忍度 (Slippage)</div>
+                    <div class="opts">
+                      <span class="opt" data-slip="0.1">0.1%</span>
+                      <span class="opt active" data-slip="0.5">0.5%</span>
+                      <span class="opt" data-slip="1.0">1.0%</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="swap-block">
+                  <div class="lbl"><span>You pay</span><span>Balance: 3.245</span></div>
+                  <div class="input-row">
+                    <input type="number" id="from-amt" placeholder="0" value="1.5" oninput="recalcSwap()"/>
+                    <div class="tok" id="from-tok"><span class="ti" style="background:#627eea;">⟠</span> ETH ⌄</div>
+                  </div>
+                  <div class="usd" id="from-usd">≈ $4,872.30</div>
+                </div>
+
+                <div class="swap-flip">
+                  <div class="btn" onclick="flipSwap()">⇅</div>
+                </div>
+
+                <div class="swap-block">
+                  <div class="lbl"><span>You receive (estimated)</span><span>Balance: 8,234.56</span></div>
+                  <div class="input-row">
+                    <input type="number" id="to-amt" placeholder="0" readonly value="4,872.30"/>
+                    <div class="tok" id="to-tok"><span class="ti" style="background:#2775ca;">$</span> USDC ⌄</div>
+                  </div>
+                  <div class="usd" id="to-usd">≈ $4,872.30</div>
+                </div>
+
+                <div class="swap-details">
+                  <div class="row"><span>Rate</span><span class="v">1 ETH = 3,248.20 USDC</span></div>
+                  <div class="row"><span>Price Impact</span><span class="v g" id="impact">&lt; 0.01%</span></div>
+                  <div class="row"><span>Slippage Tolerance</span><span class="v" id="slip-text">0.5%</span></div>
+                  <div class="row"><span>Min Received</span><span class="v" id="min-recv">4,847.93 USDC</span></div>
+                  <div class="row"><span>Network Fee</span><span class="v">$3.42</span></div>
+                  <div class="row"><span>Route</span><span class="v">ETH → USDC (Uniswap V3)</span></div>
+                </div>
+
+                <button class="swap-cta" onclick="confirmSwap()">Confirm Swap</button>
+
+                <div class="route-info">
+                  <strong>⚡ Auto Router:</strong> 路由 ETH → USDC 直接路徑 (Uniswap V3 0.05% pool)，無需多跳。Approve 採精確授權 (非 MaxUint256)。
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- DApp -->
+          <div class="panel" id="p-dapp">
+            <h2 style="font-size:14px;font-family:var(--mono);text-transform:uppercase;letter-spacing:0.1em;color:var(--text-3);margin-bottom:14px;">探索 DApps</h2>
+            <div class="dapp-grid">
+              <div class="dapp-card"><div class="ic" style="background:#ff007a;">U</div><div><div class="nm">Uniswap <span class="hot">HOT</span></div><div class="ds">最大去中心化交易所</div></div></div>
+              <div class="dapp-card"><div class="ic" style="background:#b6509e;">A</div><div><div class="nm">Aave</div><div class="ds">DeFi 借貸協議</div></div></div>
+              <div class="dapp-card"><div class="ic" style="background:#2081e2;">O</div><div><div class="nm">OpenSea</div><div class="ds">NFT 市場</div></div></div>
+              <div class="dapp-card"><div class="ic" style="background:#00a3ff;">L</div><div><div class="nm">Lido <span class="hot">HOT</span></div><div class="ds">ETH 液態質押</div></div></div>
+              <div class="dapp-card"><div class="ic" style="background:#fffe7d;color:#000;">C</div><div><div class="nm">Curve</div><div class="ds">穩定幣兌換 AMM</div></div></div>
+              <div class="dapp-card"><div class="ic" style="background:#1f74dd;">1</div><div><div class="nm">1inch</div><div class="ds">DEX 聚合路由</div></div></div>
+            </div>
+          </div>
+
+          <!-- SEND -->
+          <div class="panel" id="p-send">
+            <h2 style="font-size:14px;font-family:var(--mono);text-transform:uppercase;letter-spacing:0.1em;color:var(--text-3);margin-bottom:14px;">發送 / 接收</h2>
+            <div style="max-width:480px;margin:0 auto;background:var(--bg-2);border:1px solid var(--line);border-radius:20px;padding:24px;">
+              <div style="display:flex;gap:8px;background:var(--bg-3);border-radius:10px;padding:3px;margin-bottom:20px;">
+                <div style="flex:1;text-align:center;padding:9px;background:var(--accent);color:#fff;border-radius:8px;font-size:14px;font-weight:500;cursor:pointer;">↗ 發送</div>
+                <div style="flex:1;text-align:center;padding:9px;color:var(--text-2);font-size:14px;cursor:pointer;">↙ 接收</div>
+              </div>
+              <div style="margin-bottom:16px;">
+                <div style="font-size:11px;color:var(--text-3);font-family:var(--mono);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px;">資產</div>
+                <div style="background:var(--bg-3);border:1px solid var(--line);border-radius:10px;padding:12px;display:flex;align-items:center;gap:10px;">
+                  <span style="width:32px;height:32px;background:#627eea;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:600;">⟠</span>
+                  <div style="flex:1;"><div style="font-size:14px;font-weight:500;">Ethereum</div><div style="font-size:12px;color:var(--text-3);font-family:var(--mono);">3.245 ETH 可用</div></div>
+                </div>
+              </div>
+              <div style="margin-bottom:16px;">
+                <div style="font-size:11px;color:var(--text-3);font-family:var(--mono);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px;display:flex;justify-content:space-between;"><span>金額</span><span style="color:var(--accent);cursor:pointer;">最大</span></div>
+                <input type="text" placeholder="0.0" style="width:100%;background:var(--bg-3);border:1px solid var(--line);color:var(--text);padding:14px 16px;border-radius:10px;font-family:var(--mono);font-size:20px;outline:none;"/>
+                <div style="font-size:12px;color:var(--text-3);font-family:var(--mono);margin-top:6px;">≈ $0.00</div>
+              </div>
+              <div style="margin-bottom:16px;">
+                <div style="font-size:11px;color:var(--text-3);font-family:var(--mono);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px;">收款地址</div>
+                <input type="text" placeholder="0x... 或 ENS 名稱" style="width:100%;background:var(--bg-3);border:1px solid var(--line);color:var(--text);padding:12px 14px;border-radius:10px;font-family:var(--mono);font-size:13px;outline:none;"/>
+              </div>
+              <div style="margin-bottom:20px;">
+                <div style="font-size:11px;color:var(--text-3);font-family:var(--mono);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px;">Gas Fee</div>
+                <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px;">
+                  <div style="background:var(--bg-3);border:1px solid var(--line);border-radius:8px;padding:8px;text-align:center;cursor:pointer;font-size:12px;font-family:var(--mono);"><span>🐢 慢</span><div style="color:var(--text-3);margin-top:2px;">$1.20</div></div>
+                  <div style="background:rgba(255,102,204,0.08);border:1px solid var(--accent);border-radius:8px;padding:8px;text-align:center;cursor:pointer;font-size:12px;font-family:var(--mono);color:var(--accent);"><span>⚡ 標準</span><div style="margin-top:2px;">$3.42</div></div>
+                  <div style="background:var(--bg-3);border:1px solid var(--line);border-radius:8px;padding:8px;text-align:center;cursor:pointer;font-size:12px;font-family:var(--mono);"><span>🚀 快</span><div style="color:var(--text-3);margin-top:2px;">$6.80</div></div>
+                </div>
+              </div>
+              <button class="swap-cta">確認發送</button>
+            </div>
+          </div>
+
+          <!-- CREATE WALLET -->
+          <div class="panel" id="p-create">
+            <div class="create-card">
+              <div class="create-stepper">
+                <span class="dot done"></span><span>密碼</span>
+                <span style="color:var(--text-3)">─</span>
+                <span class="dot active"></span><span style="color:var(--text)">助記詞</span>
+                <span style="color:var(--text-3)">─</span>
+                <span class="dot"></span><span>驗證</span>
+                <span style="color:var(--text-3)">─</span>
+                <span class="dot"></span><span>完成</span>
+              </div>
+              <div class="step">Step 2 of 4</div>
+              <h3>記住您的助記詞</h3>
+              <p class="help">這 12 個單詞是恢復錢包的唯一方法。請按順序手抄保存，不要截圖、不要分享。</p>
+              <div class="warn">
+                <span>⚠️</span>
+                <span>禁止截圖、不要存到雲端、不要拍照。任何人取得這些詞可以掌控您的資產。</span>
+              </div>
+              <div class="seed-grid" style="user-select:none">
+                <div class="word"><span class="n">1</span>witch</div>
+                <div class="word"><span class="n">2</span>collapse</div>
+                <div class="word"><span class="n">3</span>practice</div>
+                <div class="word"><span class="n">4</span>feed</div>
+                <div class="word"><span class="n">5</span>shame</div>
+                <div class="word"><span class="n">6</span>open</div>
+                <div class="word"><span class="n">7</span>despair</div>
+                <div class="word"><span class="n">8</span>creek</div>
+                <div class="word"><span class="n">9</span>road</div>
+                <div class="word"><span class="n">10</span>again</div>
+                <div class="word"><span class="n">11</span>ice</div>
+                <div class="word"><span class="n">12</span>least</div>
+              </div>
+              <button class="create-btn">我已手抄完成 →</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="proto-note">⚠️ 這是高保真 UI 原型 — 助記詞為展示用範例，真實實作會用 ethers.js 產生 BIP39 隨機助記詞。Swap 匯率以 1 ETH = 3248.20 USDC 模擬計算。</div>
+  </div>
+</section>
+
+<!-- OVERVIEW -->
+<section id="overview" class="prd-section">
+  <div class="container">
+    <div class="sec-head">
+      <div class="small">product overview</div>
+      <h2>產品定位與設計挑戰</h2>
+    </div>
+
+    <p style="font-size:17px;line-height:1.75;color:var(--text-2);">
+      這是一個<strong>結合內建錢包與 DEX 聚合器</strong>的 Web3 工具。對比 MetaMask 純錢包與 Uniswap 純 DEX 的設計，這個產品兼具兩者 — 用戶可以在同一個 App 內管理私鑰、簽名交易、執行 Swap、瀏覽 DApp。最大的挑戰是<strong>用戶體驗與安全的權衡</strong>。
+    </p>
+
+    <h3><span class="num">挑戰 01</span>私鑰本地化的 UX 成本</h3>
+    <p>私鑰永遠不離開用戶裝置是 Web3 原則 — 但這意味著每一次簽名都要解密私鑰、用戶要記得密碼、助記詞要妥善保存。最終採用 AES-256-GCM 加密 + scrypt KDF (N=262144)，平衡安全性與解鎖速度。</p>
+
+    <h3><span class="num">挑戰 02</span>多鏈 RPC 的可靠性</h3>
+    <p>Alchemy/Infura 任一節點掛掉用戶就無法交易。設計 <code>FallbackProvider</code> 自動切換主備節點，搭配每條鏈獨立的 RPC 池，並監控延遲與成功率動態調權。</p>
+
+    <h3><span class="num">挑戰 03</span>Approve 風險的教育成本</h3>
+    <p>無限 Approve (<code>MaxUint256</code>) 是 Web3 詐騙最大來源。產品端強制預設為精確授權 + 提供「授權管理」頁面讓用戶撤銷舊授權。MetaMask 都做了之後我們抄了。</p>
+
+    <div class="decisions">
+      <div class="decision">
+        <div class="label">關鍵決策 #1</div>
+        <h5>內建錢包 + 外部錢包雙模式</h5>
+        <p>不只做內建錢包 — 同時接 MetaMask + WalletConnect。讓重度用戶可以用習慣的錢包，新手也可以快速上手內建版。</p>
+      </div>
+      <div class="decision">
+        <div class="label">關鍵決策 #2</div>
+        <h5>用 wagmi/viem 而非 ethers.js</h5>
+        <p>wagmi 已是 React DApp 的事實標準 (連 Uniswap 都換了)。生態整合好、Hook 設計優雅、TypeScript 友好。但底層仍可呼叫 ethers/viem 補低階操作。</p>
+      </div>
+      <div class="decision">
+        <div class="label">關鍵決策 #3</div>
+        <h5>Auto Router vs 自建路徑搜尋</h5>
+        <p>MVP 用 Uniswap 官方 Auto Router (省 4 週開發 + 路由品質高)。Phase 2 再評估自建多 DEX 聚合 (Uniswap + Curve + 1inch)。</p>
+      </div>
+      <div class="decision">
+        <div class="label">關鍵決策 #4</div>
+        <h5>精確 Approve vs 無限 Approve</h5>
+        <p>強制預設精確授權。會多一次 Approve TX (用戶體驗稍差) 但能避免 99% 的 Rug Pull/詐騙風險。差的體驗 vs 用戶資金損失 — 後者代價太高。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ARCHITECTURE -->
+<section id="architecture" class="prd-section">
+  <div class="container">
+    <div class="sec-head">
+      <div class="small">system architecture</div>
+      <h2>分層架構設計</h2>
+      <p class="desc">9 大功能層獨立解耦：用戶入口層 / 錢包核心 / 第三方錢包 / DEX 引擎 / 區塊鏈交互 / Gas / Tx 監控 / 資產管理 / 安全。</p>
+    </div>
+
+    <div class="modules">
+      <div class="module"><div class="num">LAYER 1.1</div><h5>用戶入口層</h5><p>Web (React + TS + Vite) + Mobile (RN/Flutter) + Chrome Extension (MV3)</p></div>
+      <div class="module"><div class="num">LAYER 1.2</div><h5>錢包系統</h5><p>BIP39 助記詞、BIP32/BIP44 HD 派生、AES-256-GCM + scrypt 本地加密</p></div>
+      <div class="module"><div class="num">LAYER 1.3</div><h5>第三方錢包</h5><p>WalletConnect V2 + MetaMask SDK + wagmi/viem 抽象層</p></div>
+      <div class="module"><div class="num">LAYER 1.4</div><h5>DEX 交易引擎</h5><p>Token List + Price Quote + Approve Manager + Uniswap Router</p></div>
+      <div class="module"><div class="num">LAYER 1.5</div><h5>區塊鏈交互</h5><p>FallbackProvider 多節點容錯、WebSocket 區塊監聽、Chain Registry 配置</p></div>
+      <div class="module"><div class="num">LAYER 1.6</div><h5>Gas 管理</h5><p>EIP-1559 fee 估算、Slow/Standard/Fast 三檔、餘額檢查</p></div>
+      <div class="module"><div class="num">LAYER 1.7</div><h5>交易監控</h5><p>PENDING / CONFIRMING / SUCCESS / FAILED / DROPPED 五狀態追蹤</p></div>
+      <div class="module"><div class="num">LAYER 1.8</div><h5>資產管理</h5><p>Multicall3 批量讀取餘額、CoinGecko 價格、Etherscan 交易歷史</p></div>
+      <div class="module"><div class="num">LAYER 1.9</div><h5>安全模組</h5><p>簽名預覽、釣魚域名黑名單、合約風險偵測、Approve 撤銷</p></div>
+    </div>
+
+    <h3 style="margin-top:48px;"><span class="num">圖一</span>整體分層架構</h3>
+    <div class="mermaid-wrap">
+      <div class="mermaid">
+graph TB
+    classDef front fill:#0d0f15,stroke:#4f80ff,color:#e8eaf0
+    classDef wallet fill:#0d0f15,stroke:#ff66cc,color:#e8eaf0
+    classDef dex fill:#0d0f15,stroke:#00d395,color:#e8eaf0
+    classDef chain fill:#0d0f15,stroke:#f5a524,color:#e8eaf0
+    classDef sec fill:#0d0f15,stroke:#f24b3d,color:#e8eaf0
+
+    WEB[Web App · React + Vite]:::front
+    APP[Mobile · React Native]:::front
+
+    WC[Internal Wallet · BIP39+HD]:::wallet
+    EXT[External · wagmi+viem]:::wallet
+    KS[Keystore · AES-256+scrypt]:::wallet
+    MM[MetaMask · EIP-1193]:::wallet
+    WCV2[WalletConnect V2]:::wallet
+
+    TL[Token List]:::dex
+    QE[Quote · Router.getAmountsOut]:::dex
+    AM[Approve Manager]:::dex
+    SW[Swap Executor]:::dex
+    TT[Tx Tracker]:::dex
+
+    RPC[RPC · Alchemy+FallbackProvider]:::chain
+    GAS[Gas Manager · EIP-1559]:::chain
+    MC[Multicall3]:::chain
+    SC[Uniswap Router/Pairs]:::chain
+    POOL[Liquidity Pools · x*y=k]:::chain
+
+    PD[Phishing Detector]:::sec
+    SP[Sign Preview]:::sec
+    AV[Approve Viewer]:::sec
+
+    WEB --> WC
+    WEB --> EXT
+    APP --> WC
+    WC --> KS
+    EXT --> MM
+    EXT --> WCV2
+
+    WC --> SW
+    EXT --> SW
+    TL --> QE --> AM --> SW --> TT
+    SW --> RPC
+    QE --> RPC
+    GAS --> RPC
+    MC --> RPC
+    RPC --> SC --> POOL
+
+    WEB --> PD
+    SW --> SP
+    AM --> AV
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section id="features" class="prd-section">
+  <div class="container">
+    <div class="sec-head">
+      <div class="small">core features</div>
+      <h2>核心功能與技術細節</h2>
+    </div>
+
+    <h3><span class="num">2.1</span>內建錢包 (Wallet Core)</h3>
+    <p>採用 BIP39/BIP32/BIP44 標準，路徑 <code>m/44'/60'/0'/0/x</code> 支援多帳號派生。所有私鑰使用 AES-256-GCM 加密儲存於本機 Secure Storage (iOS Keychain / Android EncryptedSharedPreferences / Web IndexedDB + WebCrypto)。</p>
+    <pre>// 助記詞生成 (BIP39)
+const mnemonic = ethers.Mnemonic.entropyToPhrase(ethers.randomBytes(16)); // 12 words
+const wallet = ethers.HDNodeWallet.fromPhrase(mnemonic, undefined, "m/44'/60'/0'/0/0");
+
+// 加密存儲
+const encryptedJson = await wallet.encrypt(userPassword); // scrypt KDF
+// 存入 IndexedDB（Web）或 Keychain（App）
+
+// 解密還原
+const decryptedWallet = await ethers.Wallet.fromEncryptedJson(encryptedJson, userPassword);</pre>
+
+    <h3><span class="num">2.2</span>外部錢包連接 (wagmi + viem)</h3>
+    <pre>// wagmi config — 統一管理所有 Connector
+export const config = createConfig({
+  chains: [mainnet, polygon, arbitrum, bsc],
+  connectors: [
+    injected(),                    // MetaMask
+    walletConnect({ projectId: 'YOUR_WC_PROJECT_ID', ... }),
+  ],
+  transports: {
+    [mainnet.id]: http('https://eth-mainnet.g.alchemy.com/v2/KEY'),
+    [polygon.id]: http('https://polygon-mainnet.g.alchemy.com/v2/KEY'),
+    ...
+  },
+});</pre>
+
+    <h3><span class="num">2.3</span>Swap 核心流程</h3>
+    <pre>// 1. 檢查 Allowance
+const allowance = await tokenContract.allowance(userAddress, ROUTER_ADDRESS);
+
+// 2. 如需 Approve（精確授權）
+if (allowance < amountIn) {
+  await tokenContract.approve(ROUTER_ADDRESS, amountIn);  // ⚠️ 不用 MaxUint256
+}
+
+// 3. 執行 Swap
+const swapTx = await routerContract.swapExactTokensForTokens(
+  amountIn,
+  amountOutMin,  // 扣除滑點
+  [tokenA, tokenB],
+  userAddress,
+  deadline
+);</pre>
+
+    <h3><span class="num">2.4</span>多鏈 Fallback Provider</h3>
+    <pre>// 多節點容錯
+const provider = new ethers.FallbackProvider([
+  { provider: alchemyProvider, priority: 1, stallTimeout: 2000 },
+  { provider: infuraProvider, priority: 2, stallTimeout: 2000 },
+]);</pre>
+
+    <h3><span class="num">2.5</span>交易狀態追蹤</h3>
+    <table>
+      <tr><th>狀態</th><th>觸發</th><th>UI 表現</th></tr>
+      <tr><td>PENDING</td><td>tx.hash 取得後</td><td>轉圈動畫、顯示 hash</td></tr>
+      <tr><td>CONFIRMING</td><td>確認數 &lt; threshold</td><td>1/12 確認進度</td></tr>
+      <tr><td>SUCCESS</td><td>receipt.status === 1</td><td>綠勾 + 結果</td></tr>
+      <tr><td>FAILED</td><td>receipt.status === 0</td><td>紅叉 + 解碼 revert reason</td></tr>
+      <tr><td>DROPPED</td><td>超時未上鏈</td><td>提示加速或取消</td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- SECURITY -->
+<section id="security" class="prd-section">
+  <div class="container">
+    <div class="sec-head">
+      <div class="small">security design</div>
+      <h2>安全設計</h2>
+    </div>
+
+    <h3><span class="num">5.1</span>私鑰流向（核心原則）</h3>
+    <p><strong>⚠️ 私鑰永遠不離開用戶裝置。</strong></p>
+    <div class="mermaid-wrap">
+      <div class="mermaid">
+flowchart LR
+    M[助記詞]:::s --> HD[HD 派生]:::s
+    HD --> PK[私鑰]:::s
+    PK --> ENC[AES-256-GCM 加密<br/>scrypt N=262144]:::w
+    ENC --> SS[Secure Storage<br/>Keychain/Keystore]:::ok
+
+    SS --> DEC[簽名時·解密到記憶體]:::w
+    DEC --> SIGN[簽名交易]:::ok
+    SIGN --> CLR[立即清除記憶體]:::ok
+    SIGN --> BC[廣播 RPC]:::s
+
+    classDef s fill:#0d0f15,stroke:#9097a8,color:#e8eaf0
+    classDef w fill:#0d0f15,stroke:#f5a524,color:#e8eaf0
+    classDef ok fill:#0d0f15,stroke:#00d395,color:#e8eaf0
+      </div>
+    </div>
+    <p><strong>❌ 私鑰永遠不會：</strong>傳送到後端伺服器 / 寫入 log / 出現在 URL / 存入未加密 Storage。</p>
+
+    <h3><span class="num">5.2</span>助記詞 6 大風險與防護</h3>
+    <table>
+      <tr><th>風險</th><th>防護措施</th><th>實作</th></tr>
+      <tr><td>截圖洩露</td><td>禁止截圖</td><td>Android FLAG_SECURE / iOS 監聽截圖 / Web user-select:none</td></tr>
+      <tr><td>剪貼簿洩露</td><td>不允許複製</td><td>禁用長按複製，提示手抄</td></tr>
+      <tr><td>記憶體殘留</td><td>使用後立即清除</td><td>mnemonic = null; Uint8Array.fill(0)</td></tr>
+      <tr><td>本地存儲被讀</td><td>強加密</td><td>AES-256-GCM + scrypt(N=262144, r=8, p=1)</td></tr>
+      <tr><td>暴力破解密碼</td><td>限制嘗試次數</td><td>5 次錯誤鎖 30 秒，10 次鎖 5 分鐘</td></tr>
+      <tr><td>XSS 竊取</td><td>CSP 策略</td><td>Content-Security-Policy default-src 'self'</td></tr>
+    </table>
+
+    <h3><span class="num">5.3</span>合約風險偵測</h3>
+    <table>
+      <tr><th>風險</th><th>偵測方式</th><th>用戶提示</th></tr>
+      <tr><td>假 Token</td><td>對比 Token List 白名單</td><td>🟡 此 Token 未經驗證</td></tr>
+      <tr><td>Rug Pull</td><td>檢查合約是否含 pause() / blacklist()</td><td>🔴 合約含可暫停交易函式</td></tr>
+      <tr><td>蜜罐 Honeypot</td><td>模擬 sell 交易，失敗 → 蜜罐</td><td>🔴 此 Token 可能無法賣出</td></tr>
+      <tr><td>未驗證合約</td><td>Etherscan API 查驗證狀態</td><td>🟡 原始碼未公開驗證</td></tr>
+    </table>
+
+    <h3><span class="num">5.4</span>Approve 無限授權風險</h3>
+    <pre>// ❌ 危險：無限授權
+await token.approve(router, ethers.MaxUint256);
+
+// ✅ 安全：精確授權
+await token.approve(router, exactAmountNeeded);
+
+// 一鍵撤銷授權
+async function revokeApproval(tokenAddr, spenderAddr, signer) {
+  const token = new ethers.Contract(tokenAddr, ERC20_ABI, signer);
+  return token.approve(spenderAddr, 0); // 設為 0
+}</pre>
+    <p>UI 設計：Swap 時預設精確授權；提供「授權管理」頁面列出所有已授權 Token + Spender；每項顯示「撤銷」按鈕。</p>
+
+    <h3><span class="num">5.5</span>防釣魚機制</h3>
+    <p>啟動時載入 MetaMask 釣魚黑名單 (auto-updated)。DApp 連線前檢查 domain：blacklist 直接阻擋、whitelist 直接通過、unknown 顯示警告。所有外部連結強制顯示完整 URL，可疑 URL 高亮提醒。</p>
+  </div>
+</section>
+
+<!-- MVP -->
+<section id="mvp" class="prd-section">
+  <div class="container">
+    <div class="sec-head">
+      <div class="small">mvp roadmap</div>
+      <h2>6~8 週 MVP 路線</h2>
+    </div>
+
+    <h3><span class="num">6.1</span>Phase 1 必做（6~8 週）</h3>
+    <table>
+      <tr><th>功能</th><th>優先級</th><th>估時</th></tr>
+      <tr><td>助記詞創建 / 導入 / 加密存儲</td><td>P0</td><td>2 週</td></tr>
+      <tr><td>單鏈支援（Ethereum 或 Polygon）</td><td>P0</td><td>1 週</td></tr>
+      <tr><td>MetaMask 連接（injected provider）</td><td>P0</td><td>1 週</td></tr>
+      <tr><td>Token 餘額顯示（ETH + 前 20 大 Token）</td><td>P0</td><td>1 週</td></tr>
+      <tr><td>Swap 功能（Uniswap V2 Router，單路徑）</td><td>P0</td><td>2 週</td></tr>
+      <tr><td>交易狀態監控</td><td>P0</td><td>0.5 週</td></tr>
+      <tr><td>基礎安全（簽名預覽 / 精確 Approve）</td><td>P0</td><td>0.5 週</td></tr>
+    </table>
+
+    <h3><span class="num">6.2</span>Phase 2 可延後</h3>
+    <p>WalletConnect V2、多鏈支持、多跳路由 (Auto Router)、交易歷史頁、Gas 速度選擇、釣魚域名動態黑名單、交易模擬 (Tenderly)、NFT 顯示、Mobile App、授權管理頁面。</p>
+
+    <h3><span class="num">6.3</span>不要做（重要）</h3>
+    <ul>
+      <li><strong>自建 AMM 合約</strong> — 直接用 Uniswap，不要重造輪子</li>
+      <li><strong>自建 Token List</strong> — 用 Uniswap 官方 Token List</li>
+      <li><strong>自建 RPC 節點</strong> — Alchemy 免費方案足夠</li>
+      <li><strong>Limit Order</strong> — 複雜度高，MVP 不需要</li>
+      <li><strong>跨鏈橋</strong> — 複雜度極高，Phase 3+</li>
+      <li><strong>流動性提供 (Add Liquidity)</strong> — MVP 只做 Swap</li>
+    </ul>
+
+    <h3><span class="num">6.4</span>技術棧</h3>
+    <pre>React 18 + TypeScript 5
+Vite 5 + TailwindCSS
+ethers.js v6 + wagmi v2 + viem v2
+@walletconnect/modal v2.7 + @walletconnect/ethereum-provider v2.17
+@tanstack/react-query v5 + Zustand v5
+Alchemy SDK + Multicall3</pre>
+  </div>
+</section>
+
+<!-- BOTTOM NAV -->
+<div class="container">
+  <div class="bottom-nav">
+    <a href="product-cex.html">
+      <div class="l">← Previous</div>
+      <div class="v">CEX 中心化交易所</div>
+    </a>
+    <a href="product-defi.html" class="next">
+      <div class="l">Next →</div>
+      <div class="v">DeFi 理財平台</div>
+    </a>
+  </div>
+</div>
+
+<footer style="padding:40px 0;text-align:center;color:var(--text-3);font-size:13px;border-top:1px solid var(--line);font-family:var(--mono);">
+  Simon Lee · DEX + Wallet Product Detail · v1.0 · 2026
+</footer>
+
+<script>
+  mermaid.initialize({
+    startOnLoad: true,
+    theme: 'base',
+    themeVariables: {
+      darkMode: true,
+      background: '#0d0f15',
+      primaryColor: '#0d0f15',
+      primaryTextColor: '#e8eaf0',
+      primaryBorderColor: '#ff66cc',
+      lineColor: '#5d6477',
+      secondaryColor: '#13161f',
+      tertiaryColor: '#1a1e2a',
+      fontFamily: 'JetBrains Mono, ui-monospace, monospace',
+      fontSize: '13px',
+    },
+    flowchart:{ curve:'basis', padding:20 }
+  });
+
+  // Sidebar panel switching
+  document.querySelectorAll('.dex-sidebar .nav .item').forEach(item => {
+    item.onclick = () => {
+      document.querySelectorAll('.dex-sidebar .nav .item').forEach(x => x.classList.remove('active'));
+      item.classList.add('active');
+      const panelId = item.dataset.panel;
+      document.querySelectorAll('.dex-content .panel').forEach(p => p.classList.remove('active'));
+      document.getElementById('p-' + panelId).classList.add('active');
+    };
+  });
+
+  // Swap interactive
+  let ethToUsd = 3248.20;
+  let fromTok = {sym:'ETH', usd:3248.20};
+  let toTok = {sym:'USDC', usd:1.00};
+  let slip = 0.5;
+  let flipped = false;
+
+  document.querySelectorAll('.swap-slippage .opt').forEach(o => {
+    o.onclick = () => {
+      document.querySelectorAll('.swap-slippage .opt').forEach(x => x.classList.remove('active'));
+      o.classList.add('active');
+      slip = parseFloat(o.dataset.slip);
+      document.getElementById('slip-text').textContent = slip + '%';
+      recalcSwap();
+    };
+  });
+
+  function recalcSwap(){
+    const fromAmt = parseFloat(document.getElementById('from-amt').value) || 0;
+    const fromUsd = fromAmt * fromTok.usd;
+    const toAmt = fromUsd / toTok.usd;
+    const minRecv = toAmt * (1 - slip/100);
+    document.getElementById('to-amt').value = toAmt.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
+    document.getElementById('from-usd').textContent = '≈ $' + fromUsd.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
+    document.getElementById('to-usd').textContent = '≈ $' + fromUsd.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
+    document.getElementById('min-recv').textContent = minRecv.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2}) + ' ' + toTok.sym;
+    // Price impact (mock: bigger amount = bigger impact)
+    const impact = Math.min(fromAmt * 0.005, 2.5).toFixed(3);
+    const ie = document.getElementById('impact');
+    ie.textContent = (impact < 0.01 ? '< 0.01%' : impact + '%');
+    ie.className = 'v ' + (impact < 0.3 ? 'g' : impact < 1 ? '' : 'r');
+  }
+
+  function flipSwap(){
+    flipped = !flipped;
+    const tmp = fromTok; fromTok = toTok; toTok = tmp;
+    const ft = document.getElementById('from-tok');
+    const tt = document.getElementById('to-tok');
+    if(flipped){
+      ft.innerHTML = '<span class="ti" style="background:#2775ca;">$</span> USDC ⌄';
+      tt.innerHTML = '<span class="ti" style="background:#627eea;">⟠</span> ETH ⌄';
+    } else {
+      ft.innerHTML = '<span class="ti" style="background:#627eea;">⟠</span> ETH ⌄';
+      tt.innerHTML = '<span class="ti" style="background:#2775ca;">$</span> USDC ⌄';
+    }
+    document.getElementById('from-amt').value = '';
+    document.getElementById('to-amt').value = '';
+    recalcSwap();
+  }
+
+  function confirmSwap(){
+    const fromAmt = document.getElementById('from-amt').value || '0';
+    const toAmt = document.getElementById('to-amt').value || '0';
+    alert(`🦄 Demo Swap Confirmed\n\n${fromAmt} ${fromTok.sym} → ${toAmt} ${toTok.sym}\nSlippage: ${slip}%\nRouter: Uniswap V3\n\n（這是 demo，實際會彈 MetaMask 簽名）`);
+  }
+
+  recalcSwap();
+</script>
+
+</body>
+</html>
