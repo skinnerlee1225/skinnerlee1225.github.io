@@ -74,6 +74,8 @@
   .hero .qj-defi:hover .qj-arr{color:#00d395;}
   .hero .qj-h5:hover{border-color:#4f80ff;color:#4f80ff;}
   .hero .qj-h5:hover .qj-arr{color:#4f80ff;}
+  .hero .qj-poly:hover{border-color:#fbbf24;color:#fbbf24;}
+  .hero .qj-poly:hover .qj-arr{color:#fbbf24;}
 
   .hero .helpers{display:flex;gap:24px;align-items:center;font-family:var(--mono);font-size:13px;color:var(--text-3);}
   .hero .helpers span{display:flex;align-items:center;gap:8px;}
@@ -153,6 +155,7 @@
   .work.dex .footer .arrow{color:var(--pink);}
   .work.defi .footer .arrow{color:var(--green);}
   .work.h5 .footer .arrow{color:var(--blue);}
+  .work.poly .footer .arrow{color:#fbbf24;}
   .work:hover .footer .arrow{transform:translateX(6px);}
 
   /* WHITE LABEL */
@@ -201,21 +204,23 @@
 
 <header class="hero">
   <div class="container">
-    <div class="tag">Live product prototypes · 4 projects</div>
+    <div class="tag">4 shipped products + 1 design proposal</div>
     <h1>
       <a href="product-cex.html" class="quick-link qlink-cex">CEX</a><span class="hero-sep">·</span><a href="product-dex.html" class="quick-link qlink-dex">DEX</a><span class="hero-sep">·</span><a href="product-defi.html" class="quick-link qlink-defi">DeFi</a><span class="hero-sep">·</span><a href="product-h5.html" class="quick-link qlink-h5">H5</a><br/>
       四個我從 0 設計的 Crypto 產品。
     </h1>
     <p class="sub">
       點進任何一個產品 — 你會看到實際可操作的原型 demo、完整 PRD 規格書，以及背後的系統架構與數據流圖。<br/>
-      不只是文字，是讓你「親手摸到」我做的產品。
+      不只是文字，是讓你「親手摸到」我做的產品。<br/>
+      <span style="color:#fbbf24;">另附一份 Polymarket 預測市場的設計提案 PRD（非已落地產品）。</span>
     </p>
     <div class="quick-jump">
       <span class="qj-label">⚡ 快速跳轉：</span>
       <a href="product-cex.html" class="qj-pill qj-cex"><span class="qj-ic">🏦</span><span class="qj-name">CEX 中心化交易所</span><span class="qj-arr">→</span></a>
       <a href="product-dex.html" class="qj-pill qj-dex"><span class="qj-ic">🦄</span><span class="qj-name">DEX 錢包 + Swap</span><span class="qj-arr">→</span></a>
       <a href="product-defi.html" class="qj-pill qj-defi"><span class="qj-ic">💎</span><span class="qj-name">理財模組 + VIP</span><span class="qj-arr">→</span></a>
-      <a href="product-h5.html" class="qj-pill qj-h5"><span class="qj-ic">🎯</span><span class="qj-name">H5 拉新活動</span><span class="qj-arr">→</span></a>
+      <a href="product-h5.html" class="qj-pill qj-h5"><span class="qj-ic">🎯</span><span class="qj-name">活動模組套件</span><span class="qj-arr">→</span></a>
+      <a href="polymarket-clone-product-doc.html" class="qj-pill qj-poly"><span class="qj-ic">📐</span><span class="qj-name">Polymarket 設計提案</span><span class="qj-arr">→</span></a>
     </div>
     <div class="helpers" style="margin-top:24px;">
       <span><span class="k">→</span> 點擊作品卡進入產品 demo</span>
@@ -342,17 +347,17 @@
           </div>
         </div>
         <div class="body">
-          <div class="badge">EARN MODULE · CEX / DEX · 2025</div>
-          <h3>理財模組 + VIP 裂變</h3>
-          <div class="desc">USDT 理財 + 9 級 VIP + 團隊裂變獎勵。<strong style="color:var(--text);">可嵌入 CEX 作為 Earn 子產品，DEX 場景對應 LP 質押。</strong>撥比可控在 12.5% 以內。</div>
+          <div class="badge">UNIVERSAL MODULE · CEX + DEX · 2025</div>
+          <h3>理財 + VIP 裂變模組套件</h3>
+          <div class="desc"><strong style="color:var(--text);">幾乎所有 B 端客戶都會加裝的客製模組</strong>。9 級 VIP + 級差獎金 + 收益 Cap，撥比鎖在 12.5%。<strong style="color:var(--accent);">每個客戶按市場特性自訂 % 數與規則</strong>。</div>
           <div class="meta">
-            <span>VIP0 ~ VIP9</span>
-            <span>級差獎金</span>
+            <span>10+ 可調參數</span>
+            <span>CEX + DEX 通用</span>
             <span>撥比建模</span>
-            <span>防自刷風控</span>
+            <span>含計算器原型</span>
           </div>
           <div class="footer">
-            <span>v1.1 · 含撥比計算器原型</span>
+            <span>v1.1 · 每客戶量身調參</span>
             <span class="arrow">→</span>
           </div>
         </div>
@@ -382,17 +387,69 @@
           </div>
         </div>
         <div class="body">
-          <div class="badge">H5 GROWTH CAMPAIGN · 2026</div>
-          <h3>H5 活動頁規格</h3>
-          <div class="desc">USDT 理財平台的拉新活動 — 社群報銷、VIP 挑戰賽、每日排行榜三大活動，含完整反作弊與業績計算規則。</div>
+          <div class="badge">UNIVERSAL MODULE · CEX + DEX · 2026</div>
+          <h3>活動模組套件</h3>
+          <div class="desc"><strong style="color:var(--text);">給 B 端客戶辦活動用的引擎</strong> — 社群報銷 / VIP 挑戰賽 / 每日排行榜三大模組，<strong style="color:var(--accent);">每個客戶按預算調參、自由組合</strong>。我們提供引擎、反作弊與業績計算，廣告怎麼打是客戶的事。</div>
           <div class="meta">
-            <span>100K USDT 獎池</span>
-            <span>5 分鐘刷新</span>
-            <span>三大活動</span>
-            <span>反作弊機制</span>
+            <span>3 模組可單裝</span>
+            <span>CEX + DEX 通用</span>
+            <span>4 維反作弊</span>
+            <span>參數全可調</span>
           </div>
           <div class="footer">
-            <span>3 campaigns · 完整資料表</span>
+            <span>v1.0 · 活動引擎</span>
+            <span class="arrow">→</span>
+          </div>
+        </div>
+      </a>
+
+    </div>
+
+    <!-- Design Exercises 區分線 -->
+    <div style="margin:60px 0 32px;display:flex;align-items:center;gap:16px;">
+      <div style="height:1px;flex:1;background:var(--line);"></div>
+      <div style="font-family:var(--mono);font-size:11px;color:#fbbf24;letter-spacing:0.15em;text-transform:uppercase;padding:5px 14px;border:1px solid rgba(251,191,36,0.3);background:rgba(251,191,36,0.06);border-radius:999px;">📐 Design Proposal · Not yet shipped</div>
+      <div style="height:1px;flex:1;background:var(--line);"></div>
+    </div>
+
+    <div class="works" style="grid-template-columns:1fr;">
+
+      <!-- POLYMARKET -->
+      <a href="polymarket-clone-product-doc.html" class="work poly" style="--c:#fbbf24;">
+        <div class="preview" style="padding:18px;background:linear-gradient(135deg,#0a0d14 0%,#121726 100%);display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+          <div style="background:#121726;border:1px solid #2a3654;border-radius:10px;padding:14px;display:flex;flex-direction:column;justify-content:space-between;">
+            <div>
+              <div style="font-size:10px;color:#8b96b0;font-family:var(--mono);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:4px;">2028 US Election</div>
+              <div style="font-size:13px;font-weight:600;color:#e8eef7;line-height:1.4;">Will Democrats win the presidency?</div>
+            </div>
+            <div style="display:flex;gap:6px;margin-top:10px;">
+              <div style="flex:1;background:rgba(52,211,153,0.12);border:1px solid #34d399;color:#34d399;padding:6px;border-radius:6px;text-align:center;font-family:var(--mono);font-size:11px;font-weight:600;">YES · 47¢</div>
+              <div style="flex:1;background:rgba(248,113,113,0.08);border:1px solid #f87171;color:#f87171;padding:6px;border-radius:6px;text-align:center;font-family:var(--mono);font-size:11px;font-weight:600;">NO · 53¢</div>
+            </div>
+          </div>
+          <div style="background:#121726;border:1px solid #2a3654;border-radius:10px;padding:14px;display:flex;flex-direction:column;justify-content:space-between;">
+            <div>
+              <div style="font-size:10px;color:#8b96b0;font-family:var(--mono);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:4px;">Crypto · Mar 2026</div>
+              <div style="font-size:13px;font-weight:600;color:#e8eef7;line-height:1.4;">Will BTC reach $150K by Q2?</div>
+            </div>
+            <div style="display:flex;gap:6px;margin-top:10px;">
+              <div style="flex:1;background:rgba(52,211,153,0.12);border:1px solid #34d399;color:#34d399;padding:6px;border-radius:6px;text-align:center;font-family:var(--mono);font-size:11px;font-weight:600;">YES · 62¢</div>
+              <div style="flex:1;background:rgba(248,113,113,0.08);border:1px solid #f87171;color:#f87171;padding:6px;border-radius:6px;text-align:center;font-family:var(--mono);font-size:11px;font-weight:600;">NO · 38¢</div>
+            </div>
+          </div>
+        </div>
+        <div class="body">
+          <div class="badge" style="color:#fbbf24;">📐 DESIGN PROPOSAL · 2026</div>
+          <h3>Polymarket Clone — 東南亞預測市場</h3>
+          <div class="desc">針對越南、菲律賓、孟加拉設計的預測市場 PRD — 完整 11 個 sections，含市場分析、區塊鏈金流、團隊分潤、財務模型。<strong style="color:#fbbf24;">這是「如果我來做 Polymarket clone」的設計提案，非已落地客戶</strong>。</div>
+          <div class="meta">
+            <span>11 個 sections</span>
+            <span>東南亞市場</span>
+            <span>區塊鏈金流</span>
+            <span>財務模型</span>
+          </div>
+          <div class="footer">
+            <span>v1.0 · 完整 PRD · 6,300+ 行</span>
             <span class="arrow">→</span>
           </div>
         </div>

@@ -245,7 +245,7 @@
     </div>
     <ul class="toc">
       <li><a href="#prototype">Prototype</a></li>
-      <li><a href="#overview">Overview</a></li>
+      <li><a href="#overview">Story</a></li>
       <li><a href="#architecture">Architecture</a></li>
       <li><a href="#features">Features</a></li>
       <li><a href="#security">Security</a></li>
@@ -270,8 +270,8 @@
         <div class="num">4+<span class="u">條鏈</span></div>
       </div>
       <div class="item">
-        <div class="label">頁面總數</div>
-        <div class="num">10<span class="u">個頁面</span></div>
+        <div class="label">新客戶交付</div>
+        <div class="num">6~8<span class="u">週上線</span></div>
       </div>
       <div class="item">
         <div class="label">私鑰加密</div>
@@ -556,44 +556,216 @@
 <section id="overview" class="prd-section">
   <div class="container">
     <div class="sec-head">
-      <div class="small">product overview</div>
-      <h2>產品定位與設計挑戰</h2>
+      <div class="small">product story</div>
+      <h2>動手寫 PRD 之前，我先想清楚的事</h2>
+      <p class="desc">技術架構只是手段 — 下方五個區塊才是我做這個產品時真正交付的東西：問題定義、目標用戶、競品差異化、成功指標、MVP 假設。</p>
     </div>
 
-    <p style="font-size:17px;line-height:1.75;color:var(--text-2);">
-      這是一個<strong>結合內建錢包與 DEX 聚合器</strong>的 Web3 工具。對比 MetaMask 純錢包與 Uniswap 純 DEX 的設計，這個產品兼具兩者 — 用戶可以在同一個 App 內管理私鑰、簽名交易、執行 Swap、瀏覽 DApp。最大的挑戰是<strong>用戶體驗與安全的權衡</strong>。
-    </p>
-
-    <h3><span class="num">挑戰 01</span>私鑰本地化的 UX 成本</h3>
-    <p>私鑰永遠不離開用戶裝置是 Web3 原則 — 但這意味著每一次簽名都要解密私鑰、用戶要記得密碼、助記詞要妥善保存。最終採用 AES-256-GCM 加密 + scrypt KDF (N=262144)，平衡安全性與解鎖速度。</p>
-
-    <h3><span class="num">挑戰 02</span>多鏈 RPC 的可靠性</h3>
-    <p>Alchemy/Infura 任一節點掛掉用戶就無法交易。設計 <code>FallbackProvider</code> 自動切換主備節點，搭配每條鏈獨立的 RPC 池，並監控延遲與成功率動態調權。</p>
-
-    <h3><span class="num">挑戰 03</span>Approve 風險的教育成本</h3>
-    <p>無限 Approve (<code>MaxUint256</code>) 是 Web3 詐騙最大來源。產品端強制預設為精確授權 + 提供「授權管理」頁面讓用戶撤銷舊授權。MetaMask 都做了之後我們抄了。</p>
-
-    <div class="decisions">
-      <div class="decision">
-        <div class="label">關鍵決策 #1</div>
-        <h5>內建錢包 + 外部錢包雙模式</h5>
-        <p>不只做內建錢包 — 同時接 MetaMask + WalletConnect。讓重度用戶可以用習慣的錢包，新手也可以快速上手內建版。</p>
+    <!-- 🎯 PROBLEM & WHY -->
+    <div style="margin-top:48px;">
+      <div style="display:flex;gap:14px;align-items:flex-start;margin-bottom:18px;">
+        <div style="font-size:32px;line-height:1;">🎯</div>
+        <div>
+          <div style="font-family:var(--mono);font-size:12px;color:var(--accent);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:4px;">01 · Problem & Why</div>
+          <h3 style="font-size:22px;font-weight:600;margin:0;">為什麼客戶需要白標 DEX 錢包？</h3>
+        </div>
       </div>
-      <div class="decision">
-        <div class="label">關鍵決策 #2</div>
-        <h5>用 wagmi/viem 而非 ethers.js</h5>
-        <p>wagmi 已是 React DApp 的事實標準 (連 Uniswap 都換了)。生態整合好、Hook 設計優雅、TypeScript 友好。但底層仍可呼叫 ethers/viem 補低階操作。</p>
+      <p>當 CEX 客戶站穩後，下一個問題立刻浮現：<strong>怎麼接觸 Web3 原生用戶？</strong> Web3 用戶不信任 CEX 託管私鑰，他們要自管錢包 + 鏈上 DEX。客戶想滿足這群用戶，但自建錢包成本高得嚇人。</p>
+
+      <p><strong>客戶自建 Web3 錢包的痛點：</strong></p>
+      <ul>
+        <li><strong>私鑰管理 = 法律地雷</strong>：搞錯一行加密代碼，用戶資產 100% 損失，賠不起</li>
+        <li><strong>多鏈支持 = 工程黑洞</strong>：每條鏈 RPC 都不同、Gas 估算邏輯各異、合約風險偵測要建立</li>
+        <li><strong>合規與詐騙偵測</strong>：Approve 防詐騙、釣魚域名黑名單、蜜罐 Token 偵測 — Web3 安全是無底洞</li>
+      </ul>
+
+      <p>我們的市場機會：<strong style="color:var(--accent);">提供「品牌客製 + 多鏈現成 + 安全模組打包」的白標 Web3 錢包</strong>。客戶不用養 Web3 工程團隊，就能讓自家品牌進入 Web3 生態。</p>
+    </div>
+
+    <!-- 👥 TARGET USERS -->
+    <div style="margin-top:56px;">
+      <div style="display:flex;gap:14px;align-items:flex-start;margin-bottom:18px;">
+        <div style="font-size:32px;line-height:1;">👥</div>
+        <div>
+          <div style="font-family:var(--mono);font-size:12px;color:var(--accent);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:4px;">02 · Target Users</div>
+          <h3 style="font-size:22px;font-weight:600;margin:0;">兩層用戶 — Web3 跟 CEX 不一樣</h3>
+        </div>
       </div>
-      <div class="decision">
-        <div class="label">關鍵決策 #3</div>
-        <h5>Auto Router vs 自建路徑搜尋</h5>
-        <p>MVP 用 Uniswap 官方 Auto Router (省 4 週開發 + 路由品質高)。Phase 2 再評估自建多 DEX 聚合 (Uniswap + Curve + 1inch)。</p>
+
+      <h4 style="margin-top:24px;color:var(--accent);font-size:15px;letter-spacing:0.04em;">B 端客戶 Persona</h4>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:14px 0;">
+        <div style="background:var(--bg-2);border:1px solid var(--line);border-radius:12px;padding:18px;">
+          <div style="font-weight:600;font-size:15px;color:var(--text);margin-bottom:6px;">🪙 已有 Token 的項目方</div>
+          <div style="font-size:13px;color:var(--text-2);line-height:1.6;">想把錢包當作社群入口，用戶持幣 + Swap + 質押都在自己錢包內完成。</div>
+        </div>
+        <div style="background:var(--bg-2);border:1px solid var(--line);border-radius:12px;padding:18px;">
+          <div style="font-weight:600;font-size:15px;color:var(--text);margin-bottom:6px;">🏦 既有 CEX 客戶</div>
+          <div style="font-size:13px;color:var(--text-2);line-height:1.6;">想做 Web3 入口讓用戶從 CEX 提幣到自管錢包，留在自家生態內。</div>
+        </div>
+        <div style="background:var(--bg-2);border:1px solid var(--line);border-radius:12px;padding:18px;">
+          <div style="font-weight:600;font-size:15px;color:var(--text);margin-bottom:6px;">🎮 NFT / GameFi 品牌</div>
+          <div style="font-size:13px;color:var(--text-2);line-height:1.6;">純 Web3 品牌，要自有錢包做用戶資產載體 + 鏈上身份。</div>
+        </div>
       </div>
-      <div class="decision">
-        <div class="label">關鍵決策 #4</div>
-        <h5>精確 Approve vs 無限 Approve</h5>
-        <p>強制預設精確授權。會多一次 Approve TX (用戶體驗稍差) 但能避免 99% 的 Rug Pull/詐騙風險。差的體驗 vs 用戶資金損失 — 後者代價太高。</p>
+
+      <h4 style="margin-top:24px;color:var(--accent);font-size:15px;letter-spacing:0.04em;">終端用戶 Persona — Web3 用戶不能套 CEX 那套</h4>
+      <table>
+        <tr><th>類型</th><th>佔比</th><th>主要需求</th><th>關鍵體驗</th></tr>
+        <tr><td>🧠 DeFi 老手</td><td>~20%</td><td>已有 MetaMask，看不上內建錢包</td><td>WalletConnect 連外部錢包 + Approve 管理</td></tr>
+        <tr><td>🌱 Web3 新手</td><td>~70%</td><td>第一次接觸錢包，怕弄丟助記詞</td><td>內建錢包 + 助記詞引導 + 防呆設計</td></tr>
+        <tr><td>🌉 跨鏈 Swap 用戶</td><td>~10%</td><td>追新項目，多鏈跳轉</td><td>多鏈一鍵切換 + 路由聚合 + Gas 預估</td></tr>
+      </table>
+      <p style="margin-top:8px;color:var(--text-3);font-size:13px;font-style:italic;">我學到的事：Web3 用戶分群比 CEX 更極端 — 老手嫌簡單、新手怕複雜。產品要同時做出「給老手的進階模式」與「給新手的引導模式」，UI 切換不能讓任一邊覺得被冒犯。</p>
+    </div>
+
+    <!-- ⚔️ COMPETITIVE -->
+    <div style="margin-top:56px;">
+      <div style="display:flex;gap:14px;align-items:flex-start;margin-bottom:18px;">
+        <div style="font-size:32px;line-height:1;">⚔️</div>
+        <div>
+          <div style="font-family:var(--mono);font-size:12px;color:var(--accent);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:4px;">03 · Competitive Differentiation</div>
+          <h3 style="font-size:22px;font-weight:600;margin:0;">不跟 MetaMask 比通用、跟客戶比「能不能客製」</h3>
+        </div>
       </div>
+      <table>
+        <tr><th>方案</th><th>誰用</th><th>品牌客製</th><th>多鏈支援</th><th>主要痛點</th></tr>
+        <tr><td>MetaMask</td><td>DeFi 老手</td><td>❌ 不可</td><td>需手動加</td><td>客戶無法做品牌延伸</td></tr>
+        <tr><td>Phantom</td><td>Solana 用戶</td><td>❌ 不可</td><td>只 Solana 系</td><td>多鏈支援薄弱</td></tr>
+        <tr><td>Coinbase Wallet</td><td>新手</td><td>❌ 不可</td><td>EVM + Solana</td><td>綁定 Coinbase 生態</td></tr>
+        <tr><td>客戶自建</td><td>—</td><td>✅ 100%</td><td>要自己做</td><td>成本太高，安全是無底洞</td></tr>
+        <tr style="background:rgba(255,102,204,0.05);"><td><strong style="color:var(--accent);">我們（白標）</strong></td><td>客戶的終端用戶</td><td><strong>✅ 完全客製</strong></td><td><strong>4+ 主流 EVM 鏈</strong></td><td>—（市場甜蜜點）</td></tr>
+      </table>
+      <p style="margin-top:14px;"><strong>我們的差異化：</strong>不是要打敗 MetaMask 的「通用性」— 我們服務「想做品牌錢包但不想自建的客戶」。MetaMask 是通用工具，我們是 B 端品牌延伸方案。</p>
+    </div>
+
+    <!-- 📈 SUCCESS METRICS -->
+    <div style="margin-top:56px;">
+      <div style="display:flex;gap:14px;align-items:flex-start;margin-bottom:18px;">
+        <div style="font-size:32px;line-height:1;">📈</div>
+        <div>
+          <div style="font-family:var(--mono);font-size:12px;color:var(--accent);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:4px;">04 · Success Metrics</div>
+          <h3 style="font-size:22px;font-weight:600;margin:0;">北極星指標 + AARRR 拆解</h3>
+        </div>
+      </div>
+
+      <div style="background:linear-gradient(135deg,rgba(255,102,204,0.1) 0%,rgba(79,128,255,0.05) 100%);border:1px solid rgba(255,102,204,0.3);border-radius:14px;padding:20px 24px;margin:14px 0;">
+        <div style="font-family:var(--mono);font-size:11px;color:var(--accent);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:6px;">⭐ North Star Metric</div>
+        <div style="font-size:20px;font-weight:600;color:var(--text);">所有白標錢包客戶的<span style="color:var(--accent);">月 Swap GMV × Take Rate</span></div>
+        <div style="font-size:14px;color:var(--text-2);margin-top:6px;">Swap 是錢包最直接的營收，DAU 高但沒 Swap = 死流量。這個指標逼我們關注「轉換」而不只是「下載」。</div>
+      </div>
+
+      <h4 style="margin-top:20px;color:var(--accent);font-size:15px;">終端用戶 AARRR 拆解</h4>
+      <table>
+        <tr><th>階段</th><th>指標</th><th>設計目標</th></tr>
+        <tr><td>Acquisition</td><td>App 下載 → 完成錢包創建轉換率</td><td>≥ 60%</td></tr>
+        <tr><td>Activation</td><td>創建錢包 → 完成第一筆 Swap 的比例（7 日內）</td><td>≥ 30%</td></tr>
+        <tr><td>Retention</td><td>7 日留存（散戶 segment）</td><td>≥ 25%</td></tr>
+        <tr><td>Revenue</td><td>每月活躍用戶 Swap 平均金額</td><td>$2,000</td></tr>
+        <tr><td>Referral</td><td>邀請好友連結轉換率</td><td>≥ 5%</td></tr>
+      </table>
+
+      <h4 style="margin-top:20px;color:var(--accent);font-size:15px;">安全指標（這個業務的生命線）</h4>
+      <ul>
+        <li>用戶資產零事件損失（KPI = 0，不是「越低越好」）</li>
+        <li>釣魚域名攔截率（測試集驗證 &gt; 95%）</li>
+        <li>無限 Approve 警告觸發率（每 100 次 Swap 提示 ≥ 1 次）</li>
+        <li>助記詞流向審計（每次發版做代碼掃描，零外傳）</li>
+      </ul>
+    </div>
+
+    <!-- 🧪 MVP HYPOTHESIS -->
+    <div style="margin-top:56px;">
+      <div style="display:flex;gap:14px;align-items:flex-start;margin-bottom:18px;">
+        <div style="font-size:32px;line-height:1;">🧪</div>
+        <div>
+          <div style="font-family:var(--mono);font-size:12px;color:var(--accent);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:4px;">05 · MVP Hypothesis</div>
+          <h3 style="font-size:22px;font-weight:600;margin:0;">第一版想驗證的三個假設</h3>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr;gap:14px;margin-top:14px;">
+        <div style="background:var(--bg-2);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:10px;padding:16px 22px;">
+          <div style="font-family:var(--mono);font-size:11px;color:var(--accent);margin-bottom:4px;">H1 · 雙模式假設</div>
+          <p style="margin:0;color:var(--text);font-weight:500;">同時做內建錢包 + WalletConnect 外部錢包是必要的，不能二選一。</p>
+          <p style="margin:6px 0 0;font-size:13px;color:var(--text-2);"><strong>驗證方法：</strong>上線後外部錢包用戶 ≥ 20%（如果 &lt; 5% 代表新手都用內建，WalletConnect 可砍）。</p>
+        </div>
+        <div style="background:var(--bg-2);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:10px;padding:16px 22px;">
+          <div style="font-family:var(--mono);font-size:11px;color:var(--accent);margin-bottom:4px;">H2 · 主流鏈夠用假設</div>
+          <p style="margin:0;color:var(--text);font-weight:500;">80% 的客戶只要 4 條主流 EVM 鏈（ETH / Polygon / BSC / Arbitrum），多鏈不會吵著要 Solana / Cosmos。</p>
+          <p style="margin:6px 0 0;font-size:13px;color:var(--text-2);"><strong>驗證方法：</strong>前 6 個客戶的鏈需求清單，若 &gt; 50% 客戶要非 EVM 鏈，產品方向錯。</p>
+        </div>
+        <div style="background:var(--bg-2);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:10px;padding:16px 22px;">
+          <div style="font-family:var(--mono);font-size:11px;color:var(--accent);margin-bottom:4px;">H3 · 安全痛點假設</div>
+          <p style="margin:0;color:var(--text);font-weight:500;">客戶買單我們的關鍵賣點是「安全模組打包好」，不只是錢包功能。</p>
+          <p style="margin:6px 0 0;font-size:13px;color:var(--text-2);"><strong>驗證方法：</strong>銷售過程中，「安全偵測 / 防詐騙模組」被提及次數 &gt; 「Swap 路由 / Gas 估算」。</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 🤔 MY DECISIONS -->
+    <div style="margin-top:56px;">
+      <div style="display:flex;gap:14px;align-items:flex-start;margin-bottom:18px;">
+        <div style="font-size:32px;line-height:1;">🤔</div>
+        <div>
+          <div style="font-family:var(--mono);font-size:12px;color:var(--accent);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:4px;">06 · My Product Decisions</div>
+          <h3 style="font-size:22px;font-weight:600;margin:0;">我做過的關鍵產品決策</h3>
+        </div>
+      </div>
+      <div class="decisions" style="margin-top:14px;">
+        <div class="decision">
+          <div class="label">我的決策 #1</div>
+          <h5>內建錢包 + 外部錢包雙模式</h5>
+          <p>不只做內建錢包 — 同時接 MetaMask + WalletConnect V2。我評估：重度用戶不會放棄熟悉的 MetaMask，新手又需要內建錢包的引導。雙模式雖然增加開發成本，但兩邊用戶都能 onboard，這個 trade-off 是值得的。</p>
+        </div>
+        <div class="decision">
+          <div class="label">我的決策 #2</div>
+          <h5>從 ethers.js 換成 wagmi/viem</h5>
+          <p>ethers.js 是業界元老，但 wagmi/viem 已成為 React DApp 事實標準（連 Uniswap 都換了）。Hook 設計優雅、TypeScript 友好、生態整合好。我決定第一版直接用 wagmi，省去未來重構成本 — 技術選型要看「未來 3 年的方向」，不是「現在誰最熟」。</p>
+        </div>
+        <div class="decision">
+          <div class="label">我的決策 #3</div>
+          <h5>精確 Approve 而非無限 Approve</h5>
+          <p>無限 Approve 是 Web3 詐騙最大來源。雖然 UX 會多一次簽名（用戶體驗稍差），但能避免 99% 的 Rug Pull 損失。我認為「差的 UX vs 用戶資金損失」— 後者代價太高。這個決策是「安全 &gt; 體驗」的明確表態。</p>
+        </div>
+        <div class="decision">
+          <div class="label">我的決策 #4</div>
+          <h5>Uniswap Auto Router，不自建聚合路由</h5>
+          <p>MVP 用 Uniswap 官方 Auto Router — 省 4 週開發 + 路由品質高 + 流動性深。自建多 DEX 聚合（Uniswap + Curve + 1inch）留到 Phase 2 評估，前提是用戶反映滑點問題。先不過度設計。</p>
+        </div>
+        <div class="decision" style="grid-column:1 / -1;">
+          <div class="label">我的決策 #5</div>
+          <h5>跨鏈橋選 Wormhole，不選 LayerZero / 不自建</h5>
+          <p>跨鏈橋是 Web3 最高風險的領域（Ronin / Wormhole / Multichain 都被攻擊過上億美金）。我評估了三條路：(1) 自建 — 安全成本與責任無法承擔；(2) LayerZero — 設計新但流動性與 EVM 偏重；(3) Wormhole — 雖然 2022 被攻擊但已強化、生態最廣。最終選 <strong style="color:var(--accent);">Wormhole</strong>，5 個關鍵原因：</p>
+          <ul style="margin:10px 0 0 24px;color:var(--text-2);font-size:14px;line-height:1.7;">
+            <li><strong>多鏈資產傳輸完整</strong> — 主流 Token 都能跨</li>
+            <li><strong>Wallet 內嵌整合佳</strong> — Connect UI 可直接放錢包內，不用跳第三方網站（用戶留在我們生態裡）</li>
+            <li><strong>有 SDK / Connect UI</strong> — 整合成本低，工程友善</li>
+            <li><strong>EVM + 非 EVM 鏈都有</strong> — Solana / Aptos / Sui 等都能接，未來客戶要的鏈我們都有彈性</li>
+            <li><strong>App 也能用 H5 頁面接</strong> — 同一份整合可同時跑 Web + App + 內嵌 DApp，省一份開發</li>
+          </ul>
+          <p style="margin-top:10px;font-style:italic;color:var(--text-3);font-size:13px;">這個決策的核心邏輯：跨鏈橋本身不是我們的差異化，<strong>「不跳離自家錢包」</strong>才是。Wormhole 的 Connect UI 嵌入體驗讓用戶感覺整個跨鏈都在我們錢包內完成 — 這是品牌價值。</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 🔧 TECHNICAL CHALLENGES (附錄) -->
+    <div style="margin-top:56px;padding-top:32px;border-top:1px solid var(--line);">
+      <div style="display:flex;gap:14px;align-items:flex-start;margin-bottom:18px;">
+        <div style="font-size:32px;line-height:1;">🔧</div>
+        <div>
+          <div style="font-family:var(--mono);font-size:12px;color:var(--text-3);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:4px;">附錄 · Technical Challenges</div>
+          <h3 style="font-size:20px;font-weight:500;margin:0;color:var(--text-2);">技術挑戰與工程協作</h3>
+        </div>
+      </div>
+      <p style="color:var(--text-3);font-size:14px;font-style:italic;">以下技術細節是我與工程團隊共同設計 — 我負責優先順序、跨團隊協調與業務需求對齊；架構與實作細節由工程架構師主導。</p>
+
+      <h4 style="margin-top:20px;">挑戰 01：私鑰本地化的 UX 成本</h4>
+      <p>私鑰永遠不離開用戶裝置是 Web3 原則 — 但這意味著每次簽名要解密私鑰、用戶要記得密碼、助記詞要妥善保存。採用 AES-256-GCM 加密 + scrypt KDF (N=262144)，平衡安全性與解鎖速度。</p>
+
+      <h4>挑戰 02：多鏈 RPC 的可靠性</h4>
+      <p>Alchemy / Infura 任一節點掛掉用戶就無法交易。設計 <code>FallbackProvider</code> 自動切換主備節點，每條鏈獨立 RPC 池，監控延遲與成功率動態調權。</p>
+
+      <h4>挑戰 03：Approve 風險的教育成本</h4>
+      <p>無限 Approve 是 Web3 詐騙最大來源。產品端強制預設精確授權 + 提供「授權管理」頁面讓用戶撤銷舊授權。</p>
     </div>
   </div>
 </section>
@@ -824,42 +996,104 @@ async function revokeApproval(tokenAddr, spenderAddr, signer) {
 <section id="mvp" class="prd-section">
   <div class="container">
     <div class="sec-head">
-      <div class="small">mvp roadmap</div>
-      <h2>6~8 週 MVP 路線</h2>
+      <div class="small">delivery roadmap</div>
+      <h2>新 B 端客戶 6~8 週交付週期</h2>
+      <p class="desc">6~8 週<strong>不是「我們從零開發 DEX 錢包的時間」</strong>— 基礎套組與客製模組庫已經沉澱好。6~8 週是<strong style="color:var(--accent);">一個新 B 端客戶從簽約到正式上線的完整交付時間</strong>。Web3 比 CEX 快，因為錢包是 stateless 的 — 沒有撮合引擎、沒有訂單帳本，主要工作落在「品牌客製 + 客製模組組裝」。</p>
     </div>
 
-    <h3><span class="num">6.1</span>Phase 1 必做（6~8 週）</h3>
+    <h3><span class="num">6.1</span>已沉澱的產品庫存</h3>
+    <p>客戶簽約那一刻起，能拿到的不是空白專案，而是<strong>下面這些已經做好、隨時可組裝的模組</strong>：</p>
+
+    <h4 style="margin-top:18px;color:var(--accent);">📦 基礎套組（所有客戶都有）</h4>
     <table>
-      <tr><th>功能</th><th>優先級</th><th>估時</th></tr>
-      <tr><td>助記詞創建 / 導入 / 加密存儲</td><td>P0</td><td>2 週</td></tr>
-      <tr><td>單鏈支援（Ethereum 或 Polygon）</td><td>P0</td><td>1 週</td></tr>
-      <tr><td>MetaMask 連接（injected provider）</td><td>P0</td><td>1 週</td></tr>
-      <tr><td>Token 餘額顯示（ETH + 前 20 大 Token）</td><td>P0</td><td>1 週</td></tr>
-      <tr><td>Swap 功能（Uniswap V2 Router，單路徑）</td><td>P0</td><td>2 週</td></tr>
-      <tr><td>交易狀態監控</td><td>P0</td><td>0.5 週</td></tr>
-      <tr><td>基礎安全（簽名預覽 / 精確 Approve）</td><td>P0</td><td>0.5 週</td></tr>
+      <tr><th>模組</th><th>內容</th><th>客戶可否關閉</th></tr>
+      <tr><td>內建錢包核心</td><td>BIP39 助記詞 / HD 派生 / AES-256-GCM 加密存儲</td><td>❌ 必裝</td></tr>
+      <tr><td>外部錢包整合</td><td>MetaMask + WalletConnect V2</td><td>✅ 可關閉</td></tr>
+      <tr><td>多鏈支援</td><td>4 條主流 EVM 鏈（ETH / Polygon / BSC / Arbitrum）</td><td>❌ 必裝（鏈可選）</td></tr>
+      <tr><td>Swap 引擎</td><td>Uniswap V3 Auto Router + 滑點控制 + Gas 估算</td><td>❌ 必裝</td></tr>
+      <tr><td>安全模組</td><td>合約風險偵測 / 釣魚黑名單 / 精確 Approve / 助記詞防呆</td><td>❌ 必裝</td></tr>
+      <tr><td>交易監控</td><td>5 狀態追蹤（pending → confirming → success/failed/dropped）</td><td>❌ 必裝</td></tr>
+      <tr><td>DApp 瀏覽器</td><td>EIP-1193 兼容 + 預設 DApp 列表</td><td>✅ 可關閉</td></tr>
+      <tr><td>基礎管理後台</td><td>用戶管理 / 交易監控 / 黑名單 / 報表</td><td>❌ 必裝</td></tr>
     </table>
 
-    <h3><span class="num">6.2</span>Phase 2 可延後</h3>
-    <p>WalletConnect V2、多鏈支持、多跳路由 (Auto Router)、交易歷史頁、Gas 速度選擇、釣魚域名動態黑名單、交易模擬 (Tenderly)、NFT 顯示、Mobile App、授權管理頁面。</p>
+    <h4 style="margin-top:18px;color:var(--accent);">🧩 客製模組庫（按客戶需求 plug-in）</h4>
+    <p style="font-size:14px;color:var(--text-2);margin-bottom:10px;">Web3 客戶要的客製化比 CEX 更深 — 因為很多客戶就是「想推自己的 Token」，這牽涉到代幣經濟學、流動性設計、質押收益這些核心 DeFi 模組。我為這些需求設計了可組裝的客製模組庫：</p>
+    <table>
+      <tr><th>模組</th><th>適合客戶</th><th>開發狀態</th></tr>
+      <tr><td>🪙 代幣經濟學設計</td><td>有自有 Token 的項目方（總量分配、解鎖曲線、燃燒機制）</td><td>已沉澱（含模擬器）</td></tr>
+      <tr><td>💧 LP 質押系統</td><td>想做 DeFi 收益的項目方（流動性挖礦 + 雙幣質押）</td><td>已沉澱</td></tr>
+      <tr><td>🏊 流動池建立與管理</td><td>想在自家錢包內提供 Uniswap V3 / Curve 流動性的客戶</td><td>已沉澱</td></tr>
+      <tr><td>💰 流動池理財產品</td><td>把 LP 包裝成「結構化理財產品」給散戶用（一鍵入金 + 自動 rebalance）</td><td>已沉澱</td></tr>
+      <tr><td>🎁 空投 / 任務系統</td><td>新 Token 發行型客戶（連結錢包 → 完成任務 → 領空投）</td><td>已沉澱</td></tr>
+      <tr><td>🖼️ NFT 收藏與展示</td><td>NFT / GameFi 品牌（NFT 列表、Floor Price、稀有度）</td><td>已沉澱</td></tr>
+      <tr><td>🌉 跨鏈橋整合（Wormhole）</td><td>需要 EVM + 非 EVM 跨鏈資產傳輸的客戶</td><td>已沉澱（Wormhole SDK 嵌入）</td></tr>
+      <tr><td>📊 治理投票系統</td><td>有 DAO 結構的客戶（鏈上投票 + Snapshot 整合）</td><td>客戶需求觸發</td></tr>
+    </table>
 
-    <h3><span class="num">6.3</span>不要做（重要）</h3>
+    <h3><span class="num">6.2</span>新客戶 6~8 週交付流程</h3>
+    <div class="mermaid-wrap">
+      <div class="mermaid">
+gantt
+    title 新 B 端客戶交付甘特圖
+    dateFormat YYYY-MM-DD
+    axisFormat W%V
+    section 啟動期
+    簽約 + Token / Tokenomics workshop  :done, kickoff, 2024-01-01, 1w
+    section 客製期
+    品牌客製 LOGO/主題色/域名            :brand, after kickoff, 1w
+    代幣經濟學設計 + 模擬               :tokenomics, after kickoff, 2w
+    section 組裝期
+    基礎套組 + 模組選裝                  :modules, after brand, 1w
+    LP 質押 / 流動池參數配置             :lp, after modules, 1w
+    section 驗收期
+    集成測試 + 合約審計                  :audit, after lp, 1w
+    section 上線
+    灰度上線 (邀請 200 用戶)            :soft, after audit, 0.5w
+    正式公開上線                         :go-live, after soft, 0.5w
+      </div>
+    </div>
+
+    <h3><span class="num">6.3</span>規模化效應 — 第二、三個客戶縮到 4~5 週</h3>
+    <p>第一個客戶 6~8 週是「沉澱期 + 交付期」加總。<strong>從第二個客戶開始，如果沒新模組需求，交付時間應該縮到 4~5 週</strong>：</p>
+
+    <table>
+      <tr><th>客戶序號</th><th>預估交付時間</th><th>關鍵縮短點</th></tr>
+      <tr><td>第 1 個客戶</td><td>6~8 週</td><td>沉澱基礎套組 + 第一輪流程</td></tr>
+      <tr><td>第 2 個客戶</td><td>~5 週</td><td>基礎套組複用、tokenomics 流程已知</td></tr>
+      <tr><td>第 3 個客戶</td><td>~4 週</td><td>LP/質押模組已存在（除非要新代幣模型）</td></tr>
+      <tr><td>需要全新代幣模型客戶</td><td>+1~2 週</td><td>代幣經濟學重新設計與模擬</td></tr>
+    </table>
+
+    <p style="margin-top:14px;"><strong>跟 CEX 對比：</strong>CEX 客戶交付 12 週（含合約引擎 + 金流通路）；DEX 客戶交付 6~8 週（stateless + 不用接金流）。<strong style="color:var(--accent);">DEX 是 CEX 之後的自然延伸 — 同一批 30 人團隊複用核心架構與部分客製模組</strong>。</p>
+
+    <h3><span class="num">6.4</span>客戶簽約後可加購的進階模組</h3>
+    <p>上線後客戶可隨時加購：</p>
     <ul>
-      <li><strong>自建 AMM 合約</strong> — 直接用 Uniswap，不要重造輪子</li>
-      <li><strong>自建 Token List</strong> — 用 Uniswap 官方 Token List</li>
-      <li><strong>自建 RPC 節點</strong> — Alchemy 免費方案足夠</li>
-      <li><strong>Limit Order</strong> — 複雜度高，MVP 不需要</li>
-      <li><strong>跨鏈橋</strong> — 複雜度極高，Phase 3+</li>
-      <li><strong>流動性提供 (Add Liquidity)</strong> — MVP 只做 Swap</li>
+      <li><strong>限價單 (Limit Order)</strong>：1inch limit order 整合或自建</li>
+      <li><strong>進階交易模擬</strong>：Tenderly Bundle Simulator 整合</li>
+      <li><strong>授權管理頁面</strong>：列出所有已 Approve token + 一鍵撤銷</li>
+      <li><strong>移動端 App</strong>：Flutter 雙平台一次出包</li>
+      <li><strong>機構級 API</strong>：給 OTC desk / 做市商使用的 REST + WebSocket</li>
+      <li><strong>客製代幣模型</strong>：例如稅費代幣、Reflection、Anti-MEV 設計</li>
     </ul>
 
-    <h3><span class="num">6.4</span>技術棧</h3>
+    <h3><span class="num">6.5</span>不要做（重要原則）</h3>
+    <ul>
+      <li><strong>自建 AMM 合約</strong> — 直接用 Uniswap，不要重造輪子</li>
+      <li><strong>自建 Token List</strong> — 用 Uniswap 官方 + 客戶自選白名單</li>
+      <li><strong>自建 RPC 節點</strong> — Alchemy/Infura FallbackProvider 足夠</li>
+      <li><strong>跨鏈橋自建</strong> — 安全風險太高，直接整合 Wormhole SDK（理由見決策 #5）</li>
+    </ul>
+
+    <h3><span class="num">6.6</span>技術棧</h3>
     <pre>React 18 + TypeScript 5
 Vite 5 + TailwindCSS
-ethers.js v6 + wagmi v2 + viem v2
+wagmi v2 + viem v2（外部錢包整合）
+ethers.js v6（內建錢包核心，BIP39/BIP44/加密）
 @walletconnect/modal v2.7 + @walletconnect/ethereum-provider v2.17
 @tanstack/react-query v5 + Zustand v5
-Alchemy SDK + Multicall3</pre>
+Alchemy SDK + Multicall3 + FallbackProvider</pre>
   </div>
 </section>
 

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>H5 活動頁規格 · Product Detail · Simon Lee</title>
+<title>活動模組套件（CEX + DEX 通用）· Product Detail · Simon Lee</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/mermaid@10.6.1/dist/mermaid.min.js"></script>
 <style>
@@ -214,11 +214,11 @@
       <span class="sep">/</span>
       <a href="index.html">Portfolio</a>
       <span class="sep">/</span>
-      <span class="curr">H5 活動頁規格</span>
+      <span class="curr">活動模組套件</span>
     </div>
     <ul class="toc">
       <li><a href="#prototype">Prototype</a></li>
-      <li><a href="#overview">Overview</a></li>
+      <li><a href="#overview">Story</a></li>
       <li><a href="#rules">Rules</a></li>
       <li><a href="#data">Data Model</a></li>
       <li><a href="#risk">Risk</a></li>
@@ -228,30 +228,30 @@
 
 <header class="hero">
   <div class="container">
-    <div class="tag">🎯 H5 Growth Campaign · Mobile-first · v1.0</div>
+    <div class="tag">🎯 Universal Module · CEX + DEX · Mobile-first · v1.0</div>
     <h1>
-      100,000 USDT 獎池<br/>
-      <span class="accent">三大拉新活動</span>。
+      活動引擎<br/>
+      <span class="accent">三大活動模組套件</span>。
     </h1>
     <p class="sub">
-      USDT 理財平台的 H5 拉新活動頁 — 社群報銷、VIP 級別挑戰賽、每日排行榜三大活動同步開啟。完整反作弊機制、業績即時計算、獎勵分階段釋放，T+1 自動發放。
+      這不是某個平台的一次性活動 — 而是<strong style="color:var(--text);">給 B 端客戶辦活動用的引擎</strong>。社群報銷 / VIP 級別挑戰賽 / 每日排行榜三大模組，CEX 與 DEX 客戶都能掛載。<strong style="color:var(--accent);">獎池大小、活動規則、發放邏輯每個客戶按自己預算與市場調整</strong>。我們提供引擎、反作弊、業績計算與排行榜後端 — 客戶決定玩多大。
     </p>
     <div class="stats">
       <div class="item">
-        <div class="label">總獎池</div>
-        <div class="num">100K<span class="u">USDT</span></div>
-      </div>
-      <div class="item">
-        <div class="label">每日獎池上限</div>
-        <div class="num">5K<span class="u">USDT/日</span></div>
+        <div class="label">活動模組</div>
+        <div class="num">3<span class="u">種類型</span></div>
       </div>
       <div class="item">
         <div class="label">排行榜刷新</div>
         <div class="num">5<span class="u">分鐘</span></div>
       </div>
       <div class="item">
-        <div class="label">三大活動</div>
-        <div class="num">報銷 + 挑戰 + 排行</div>
+        <div class="label">反作弊維度</div>
+        <div class="num">4<span class="u">維聯合判定</span></div>
+      </div>
+      <div class="item">
+        <div class="label">參考獎池</div>
+        <div class="num">100K<span class="u">USDT（可調）</span></div>
       </div>
     </div>
   </div>
@@ -498,35 +498,247 @@
 <section id="overview" class="prd-section">
   <div class="container">
     <div class="sec-head">
-      <div class="small">product overview</div>
-      <h2>產品定位與設計挑戰</h2>
+      <div class="small">product story</div>
+      <h2>動手寫 PRD 之前，我先想清楚的事</h2>
+      <p class="desc">這不是一個「拉新活動」 — 是一個用 100K USDT 預算精準打三種用戶的成長引擎。下方五個區塊是我做這個產品時真正交付的東西。</p>
     </div>
 
-    <p style="font-size:17px;line-height:1.75;color:var(--text-2);">
-      這是<strong>搭配 DeFi 理財平台的 H5 拉新活動</strong>。三大活動同時進行，但每個活動目標不同：社群報銷瞄準有線下號召力的 KOL、VIP 挑戰賽瞄準有大客戶基礎的核心節點、每日排行榜瞄準競爭意識強的活躍用戶。三個活動互不干擾、共用同一個業績計算規則。
-    </p>
+    <!-- 🎯 PROBLEM & WHY -->
+    <div style="margin-top:48px;">
+      <div style="display:flex;gap:14px;align-items:flex-start;margin-bottom:18px;">
+        <div style="font-size:32px;line-height:1;">🎯</div>
+        <div>
+          <div style="font-family:var(--mono);font-size:12px;color:var(--accent);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:4px;">01 · Problem & Why</div>
+          <h3 style="font-size:22px;font-weight:600;margin:0;">為什麼這是「給 B 端辦活動的引擎」？</h3>
+        </div>
+      </div>
 
-    <div class="decisions">
-      <div class="decision">
-        <div class="label">關鍵決策 #1</div>
-        <h5>三活動分流 vs 單一大活動</h5>
-        <p>同時做三個活動而非一個大活動。原因：不同類型用戶需要不同的激勵 — KOL 要報銷、核心節點要 VIP 衝級、活躍用戶要每日榜單。</p>
+      <div style="background:rgba(79,128,255,0.06);border-left:3px solid var(--accent);border-radius:8px;padding:16px 22px;margin:14px 0;">
+        <div style="font-family:var(--mono);font-size:11px;color:var(--accent);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:6px;">📌 一個重要的定位</div>
+        <p style="margin:0;color:var(--text);font-weight:500;">這不是某個平台「自己辦」的活動 — 是<strong style="color:var(--accent);">給 B 端客戶辦活動用的引擎</strong>。CEX 與 DEX 客戶都能掛載。我們提供活動架構、反作弊、業績計算與排行榜後端，<strong>客戶決定獎池大小、活動規則、發放邏輯</strong>。廣告怎麼打、用戶從哪來、CAC 多少 — 那是 B 端客戶自己的業務，<strong>我們不過問也算不到</strong>。</p>
       </div>
-      <div class="decision">
-        <div class="label">關鍵決策 #2</div>
-        <h5>排行榜每 5 分鐘刷新</h5>
-        <p>不做即時刷新（成本高），也不每小時刷新（沒緊張感）。5 分鐘是兼顧用戶體驗與後端壓力的平衡點。</p>
+
+      <p>客戶上線交易所或錢包後，下一個焦慮：<strong>新用戶從哪來？老用戶怎麼留？</strong> 純靠 KOL 發單帶量成本高、生命週期短；發空投又容易養出撸毛黨；單做一個大型獎勵活動，預算很快被頭部用戶吃光，散戶完全沒感覺。</p>
+
+      <p><strong>客戶試過的方法都有問題：</strong></p>
+      <ul>
+        <li><strong>單一獎勵池</strong>：100% 預算發 Top10，前 10 名搶得頭破血流，91% 的用戶完全沒參與感</li>
+        <li><strong>純空投</strong>：拉來的是撸毛黨，發完就走，留存接近 0</li>
+        <li><strong>KOL 給佣金</strong>：佣金太高燒不起、太低 KOL 不上心，且 KOL 帶來的用戶質量參差</li>
+      </ul>
+
+      <p>所以我把活動設計成「<strong>三個互不衝突的子模組 + 同一個業績計算引擎 + 統一反作弊</strong>」的套件。客戶可以全裝、可以只裝其中一兩個，獎池大小完全自訂：</p>
+      <ul>
+        <li><strong>社群報銷</strong>（參考設計 500 USDT × N 人）→ 打 KOL，要素材審核確認真實性</li>
+        <li><strong>VIP 挑戰賽</strong>（參考設計最高 30K USDT）→ 打核心節點，分期釋放鎖長期承諾</li>
+        <li><strong>每日排行榜</strong>（參考設計 5K USDT/日）→ 打活躍用戶，創造每天回來的理由</li>
+      </ul>
+
+      <h4 style="margin-top:24px;color:var(--accent);font-size:15px;">⚙️ 每個客戶可調的參數</h4>
+      <table>
+        <tr><th>參數</th><th>參考設計（v1）</th><th>客戶可調空間</th></tr>
+        <tr><td>三大模組要開哪些</td><td>全開</td><td>可單開、雙開、全開</td></tr>
+        <tr><td>單期總獎池</td><td>100K USDT</td><td>完全自訂（無下限）</td></tr>
+        <tr><td>單日獎池上限</td><td>5K USDT</td><td>完全自訂</td></tr>
+        <tr><td>VIP 挑戰賽分期</td><td>40 / 30 / 30（共 3 期）</td><td>可改 50/50、20/30/50、一次發完</td></tr>
+        <tr><td>排行榜刷新頻率</td><td>5 分鐘</td><td>1 / 5 / 15 / 60 分鐘</td></tr>
+        <tr><td>社群報銷審核</td><td>1~3 工作天人工</td><td>必須人工，SLA 可改</td></tr>
+        <tr><td>反作弊嚴格度</td><td>4 維聯合判定</td><td>可關閉部分維度</td></tr>
+        <tr><td>業績計算規則</td><td>新增投資 − 撤資 − 提現</td><td>可自訂指標（如純交易量、純入金量）</td></tr>
+      </table>
+      <p style="margin-top:8px;color:var(--text-3);font-size:13px;font-style:italic;">客戶簽約後，我會帶他做一場「活動設計 workshop」 — 根據他的預算、用戶結構、市場習慣，調出他要的三模組組合與參數。同一套引擎，<strong>對 CEX 客戶跑交易量排行、對 DEX 客戶跑 TVL 排行</strong>，業績計算規則參數化切換即可。</p>
+    </div>
+
+    <!-- 👥 TARGET USERS -->
+    <div style="margin-top:56px;">
+      <div style="display:flex;gap:14px;align-items:flex-start;margin-bottom:18px;">
+        <div style="font-size:32px;line-height:1;">👥</div>
+        <div>
+          <div style="font-family:var(--mono);font-size:12px;color:var(--accent);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:4px;">02 · Target Users</div>
+          <h3 style="font-size:22px;font-weight:600;margin:0;">三種用戶 → 三個活動精準對應</h3>
+        </div>
       </div>
-      <div class="decision">
-        <div class="label">關鍵決策 #3</div>
-        <h5>VIP 挑戰分 3 期釋放</h5>
-        <p>40% / 30% / 30% 分 3 期，避免用戶達標後立即贖回離場。釋放期間業績下滑 ≥30% 暫停、≥50% 追回，鎖定長期承諾。</p>
+
+      <p>傳統做法是「一個活動讓所有人都來玩」 — 結果三種人都覺得不適合自己。我選擇相反路線：<strong>三種用戶 × 三個活動 × 三套激勵邏輯</strong>。</p>
+
+      <div style="display:grid;grid-template-columns:1fr;gap:14px;margin:14px 0;">
+        <div style="background:var(--bg-2);border:1px solid var(--line);border-radius:12px;padding:18px;display:grid;grid-template-columns:auto 1fr auto;gap:16px;align-items:center;">
+          <div style="font-size:32px;">📢</div>
+          <div>
+            <div style="font-weight:600;font-size:15px;color:var(--text);margin-bottom:4px;">KOL / 社群領袖</div>
+            <div style="font-size:13px;color:var(--text-2);line-height:1.6;">有線下號召力，能舉辦實體活動 / 帶單群。動機：取得平台官方背書 + 報銷預算。</div>
+          </div>
+          <div style="font-family:var(--mono);font-size:11px;color:var(--accent);background:rgba(79,128,255,0.1);padding:5px 10px;border-radius:6px;white-space:nowrap;">→ 社群報銷</div>
+        </div>
+        <div style="background:var(--bg-2);border:1px solid var(--line);border-radius:12px;padding:18px;display:grid;grid-template-columns:auto 1fr auto;gap:16px;align-items:center;">
+          <div style="font-size:32px;">💼</div>
+          <div>
+            <div style="font-weight:600;font-size:15px;color:var(--text);margin-bottom:4px;">核心節點 / VIP 玩家</div>
+            <div style="font-size:13px;color:var(--text-2);line-height:1.6;">已有 VIP3+ 等級，手上有大客戶基礎。動機：衝級獎金 + 把已有資源轉化成業績。</div>
+          </div>
+          <div style="font-family:var(--mono);font-size:11px;color:var(--accent);background:rgba(79,128,255,0.1);padding:5px 10px;border-radius:6px;white-space:nowrap;">→ VIP 挑戰賽</div>
+        </div>
+        <div style="background:var(--bg-2);border:1px solid var(--line);border-radius:12px;padding:18px;display:grid;grid-template-columns:auto 1fr auto;gap:16px;align-items:center;">
+          <div style="font-size:32px;">⚡</div>
+          <div>
+            <div style="font-weight:600;font-size:15px;color:var(--text);margin-bottom:4px;">活躍散戶 / 競爭型用戶</div>
+            <div style="font-size:13px;color:var(--text-2);line-height:1.6;">每天都登入、想看到自己在榜上、追求每日成就感。動機：每日榜單名次 + 即時獎勵。</div>
+          </div>
+          <div style="font-family:var(--mono);font-size:11px;color:var(--accent);background:rgba(79,128,255,0.1);padding:5px 10px;border-radius:6px;white-space:nowrap;">→ 每日排行榜</div>
+        </div>
       </div>
-      <div class="decision">
-        <div class="label">關鍵決策 #4</div>
-        <h5>社群報銷需人工審核</h5>
-        <p>不像其他活動自動發獎，社群報銷強制人工審核（1~3 工作天）。原因：要驗證活動真實性、防 AI 生成素材作弊。</p>
+
+      <p style="margin-top:8px;color:var(--text-3);font-size:13px;font-style:italic;">我學到的事：拉新活動不是「越大越好」，是「越精準越好」。一個 100K 大池吸引不到 KOL（覺得自己拿不到頭獎），也吸引不到散戶（覺得跟自己無關）。三個池子各打一群人，每群人都覺得「這個活動是為我設計的」。</p>
+    </div>
+
+    <!-- ⚔️ COMPETITIVE -->
+    <div style="margin-top:56px;">
+      <div style="display:flex;gap:14px;align-items:flex-start;margin-bottom:18px;">
+        <div style="font-size:32px;line-height:1;">⚔️</div>
+        <div>
+          <div style="font-family:var(--mono);font-size:12px;color:var(--accent);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:4px;">03 · Competitive Differentiation</div>
+          <h3 style="font-size:22px;font-weight:600;margin:0;">業界拉新活動 vs 我們的設計</h3>
+        </div>
       </div>
+      <table>
+        <tr><th>方案</th><th>用戶涵蓋</th><th>留存設計</th><th>反作弊</th><th>主要痛點</th></tr>
+        <tr><td>客戶自建活動</td><td>~10%（只發 Top）</td><td>❌ 發完就走</td><td>⚠️ 弱</td><td>91% 用戶沒參與感、要自己養工程</td></tr>
+        <tr><td>純空投腳本</td><td>~100%（人人有份）</td><td>❌ 撸毛黨為主</td><td>❌ 無</td><td>留存接近 0</td></tr>
+        <tr><td>單一排行榜</td><td>~20%（活躍用戶）</td><td>⚠️ 一週後退潮</td><td>⚠️ 弱</td><td>KOL 與散戶都沒打到</td></tr>
+        <tr style="background:rgba(79,128,255,0.05);"><td><strong style="color:var(--accent);">我們（活動引擎）</strong></td><td><strong>~80% 用戶（三模組分流）</strong></td><td><strong>✅ 分期釋放鎖定</strong></td><td><strong>✅ 四維反作弊</strong></td><td>—（B 端不用自建活動工程團隊）</td></tr>
+      </table>
+      <p style="margin-top:14px;"><strong>我們的差異化：</strong>不是「給用戶獎勵」，是「<strong>給 B 端客戶一個能精準分流、能自動防作弊、能參數化客製的活動引擎</strong>」。客戶想辦多大、想瞄準誰、要不要分期釋放 — 都可以調。客戶買的不是某次活動，是一份隨時能用、能改參數重複辦的引擎。</p>
+    </div>
+
+    <!-- 📈 SUCCESS METRICS -->
+    <div style="margin-top:56px;">
+      <div style="display:flex;gap:14px;align-items:flex-start;margin-bottom:18px;">
+        <div style="font-size:32px;line-height:1;">📈</div>
+        <div>
+          <div style="font-family:var(--mono);font-size:12px;color:var(--accent);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:4px;">04 · Success Metrics</div>
+          <h3 style="font-size:22px;font-weight:600;margin:0;">引擎自己能控制的指標（不碰 B 端廣告 / CAC）</h3>
+        </div>
+      </div>
+
+      <div style="background:rgba(245,165,36,0.06);border-left:3px solid #f5a524;border-radius:8px;padding:14px 20px;margin-bottom:14px;font-size:14px;color:var(--text-2);line-height:1.7;">
+        <strong style="color:#f5a524;">⚠️ 為什麼這裡看不到 CAC / LTV / ROAS？</strong><br/>
+        因為活動拉到的用戶從哪來、廣告怎麼打、單個用戶獲取成本多少 — <strong style="color:var(--text);">這些是 B 端客戶自己的業務，我們不過問也算不到</strong>。我們是活動引擎的提供方，能控制的是「<strong>引擎本身好不好用、穩不穩定、抓得到作弊嗎</strong>」。把不歸自己的指標掛上來只是裝樣子，PM 應該誠實列「自己能影響的指標」。
+      </div>
+
+      <div style="background:linear-gradient(135deg,rgba(79,128,255,0.1) 0%,rgba(0,211,149,0.05) 100%);border:1px solid rgba(79,128,255,0.3);border-radius:14px;padding:20px 24px;margin:14px 0;">
+        <div style="font-family:var(--mono);font-size:11px;color:var(--accent);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:6px;">⭐ North Star Metric</div>
+        <div style="font-size:20px;font-weight:600;color:var(--text);">所有 B 端客戶<span style="color:var(--accent);">活動期間用我們引擎處理的有效業績總額</span></div>
+        <div style="font-size:14px;color:var(--text-2);margin-top:6px;">扣除反作弊攔截掉的異常業績後，引擎實際「為客戶活動所創造的乾淨業績量」。客戶越多、活動越大、攔截越乾淨，這個數字就越高。</div>
+      </div>
+
+      <h4 style="margin-top:20px;color:var(--accent);font-size:15px;">引擎健康度指標（我們能控制的）</h4>
+      <table>
+        <tr><th>指標</th><th>目標</th><th>意義</th></tr>
+        <tr><td>活動建檔到上線時間</td><td>UI 無大改：~4 小時<br/>UI 大改 + 加動畫：~1 天</td><td>引擎已沉澱，主要時間花在 UI 確認；遇過客戶要重做 UI 加動畫，工程實作就會拉長</td></tr>
+        <tr><td>排行榜計算延遲 P99</td><td>&lt; 30 秒</td><td>5 分鐘刷新節奏的工程承諾</td></tr>
+        <tr><td>異常帳號攔截率</td><td>&gt; 95%</td><td>反作弊系統的核心 KPI</td></tr>
+        <tr><td>誤判率（誤殺正常用戶）</td><td>&lt; 1%</td><td>反作弊不能太嚴變得有用戶被冤枉</td></tr>
+        <tr><td>人工審核 SLA</td><td>&lt; 24 小時</td><td>社群報銷的 KOL 信任</td></tr>
+        <tr><td>系統可用性（SLA）</td><td>≥ 99.95%</td><td>活動期間不能掛掉</td></tr>
+      </table>
+
+      <h4 style="margin-top:20px;color:var(--accent);font-size:15px;">B 端客戶健康度指標（看引擎好不好賣）</h4>
+      <table>
+        <tr><th>指標</th><th>目標</th><th>意義</th></tr>
+        <tr><td>每月使用引擎辦活動的客戶數</td><td>≥ 簽約客戶 80%</td><td>引擎被閒置代表沒解決客戶問題</td></tr>
+        <tr><td>客戶重複辦活動次數</td><td>≥ 3 次/季</td><td>第一次辦完還會再辦，代表有效</td></tr>
+        <tr><td>客戶在三模組中的選裝組合</td><td>—（觀察）</td><td>了解 CEX vs DEX 客戶各偏好哪種活動</td></tr>
+        <tr><td>客戶活動參數調整頻率</td><td>—（觀察）</td><td>確認「可參數化」這個賣點被用到</td></tr>
+      </table>
+
+      <h4 style="margin-top:20px;color:var(--accent);font-size:15px;">三大活動的細分指標</h4>
+      <ul>
+        <li><strong>社群報銷</strong>：提交數 / 通過率 / KOL 平均帶來新用戶數</li>
+        <li><strong>VIP 挑戰賽</strong>：報名數 / 完成率 / 分期釋放期間業績留存率</li>
+        <li><strong>每日排行榜</strong>：每日參與人數 / Top10 用戶 7 日留存 / 5 分鐘刷新峰值 QPS</li>
+      </ul>
+    </div>
+
+    <!-- 🧪 MVP HYPOTHESIS -->
+    <div style="margin-top:56px;">
+      <div style="display:flex;gap:14px;align-items:flex-start;margin-bottom:18px;">
+        <div style="font-size:32px;line-height:1;">🧪</div>
+        <div>
+          <div style="font-family:var(--mono);font-size:12px;color:var(--accent);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:4px;">05 · MVP Hypothesis</div>
+          <h3 style="font-size:22px;font-weight:600;margin:0;">想驗證的三個假設</h3>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr;gap:14px;margin-top:14px;">
+        <div style="background:var(--bg-2);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:10px;padding:16px 22px;">
+          <div style="font-family:var(--mono);font-size:11px;color:var(--accent);margin-bottom:4px;">H1 · 三活動分流假設</div>
+          <p style="margin:0;color:var(--text);font-weight:500;">三個活動互不衝突 — 同一個用戶只參與「對自己最有利」的那個，不會三個都搶。</p>
+          <p style="margin:6px 0 0;font-size:13px;color:var(--text-2);"><strong>驗證方法：</strong>活動結束後分析數據，&gt;70% 用戶集中參與一個活動。若三個活動用戶高度重疊代表分流失敗。</p>
+        </div>
+        <div style="background:var(--bg-2);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:10px;padding:16px 22px;">
+          <div style="font-family:var(--mono);font-size:11px;color:var(--accent);margin-bottom:4px;">H2 · 留存機制有效假設</div>
+          <p style="margin:0;color:var(--text);font-weight:500;">分期釋放（40/30/30）+ 業績下滑追回機制，能讓拉來的用戶留至少 60 天。</p>
+          <p style="margin:6px 0 0;font-size:13px;color:var(--text-2);"><strong>驗證方法：</strong>VIP 挑戰賽參與者 60 天後留存 &gt; 50%，業績下滑 ≥50% 追回案例 &lt; 10%。</p>
+        </div>
+        <div style="background:var(--bg-2);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:10px;padding:16px 22px;">
+          <div style="font-family:var(--mono);font-size:11px;color:var(--accent);margin-bottom:4px;">H3 · 反作弊夠強假設</div>
+          <p style="margin:0;color:var(--text);font-weight:500;">四維反作弊（設備指紋 / IP / KYC / 行為模式）能攔住 95% 以上的刷帳號。</p>
+          <p style="margin:6px 0 0;font-size:13px;color:var(--text-2);"><strong>驗證方法：</strong>活動結束抽樣 1000 帳號人工複核，異常帳號漏報率 &lt; 5%。</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 🤔 MY DECISIONS -->
+    <div style="margin-top:56px;">
+      <div style="display:flex;gap:14px;align-items:flex-start;margin-bottom:18px;">
+        <div style="font-size:32px;line-height:1;">🤔</div>
+        <div>
+          <div style="font-family:var(--mono);font-size:12px;color:var(--accent);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:4px;">06 · My Product Decisions</div>
+          <h3 style="font-size:22px;font-weight:600;margin:0;">我做過的關鍵產品決策</h3>
+        </div>
+      </div>
+      <div class="decisions" style="margin-top:14px;">
+        <div class="decision">
+          <div class="label">我的決策 #1</div>
+          <h5>三活動分流 vs 一個大活動</h5>
+          <p>單一大活動是「省事」的方案，但用戶分群差異太大不能用同一套激勵。我選擇拆成三個獨立活動 — 開發成本高 1.5 倍，但<strong>用戶覆蓋率從 ~20% 拉到 ~80%</strong>，預算 ROI 更高。決策關鍵：開發成本 vs 用戶覆蓋率，後者更值得投資。</p>
+        </div>
+        <div class="decision">
+          <div class="label">我的決策 #2</div>
+          <h5>排行榜每 5 分鐘刷新而非即時</h5>
+          <p>即時刷新最有臨場感，但<strong>後端壓力暴增 + 高頻 query 容易被刷</strong>。每小時刷新沒有緊張感，用戶不會頻繁回來看。5 分鐘是測試過 1/5/15/60 分鐘四個選項後的結論 — 既有競爭感，後端壓力又可控。</p>
+        </div>
+        <div class="decision">
+          <div class="label">我的決策 #3</div>
+          <h5>VIP 挑戰分 3 期釋放，不一次性給</h5>
+          <p>一次性發放：用戶達標立刻贖回離場，活動結束 TVL 暴跌。<strong>分 3 期（40 / 30 / 30）+ 業績下滑追回</strong>：強迫用戶持續維持業績才能拿完獎金。這是「鎖長期承諾」的設計，比「直接發錢」對平台健康度更好。</p>
+        </div>
+        <div class="decision">
+          <div class="label">我的決策 #4</div>
+          <h5>社群報銷強制人工審核（即使慢）</h5>
+          <p>其他兩個活動都是系統自動發獎。社群報銷不行 — <strong>必須人工審核活動真實性</strong>。AI 生成的活動影片、PS 的合照、湊人頭照片，自動審核擋不住。寧可發獎慢 24 小時，也不能讓平台預算被假活動掏空。這是「對的事情 &gt; 體驗順暢」的選擇。</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 🔧 TECHNICAL CHALLENGES (附錄) -->
+    <div style="margin-top:56px;padding-top:32px;border-top:1px solid var(--line);">
+      <div style="display:flex;gap:14px;align-items:flex-start;margin-bottom:18px;">
+        <div style="font-size:32px;line-height:1;">🔧</div>
+        <div>
+          <div style="font-family:var(--mono);font-size:12px;color:var(--text-3);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:4px;">附錄 · Technical Challenges</div>
+          <h3 style="font-size:20px;font-weight:500;margin:0;color:var(--text-2);">技術挑戰與工程協作</h3>
+        </div>
+      </div>
+      <p style="color:var(--text-3);font-size:14px;font-style:italic;">以下技術細節是我與工程團隊共同設計 — 我負責優先順序、跨團隊協調與業務需求對齊；架構與實作細節由工程架構師主導。</p>
+
+      <h4 style="margin-top:20px;">挑戰 01：排行榜 5 分鐘刷新的 QPS 控管</h4>
+      <p>所有用戶幾乎同時在 5 分鐘整點刷新，後端壓力暴增。設計快取層（Redis sorted set）+ 排行榜計算 cron job 每 5 分鐘預算一次寫入 Redis，前端讀取 Redis 而非實時計算。</p>
+
+      <h4>挑戰 02：分期釋放的時間鎖機制</h4>
+      <p>VIP 挑戰賽獎金 40/30/30 分 3 期，每期釋放前要檢查當下業績是否符合條件。設計 settlement_schedule 表記錄每筆獎金的釋放條件與檢查時間，cron job 每日掃描觸發釋放或追回。</p>
+
+      <h4>挑戰 03：四維反作弊判定</h4>
+      <p>同 IP + 同設備指紋 + 同 KYC 證件號 + 行為模式（註冊時間間隔 / 操作軌跡）四維度聯合判定。任一維度命中需人工複核，三維度命中自動凍結獎勵。</p>
     </div>
   </div>
 </section>

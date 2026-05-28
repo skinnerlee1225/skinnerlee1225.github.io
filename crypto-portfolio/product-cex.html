@@ -214,7 +214,7 @@
     </div>
     <ul class="toc">
       <li><a href="#prototype">Prototype</a></li>
-      <li><a href="#overview">Overview</a></li>
+      <li><a href="#overview">Story</a></li>
       <li><a href="#architecture">Architecture</a></li>
       <li><a href="#features">Features</a></li>
       <li><a href="#flows">Flows</a></li>
@@ -248,7 +248,7 @@
         <div class="num">9<span class="u">大模組</span></div>
       </div>
       <div class="item">
-        <div class="label">MVP 時程</div>
+        <div class="label">新客戶交付</div>
         <div class="num">12<span class="u">週上線</span></div>
       </div>
     </div>
@@ -401,44 +401,216 @@
 <section id="overview" class="prd-section">
   <div class="container">
     <div class="sec-head">
-      <div class="small">product overview</div>
-      <h2>產品定位與設計挑戰</h2>
+      <div class="small">product story</div>
+      <h2>動手寫 PRD 之前，我先想清楚的事</h2>
+      <p class="desc">技術架構只是手段 — 下方五個區塊才是我做這個產品時真正交付的東西：問題定義、目標用戶、競品差異化、成功指標、MVP 假設。</p>
     </div>
 
-    <p style="font-size:17px;line-height:1.75;color:var(--text-2);">
-      這是一個 <strong>白標 (White Label) 中心化交易所</strong> — 一套產品同時服務多個 B 端客戶 (品牌方)，每個客戶可以快速套用、客製化品牌、調整費率、設定地區合規。我們不是 Binance 那種百人+ 工程團隊的規模（團隊約 30 人），但要做到主流 CEX 的功能完整度（現貨 / 合約 / 理財）。設計挑戰是：在資源有限的前提下，每個客戶都要當作獨立交易所運作，但底層共用一套撮合引擎、帳本系統、風控引擎。
-    </p>
-
-    <h3><span class="num">挑戰 01</span>多租戶資料隔離</h3>
-    <p>每個 B 端客戶的用戶資料、交易紀錄、資金帳本必須完全隔離，但又共用同一套撮合引擎與冷熱錢包架構。最終採用 <code>tenant_id</code> 分庫策略 — 業務邏輯層共用，資料層按租戶 sharding。</p>
-
-    <h3><span class="num">挑戰 02</span>撮合引擎的效能極限</h3>
-    <p>單交易對需達 10 萬 TPS、延遲 &lt; 5ms。最終採用記憶體撮合 (Go/Rust 實作) + Kafka 落地 + ClickHouse 行情聚合。前期用 Go 寫第一版，瓶頸時用 Rust 改寫核心。</p>
-
-    <h3><span class="num">挑戰 03</span>合約強平與保險基金</h3>
-    <p>125x 槓桿下，強平機制必須既快又準。設計三層強平：(1) 市價減倉 → (2) 保險基金補足 → (3) ADL 自動減倉。標記價格取三所加權平均，防止單一交易所插針造成不合理強平。</p>
-
-    <div class="decisions">
-      <div class="decision">
-        <div class="label">關鍵決策 #1</div>
-        <h5>Go vs Rust 撮合引擎</h5>
-        <p>第一版選 Go — 團隊熟、開發快、可達 5 萬 TPS。預留 Rust 重寫 hook 點，當壓測瓶頸時可平滑遷移。</p>
+    <!-- 🎯 PROBLEM & WHY -->
+    <div style="margin-top:48px;">
+      <div style="display:flex;gap:14px;align-items:flex-start;margin-bottom:18px;">
+        <div style="font-size:32px;line-height:1;">🎯</div>
+        <div>
+          <div style="font-family:var(--mono);font-size:12px;color:var(--accent);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:4px;">01 · Problem & Why</div>
+          <h3 style="font-size:22px;font-weight:600;margin:0;">從一份 buggy 的現貨代碼 → 多客戶白標方案</h3>
+        </div>
       </div>
-      <div class="decision">
-        <div class="label">關鍵決策 #2</div>
-        <h5>K 線自建 vs TradingView</h5>
-        <p>整合 TradingView Charting Library — 省 3~4 週開發、用戶熟悉度高、技術指標完整。授權成本可接受。</p>
+
+      <div style="background:rgba(245,165,36,0.06);border-left:3px solid var(--accent);border-radius:8px;padding:16px 22px;margin:14px 0;">
+        <div style="font-family:var(--mono);font-size:11px;color:var(--accent);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:6px;">📍 真實起點</div>
+        <p style="margin:0;color:var(--text);font-weight:500;">我接手的不是空白專案 — 是一份<strong style="color:var(--accent);">滿是 bug、只有現貨功能</strong>的交易所代碼。沒有合約、沒有理財、自建 K 線常崩。</p>
       </div>
-      <div class="decision">
-        <div class="label">關鍵決策 #3</div>
-        <h5>KYC 自建 vs 第三方</h5>
-        <p>接 SumSub / Jumio 第三方服務 — 省 4+ 週開發、合規覆蓋更廣、人臉辨識精度更高。</p>
+
+      <p>所以我的工作不是「從零設計白標 CEX」，而是<strong>一邊修 bug、一邊補功能、一邊把它改造成可服務多個 B 端客戶的白標方案</strong>。三件事同時做，這才是真實情境。</p>
+
+      <p><strong>三個並行的挑戰：</strong></p>
+      <ul>
+        <li><strong>修 bug</strong>：穩定既有現貨交易，避免客戶（與用戶）反彈</li>
+        <li><strong>補齊功能</strong>：加合約 + 加理財 → 形成「基礎套組」，讓每個白標客戶都能拿到完整 CEX</li>
+        <li><strong>架構白標化</strong>：把單品牌系統改造成「基礎套組 + 客製模組 plug-in」的雙層架構，每個客戶按需求選裝</li>
+      </ul>
+
+      <p>實際運作後我發現，<strong style="color:var(--accent);">客戶對「基礎套組」幾乎沒爭議，差異全在客製模組</strong> — 有客戶要幣安廣場式社群、有客戶要內建 IM、有客戶要紅包功能、有客戶要 KOL 帶單系統。這個觀察改變了我規劃 roadmap 的方式。</p>
+    </div>
+
+    <!-- 👥 TARGET USERS -->
+    <div style="margin-top:56px;">
+      <div style="display:flex;gap:14px;align-items:flex-start;margin-bottom:18px;">
+        <div style="font-size:32px;line-height:1;">👥</div>
+        <div>
+          <div style="font-family:var(--mono);font-size:12px;color:var(--accent);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:4px;">02 · Target Users</div>
+          <h3 style="font-size:22px;font-weight:600;margin:0;">兩層用戶 + 模組需求差異化</h3>
+        </div>
       </div>
-      <div class="decision">
-        <div class="label">關鍵決策 #4</div>
-        <h5>Web 優先 vs Web+App 並行</h5>
-        <p>MVP 階段只做 Web — 省 4+ 週、Web 已覆蓋 70% 交易需求。App 留到 Phase 2 用 Flutter 一次出包雙平台。</p>
+      <p>白標產品最大的挑戰是<strong>兩層用戶</strong>：B 端客戶（買白標的人）+ 終端用戶（客戶的用戶）。兩邊需求都要顧到，而且 B 端客戶之間需求差異還很大。</p>
+
+      <h4 style="margin-top:24px;color:var(--accent);font-size:15px;letter-spacing:0.04em;">B 端客戶 Persona — 基礎套組相同，客製模組各異</h4>
+      <p style="margin-bottom:10px;">所有客戶都拿到「現貨 + 合約 + 理財」三大基礎套組，差異在他們各自要的<strong>客製模組</strong>：</p>
+      <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin:14px 0;">
+        <div style="background:var(--bg-2);border:1px solid var(--line);border-radius:12px;padding:18px;">
+          <div style="font-weight:600;font-size:15px;color:var(--text);margin-bottom:6px;">🎪 廣場社群型客戶</div>
+          <div style="font-size:13px;color:var(--text-2);line-height:1.6;">想要幣安廣場式的 KOL 內容廣場、帶單、社群討論。重視用戶停留時長。</div>
+        </div>
+        <div style="background:var(--bg-2);border:1px solid var(--line);border-radius:12px;padding:18px;">
+          <div style="font-weight:600;font-size:15px;color:var(--text);margin-bottom:6px;">💬 IM 即時通訊型</div>
+          <div style="font-size:13px;color:var(--text-2);line-height:1.6;">想內建 IM 讓用戶私訊、組群組討論行情。Web2 社交習慣的客戶愛這個。</div>
+        </div>
+        <div style="background:var(--bg-2);border:1px solid var(--line);border-radius:12px;padding:18px;">
+          <div style="font-weight:600;font-size:15px;color:var(--text);margin-bottom:6px;">🧧 紅包活動型</div>
+          <div style="font-size:13px;color:var(--text-2);line-height:1.6;">中華圈傳統節慶，需要紅包功能做拉新與留存。低成本高轉換。</div>
+        </div>
+        <div style="background:var(--bg-2);border:1px solid var(--line);border-radius:12px;padding:18px;">
+          <div style="font-weight:600;font-size:15px;color:var(--text);margin-bottom:6px;">🎯 純交易型客戶</div>
+          <div style="font-size:13px;color:var(--text-2);line-height:1.6;">只要基礎套組，不要任何社群/活動模組。OTC desk 與機構型客戶為主。</div>
+        </div>
       </div>
+      <p style="margin-top:8px;color:var(--text-3);font-size:13px;font-style:italic;">我學到的事：白標客戶不是同一種人。同樣是「想做交易所」，要的東西可能完全相反 — 廣場型重視 UGC、純交易型嫌社群是雜訊。</p>
+
+      <h4 style="margin-top:24px;color:var(--accent);font-size:15px;letter-spacing:0.04em;">終端用戶 Persona（客戶服務的人）</h4>
+      <table>
+        <tr><th>類型</th><th>佔比</th><th>主要需求</th><th>關鍵體驗</th></tr>
+        <tr><td>📱 散戶</td><td>~70%</td><td>追漲殺跌、現貨為主</td><td>Mobile App、簡單下單、KOL 帶單</td></tr>
+        <tr><td>📊 進階用戶</td><td>~25%</td><td>合約、技術指標、止盈止損</td><td>PC Web、K 線深度、API 半自動</td></tr>
+        <tr><td>🏦 機構/做市商</td><td>~5%</td><td>API 交易、低延遲、大流動性</td><td>FIX/REST/WS API、&lt; 5ms 延遲</td></tr>
+      </table>
+    </div>
+
+    <!-- ⚔️ COMPETITIVE -->
+    <div style="margin-top:56px;">
+      <div style="display:flex;gap:14px;align-items:flex-start;margin-bottom:18px;">
+        <div style="font-size:32px;line-height:1;">⚔️</div>
+        <div>
+          <div style="font-family:var(--mono);font-size:12px;color:var(--accent);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:4px;">03 · Competitive Differentiation</div>
+          <h3 style="font-size:22px;font-weight:600;margin:0;">在「成本 × 速度 × 自由度」三角找定位</h3>
+        </div>
+      </div>
+      <table>
+        <tr><th>方案</th><th>上線時間</th><th>客製化</th><th>成本</th><th>主要缺點</th></tr>
+        <tr><td>自建 from 0</td><td>12+ 個月</td><td>100%</td><td>$5M+</td><td>太慢、資本門檻太高</td></tr>
+        <tr><td>Binance Cloud</td><td>4~6 個月</td><td>~60%</td><td>$$$$</td><td>綁 Binance 生態、抽成高</td></tr>
+        <tr style="background:rgba(245,165,36,0.05);"><td><strong style="color:var(--accent);">我們（白標）</strong></td><td><strong>12 週</strong></td><td><strong>~80%</strong></td><td><strong>$$$</strong></td><td>—（市場甜蜜點）</td></tr>
+        <tr><td>Open-source（Honey Framework）</td><td>6~9 個月</td><td>~95%</td><td>$$</td><td>仍要自養工程團隊</td></tr>
+      </table>
+      <p style="margin-top:14px;"><strong>我們的差異化：</strong>不是技術最強、不是最便宜、不是最自由 — 但在「速度 × 客製化 × 成本」三角找到甜蜜點。我們不打 Binance Cloud 的價格戰，也不跟自建方案比深度，而是定位給「想做交易所但沒能力自建」的客戶。</p>
+    </div>
+
+    <!-- 📈 SUCCESS METRICS -->
+    <div style="margin-top:56px;">
+      <div style="display:flex;gap:14px;align-items:flex-start;margin-bottom:18px;">
+        <div style="font-size:32px;line-height:1;">📈</div>
+        <div>
+          <div style="font-family:var(--mono);font-size:12px;color:var(--accent);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:4px;">04 · Success Metrics</div>
+          <h3 style="font-size:22px;font-weight:600;margin:0;">北極星指標 + AARRR 拆解</h3>
+        </div>
+      </div>
+
+      <div style="background:linear-gradient(135deg,rgba(245,165,36,0.1) 0%,rgba(0,211,149,0.05) 100%);border:1px solid rgba(245,165,36,0.3);border-radius:14px;padding:20px 24px;margin:14px 0;">
+        <div style="font-family:var(--mono);font-size:11px;color:var(--accent);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:6px;">⭐ North Star Metric</div>
+        <div style="font-size:20px;font-weight:600;color:var(--text);">所有白標客戶的<span style="color:var(--accent);">月手續費總和（GMV × Take Rate）</span></div>
+        <div style="font-size:14px;color:var(--text-2);margin-top:6px;">這個指標同時反映「客戶數 × 客戶活躍度 × 平台抽成比例」三件事，最能代表平台健康度。</div>
+      </div>
+
+      <h4 style="margin-top:20px;color:var(--accent);font-size:15px;">B 端客戶 AARRR 拆解</h4>
+      <table>
+        <tr><th>階段</th><th>指標</th><th>設計目標</th></tr>
+        <tr><td>Acquisition</td><td>新簽約客戶 / 月</td><td>2 個</td></tr>
+        <tr><td>Activation</td><td>上線後 30 天達 $100K USDT 日交易量比例</td><td>≥ 60%</td></tr>
+        <tr><td>Retention</td><td>連續 6 個月使用的客戶比例</td><td>≥ 80%</td></tr>
+        <tr><td>Revenue</td><td>平均客戶 ARR</td><td>$500K</td></tr>
+        <tr><td>Referral</td><td>客戶 NPS 推薦轉介率</td><td>≥ 30</td></tr>
+      </table>
+
+      <h4 style="margin-top:20px;color:var(--accent);font-size:15px;">終端用戶體驗指標（透過 SDK 收集）</h4>
+      <ul>
+        <li>撮合延遲 P99 &lt; 5ms（業界 benchmark）</li>
+        <li>訂單成功率 &gt; 99.95%</li>
+        <li>小額提現處理時間 &lt; 30 分鐘（自動審核通過率）</li>
+        <li>App 7 日留存 &gt; 40%（散戶 segment）</li>
+      </ul>
+    </div>
+
+    <!-- 🧪 MVP HYPOTHESIS -->
+    <div style="margin-top:56px;">
+      <div style="display:flex;gap:14px;align-items:flex-start;margin-bottom:18px;">
+        <div style="font-size:32px;line-height:1;">🧪</div>
+        <div>
+          <div style="font-family:var(--mono);font-size:12px;color:var(--accent);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:4px;">05 · MVP Hypothesis</div>
+          <h3 style="font-size:22px;font-weight:600;margin:0;">12 週 MVP 想驗證的三個假設</h3>
+        </div>
+      </div>
+      <p>因為起點是「接手 + 修 + 補 + 改造」四件事並行，MVP 不是「做最小版本」，而是「驗證這條路走得通」。三個核心假設：</p>
+      <div style="display:grid;grid-template-columns:1fr;gap:14px;margin-top:14px;">
+        <div style="background:var(--bg-2);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:10px;padding:16px 22px;">
+          <div style="font-family:var(--mono);font-size:11px;color:var(--accent);margin-bottom:4px;">H1 · 改造可行性假設</div>
+          <p style="margin:0;color:var(--text);font-weight:500;">在 buggy 舊代碼上「修 bug + 補合約理財 + 改造白標」三件事並行可行，不需要重寫。</p>
+          <p style="margin:6px 0 0;font-size:13px;color:var(--text-2);"><strong>驗證方法：</strong>第一個白標客戶能在 12 週內帶著「現貨+合約+理財」上線，且舊用戶體驗不退化。</p>
+        </div>
+        <div style="background:var(--bg-2);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:10px;padding:16px 22px;">
+          <div style="font-family:var(--mono);font-size:11px;color:var(--accent);margin-bottom:4px;">H2 · 模組化規模化假設</div>
+          <p style="margin:0;color:var(--text);font-weight:500;">「基礎套組統一 + 客製模組 plug-in」架構，能讓 30 人團隊同時服務多個需求不同的客戶。</p>
+          <p style="margin:6px 0 0;font-size:13px;color:var(--text-2);"><strong>驗證方法：</strong>第二、三個客戶上線時間從 12 週縮短到 6~8 週，因為基礎套組已沉澱。</p>
+        </div>
+        <div style="background:var(--bg-2);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:10px;padding:16px 22px;">
+          <div style="font-family:var(--mono);font-size:11px;color:var(--accent);margin-bottom:4px;">H3 · 客製模組複用假設</div>
+          <p style="margin:0;color:var(--text);font-weight:500;">某些客製模組（廣場 / IM / 紅包）會被多個客戶要，開發成本可攤平。</p>
+          <p style="margin:6px 0 0;font-size:13px;color:var(--text-2);"><strong>驗證方法：</strong>每個客製模組至少有 2 個客戶買單，否則該模組改為「客戶獨家報價」而非進產品線。</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 🤔 PM DECISIONS -->
+    <div style="margin-top:56px;">
+      <div style="display:flex;gap:14px;align-items:flex-start;margin-bottom:18px;">
+        <div style="font-size:32px;line-height:1;">🤔</div>
+        <div>
+          <div style="font-family:var(--mono);font-size:12px;color:var(--accent);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:4px;">06 · Product Decisions</div>
+          <h3 style="font-size:22px;font-weight:600;margin:0;">我做過的關鍵產品決策（非技術選型）</h3>
+        </div>
+      </div>
+      <p>下方四個決策都是 trade-off — 沒有「對」的答案，只有「為這個產品最合適」的答案。</p>
+      <div class="decisions" style="margin-top:14px;">
+        <div class="decision">
+          <div class="label">我的決策 #1</div>
+          <h5>接手 buggy 舊代碼，而非從零重寫</h5>
+          <p>舊代碼有不少 bug、只有現貨，重寫看起來更乾淨。但評估後：重寫要 6+ 個月、丟掉現有客戶與用戶累積、團隊熟悉度歸零。最終決定<strong>在現有代碼上修 bug + 補功能 + 重構為白標</strong>，三件事並行。這是「在飛機上換引擎」式的高難度路線，但保住了既有業務不停擺。</p>
+        </div>
+        <div class="decision">
+          <div class="label">我的決策 #2</div>
+          <h5>自建 K 線 → 接 TradingView</h5>
+          <p>舊代碼用的是自建 K 線元件，常崩、技術指標少、開發成本持續燒。我主導把它<strong>換成 TradingView Charting Library</strong>：省 3~4 週後續維護、用戶熟悉度高、技術指標完整、授權成本可接受。這是「敢砍掉前人遺產」的決策 — 不是工程偏好，是我主動評估後拍板。</p>
+        </div>
+        <div class="decision">
+          <div class="label">我的決策 #3</div>
+          <h5>基礎套組統一 + 客製模組 plug-in</h5>
+          <p>客戶需求差異大（廣場 / IM / 紅包 / 純交易），如果完全客製化我們會死。決定<strong>基礎套組（現貨+合約+理財）所有客戶一致</strong>，客製模組做成可插拔的 plug-in 架構。客戶要紅包就裝紅包模組、要 IM 就裝 IM 模組。維護成本可控，又能滿足差異化需求。</p>
+        </div>
+        <div class="decision">
+          <div class="label">我的決策 #4</div>
+          <h5>不做槓桿代幣（即使賺錢）</h5>
+          <p>槓桿代幣是 Crypto 圈很賺的產品，但散戶誤解率高、客訴比例 5 倍於現貨、各國監管最嚴。決定徹底不做 — 一個產品該不該做，不只看 ARR，更要看「長期客訴與聲譽成本」。客戶問起來會解釋為什麼不做，反而建立信任。</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 🔧 TECHNICAL CHALLENGES (kept but de-emphasized) -->
+    <div style="margin-top:56px;padding-top:32px;border-top:1px solid var(--line);">
+      <div style="display:flex;gap:14px;align-items:flex-start;margin-bottom:18px;">
+        <div style="font-size:32px;line-height:1;">🔧</div>
+        <div>
+          <div style="font-family:var(--mono);font-size:12px;color:var(--text-3);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:4px;">附錄 · Technical Challenges</div>
+          <h3 style="font-size:20px;font-weight:500;margin:0;color:var(--text-2);">技術挑戰與工程協作</h3>
+        </div>
+      </div>
+      <p style="color:var(--text-3);font-size:14px;font-style:italic;">以下技術細節是我與 30 人工程團隊共同設計 — 我負責優先順序、跨團隊協調與業務需求對齊；架構與實作細節由工程架構師主導。</p>
+
+      <h4 style="margin-top:20px;">挑戰 01：多租戶資料隔離</h4>
+      <p>每個 B 端客戶資料完全隔離，但共用撮合引擎。採 <code>tenant_id</code> 分庫 sharding 策略。</p>
+
+      <h4>挑戰 02：撮合引擎效能極限</h4>
+      <p>單交易對需達 10 萬 TPS、延遲 &lt; 5ms。記憶體撮合 + Kafka 落地 + ClickHouse 行情聚合。</p>
+
+      <h4>挑戰 03：合約強平與保險基金</h4>
+      <p>125x 槓桿下強平三層機制：市價減倉 → 保險基金 → ADL。標記價格三所加權平均防插針。</p>
     </div>
   </div>
 </section>
@@ -734,52 +906,79 @@ flowchart LR
 <section id="mvp" class="prd-section">
   <div class="container">
     <div class="sec-head">
-      <div class="small">mvp roadmap</div>
-      <h2>12 週 MVP 上線規劃</h2>
-      <p class="desc">在「白標」這個情境下，MVP 的標準不是「能跑」，而是「對 B 端客戶可交付」。以下是我規劃的 12 週實施路線。</p>
+      <div class="small">delivery roadmap</div>
+      <h2>新 B 端客戶 12 週交付週期</h2>
+      <p class="desc">12 週不是「我們從零開發 CEX 的時間」— 基礎套組與客製模組庫已經沉澱好了。12 週是<strong style="color:var(--accent);">一個新 B 端客戶從簽約到正式上線的完整交付時間</strong>。這才是白標真正賣的東西。</p>
     </div>
 
-    <h3><span class="num">7.1</span>第一版必做範圍</h3>
+    <h3><span class="num">7.1</span>已沉澱的產品庫存</h3>
+    <p>客戶簽約那一刻起，他能拿到的不是空白專案，而是<strong>下面這些已經做好、隨時可組裝的模組</strong>：</p>
+
+    <h4 style="margin-top:18px;color:var(--accent);">📦 基礎套組（所有客戶都有）</h4>
     <table>
-      <tr><th>模組</th><th>MVP 範圍</th><th>備註</th></tr>
-      <tr><td>用戶系統</td><td>郵箱註冊 + Google 2FA + KYC Lv1</td><td>手機號註冊延後</td></tr>
-      <tr><td>資產系統</td><td>充值 + 提現 + 餘額查看</td><td>僅 BTC/ETH/USDT 三幣種</td></tr>
-      <tr><td>現貨交易</td><td>限價單 + 市價單 + K 線 + Orderbook</td><td>初期 5~10 個交易對</td></tr>
-      <tr><td>手續費</td><td>統一 Maker 0.1% / Taker 0.1%</td><td>VIP 體系延後</td></tr>
-      <tr><td>風控</td><td>提現限額 + 基本 AML</td><td>規則引擎優先，ML 延後</td></tr>
-      <tr><td>通知</td><td>Email (安全 + 成交)</td><td>Push/SMS 延後</td></tr>
-      <tr><td>後台</td><td>用戶管理 + KYC 審核 + 基礎報表</td><td>高級監控延後</td></tr>
-      <tr><td>錢包</td><td>熱錢包 + 基礎歸集</td><td>冷錢包用硬體多簽手動操作</td></tr>
+      <tr><th>模組</th><th>內容</th><th>客戶可否關閉</th></tr>
+      <tr><td>用戶系統</td><td>註冊 / 登入 / 2FA / KYC 三級 / 設備管理</td><td>❌ 必裝</td></tr>
+      <tr><td>資產系統</td><td>充值 / 提現 / 三帳戶劃轉 / 帳本</td><td>❌ 必裝</td></tr>
+      <tr><td>現貨交易</td><td>撮合引擎 / Orderbook / K 線（TradingView）/ 四種訂單</td><td>❌ 必裝</td></tr>
+      <tr><td>合約交易</td><td>USDT 本位永續 / 1x~125x 槓桿 / 強平三層機制</td><td>✅ 可關閉</td></tr>
+      <tr><td>理財模組</td><td>活期 / 定期 / Staking</td><td>✅ 可關閉</td></tr>
+      <tr><td>風控系統</td><td>提現限額 / AML / 異常交易偵測</td><td>❌ 必裝</td></tr>
+      <tr><td>冷熱錢包</td><td>熱錢包自動 / 冷錢包 3/5 多簽</td><td>❌ 必裝</td></tr>
+      <tr><td>後台管理</td><td>用戶 / KYC 審核 / 報表 / 操作日誌</td><td>❌ 必裝</td></tr>
     </table>
 
-    <h3><span class="num">7.2</span>12 週實施甘特圖</h3>
+    <h4 style="margin-top:18px;color:var(--accent);">🧩 客製模組庫（按客戶需求 plug-in）</h4>
+    <table>
+      <tr><th>模組</th><th>適合客戶</th><th>開發狀態</th></tr>
+      <tr><td>🎪 幣安廣場式內容社群</td><td>廣場社群型客戶</td><td>已沉澱</td></tr>
+      <tr><td>💬 IM 即時通訊</td><td>IM 社交型客戶</td><td>已沉澱</td></tr>
+      <tr><td>🧧 紅包活動系統</td><td>中華圈拉新客戶</td><td>已沉澱</td></tr>
+      <tr><td>📢 KOL 帶單系統</td><td>社群帶量型客戶</td><td>已沉澱</td></tr>
+      <tr><td>🎯 社群任務 / 簽到</td><td>留存型客戶</td><td>已沉澱</td></tr>
+      <tr><td>🎁 空投 / Launchpad</td><td>新項目發行型</td><td>客戶需求觸發開發</td></tr>
+    </table>
+
+    <h3><span class="num">7.2</span>新客戶 12 週交付流程</h3>
     <div class="mermaid-wrap">
       <div class="mermaid">
 gantt
-    title CEX MVP 12 週 Roadmap
+    title 新 B 端客戶交付甘特圖
     dateFormat YYYY-MM-DD
     axisFormat W%V
-    section 基礎建設
-    K8s + DB + Kafka + CI/CD     :done, infra, 2023-07-01, 2w
-    User Service + 2FA           :done, user, after infra, 2w
-    section 資產層
-    區塊鏈節點 BTC/ETH/TRON      :active, node, after infra, 2w
-    熱錢包服務                   :hot, after node, 1w
-    Asset Service + 帳本          :asset, after node, 2w
-    section 交易層
-    撮合引擎開發                  :match, after user, 3w
-    現貨交易 API + WS            :api, after match, 1w
-    前端交易頁                    :ui, after api, 2w
+    section 啟動期
+    簽約 + 需求對齊 workshop     :done, kickoff, 2024-01-01, 2w
+    section 客製期
+    品牌客製 LOGO/主題色/域名     :brand, after kickoff, 2w
+    法務文件 (TOS/Privacy)        :legal, after kickoff, 1w
+    section 組裝期
+    模組選裝 + 配置參數           :modules, after brand, 1w
+    KYC vendor 串接 (SumSub)      :kyc, after modules, 1w
+    金流 / 出入金通路串接          :banking, after modules, 2w
+    section 驗收期
+    集成測試 + UAT                :uat, after banking, 1w
+    第三方滲透測試                 :pentest, after uat, 1w
     section 上線
-    風控引擎 + 後台 MVP          :risk, after ui, 1w
-    全流程聯調 + 滲透測試         :test, after risk, 1w
-    灰度上線 + 監控完善           :gtm, after test, 1w
+    灰度邀請制 (200 用戶)         :soft, after pentest, 1w
+    正式公開上線                  :go-live, after soft, 1w
       </div>
     </div>
 
-    <h3><span class="num">7.3</span>Phase 2 / Phase 3 延後功能</h3>
-    <p><strong>Phase 2 (上線 1~3 個月)：</strong>合約交易 (USDT 本位永續)、理財活期、Mobile App (Flutter)、止盈止損 + OCO、VIP 手續費體系、Push 通知、多幣種擴充至 20+。</p>
-    <p><strong>Phase 3 (上線 3~6 個月)：</strong>幣本位合約、定期理財 + Staking、自動複利、冷錢包 MPC 多簽自動化、ML 風控模型、API 交易、子帳戶體系、多語言。</p>
+    <h3><span class="num">7.3</span>規模化效應 — 第二、三個客戶縮到 6~8 週</h3>
+    <p>第一個客戶 12 週是「沉澱期 + 交付期」加總。<strong>從第二個客戶開始，因為基礎套組與客製模組都已存在，交付時間應該縮短到 6~8 週</strong>：</p>
+
+    <table>
+      <tr><th>客戶序號</th><th>預估交付時間</th><th>縮短原因</th></tr>
+      <tr><td>第 1 個客戶</td><td>12 週</td><td>沉澱基礎套組 + 第一輪流程</td></tr>
+      <tr><td>第 2 個客戶</td><td>~8 週</td><td>基礎套組複用、流程已知</td></tr>
+      <tr><td>第 3 個客戶</td><td>~6 週</td><td>客製模組已存在（除非要新模組）</td></tr>
+      <tr><td>需要全新客製模組的客戶</td><td>+2~4 週</td><td>新模組開發週期</td></tr>
+    </table>
+
+    <p style="margin-top:14px;"><strong>驗收這個假設</strong>（呼應 Story 區的 H2 模組化規模化假設）：第二、三個客戶實際交付時間如果接近 12 週，代表基礎套組沉澱不夠紮實，需要回頭重構。</p>
+
+    <h3><span class="num">7.4</span>客戶上線後的加購服務</h3>
+    <p>客戶上線後，可隨時加購進階模組 — 我們的營收不是「12 週賣斷」，而是「持續加值」：</p>
+    <p><strong>常見加購：</strong>幣本位合約、定期理財 + Staking、自動複利、冷錢包 MPC 多簽自動化、ML 風控模型、API 交易、子帳戶體系、多語言、移動端 App（Flutter 雙平台一次出包）、額外客製模組（按需報價）。</p>
   </div>
 </section>
 
