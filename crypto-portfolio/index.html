@@ -190,6 +190,28 @@
     .showcase-head{flex-direction:column;align-items:flex-start;gap:20px;}
     .showcase-head .right{text-align:left;}
   }
+
+
+  /* === I18N TOGGLE (injected) === */
+  .lang-toggle{position:fixed;bottom:28px;right:28px;z-index:9000;width:56px;height:56px;border-radius:50%;
+    background:linear-gradient(135deg,#22d3ee 0%,#a78bfa 100%);border:none;cursor:pointer;display:flex;
+    align-items:center;justify-content:center;font-size:16px;font-weight:800;color:#0a0d14;
+    box-shadow:0 4px 20px rgba(34,211,238,.35);transition:transform .2s,box-shadow .2s;user-select:none;
+    font-family:-apple-system,'Segoe UI',Roboto,'Noto Sans TC',sans-serif;}
+  .lang-toggle:hover{transform:scale(1.1);box-shadow:0 6px 28px rgba(34,211,238,.5);}
+  .lang-toggle:active{transform:scale(.95);}
+  .lang-toast{position:fixed;bottom:96px;right:28px;z-index:9000;background:#1a2236;
+    border:1px solid rgba(255,255,255,.12);border-radius:10px;padding:10px 18px;font-size:13px;
+    color:#22d3ee;font-weight:600;opacity:0;transform:translateY(8px);transition:all .3s;pointer-events:none;
+    font-family:-apple-system,'Segoe UI',Roboto,'Noto Sans TC',sans-serif;}
+  .lang-toast.show{opacity:1;transform:translateY(0);}
+  .lang-inline{display:inline-flex;align-items:center;gap:8px;margin-top:16px;padding:6px 4px;}
+  .lang-inline-btn{padding:6px 16px;border-radius:8px;border:1px solid rgba(255,255,255,.12);
+    background:#1a2236;color:#94a3b8;cursor:pointer;font-size:14px;font-weight:600;transition:all .15s;
+    font-family:-apple-system,'Segoe UI',Roboto,'Noto Sans TC',sans-serif;}
+  .lang-inline-btn.active{background:linear-gradient(135deg,#22d3ee 0%,#a78bfa 100%);color:#0a0d14;border-color:transparent;}
+  .lang-inline-btn:hover:not(.active){border-color:#22d3ee;color:#e2e8f0;}
+  /* === /I18N TOGGLE === */
 </style>
 </head>
 <body>
@@ -207,6 +229,9 @@
 </nav>
 
 <header class="hero">
+<!-- I18N-INLINE-START --><div class="lang-inline" id="langInline" data-notranslate="true"><button class="lang-inline-btn active" id="btnZh" onclick="switchLang('zh')">中文</button><button class="lang-inline-btn" id="btnEn" onclick="switchLang('en')">English</button></div><!-- I18N-INLINE-END -->
+
+
   <div class="container">
     <div class="tag">4 shipped products + 1 design proposal</div>
     <h1>
@@ -561,5 +586,60 @@
   </div>
 </footer>
 
+
+
+<!-- I18N-JS-START -->
+<script>
+(function(){
+  var dict = {"四個我從 0 設計的 Crypto 產品。": "Four crypto products I designed from scratch.", "點進任何一個產品 — 你會看到實際可操作的原型 demo、完整 PRD 規格書，以及背後的系統架構與數據流圖。": "Click into any product — you'll find a fully interactive prototype demo, a complete PRD spec, and the underlying system architecture and data-flow diagrams.", "不只是文字，是讓你「親手摸到」我做的產品。": "Not just words — let you actually get your hands on the products I built.", "另附一份 Polymarket 預測市場的設計提案 PRD（非已落地產品）。": "Also included: a design-proposal PRD for a Polymarket prediction market (not a shipped product).", "⚡ 快速跳轉：": "⚡ Quick Jump:", "CEX 中心化交易所": "CEX Centralized Exchange", "DEX 錢包 + Swap": "DEX Wallet + Swap", "理財模組 + VIP": "Earn Module + VIP", "活動模組套件": "Campaign Module Kit", "Polymarket 設計提案": "Polymarket Design Proposal", "Prop Challenge 系統設計": "Prop Challenge System Design", "點擊作品卡進入產品 demo": "Click a project card to enter the product demo", "每個產品含完整 PRD + 互動原型 + 視覺化圖表": "Each product includes a complete PRD + interactive prototype + visual diagrams", "產品展示廳": "Product Showcase", "每一個都是真實落地的白標方案 — 點擊進入操作原型，並查看背後完整的 PRD、系統架構、用戶流程與風控設計。": "Every one is a real-world white-label solution — click in to explore the interactive prototype, and review the full PRD, system architecture, user flows, and risk-control design behind it.", "白標 All-in-one 中心化交易所，涵蓋現貨、合約、理財、資產管理。9 大系統模組獨立部署，30 人團隊交付主流 CEX 功能完整度。": "White-label all-in-one CEX covering spot, futures, earn, and asset management. 9 independently deployable system modules; a 30-person team delivering full-featured mainstream CEX functionality.", "現貨 + 合約": "Spot + Futures", "125x 槓桿": "125x Leverage", "冷熱錢包": "Cold & Hot Wallets", "Web3 錢包 + DEX 聚合器": "Web3 Wallet + DEX Aggregator", "去中心化錢包 + DEX 聚合器。BIP39 助記詞、HD 派生、wagmi/viem 整合、多鏈 Swap、合約風險偵測。": "Decentralized wallet + DEX aggregator. BIP39 mnemonic, HD derivation, wagmi/viem integration, multi-chain Swap, and smart-contract risk detection.", "多鏈支援": "Multi-chain Support", "10 pages · 完整原型互動": "10 pages · Full prototype interaction", "理財 + VIP 裂變模組套件": "Earn + VIP Growth Module Kit", "幾乎所有 B 端客戶都會加裝的客製模組": "A custom module almost every B2B client adds on", "。9 級 VIP + 級差獎金 + 收益 Cap，撥比鎖在 12.5%。": ". 9-tier VIP + tiered bonus + yield cap, allocation ratio locked at 12.5%.", "每個客戶按市場特性自訂 % 數與規則": "Each client customizes percentages and rules to fit their market", "10+ 可調參數": "10+ Configurable Parameters", "CEX + DEX 通用": "CEX + DEX Compatible", "撥比建模": "Allocation Modeling", "含計算器原型": "Includes Calculator Prototype", "v1.1 · 每客戶量身調參": "v1.1 · Per-client parameter tuning", "給 B 端客戶辦活動用的引擎": "The engine B2B clients use to run campaigns", "— 社群報銷 / VIP 挑戰賽 / 每日排行榜三大模組，": "— three modules: community rebate / VIP challenge / daily leaderboard,", "每個客戶按預算調參、自由組合": "each client adjusts parameters by budget and freely combines modules", "。我們提供引擎、反作弊與業績計算，廣告怎麼打是客戶的事。": ". We provide the engine, anti-cheat logic, and performance calculation — how clients run ads is their own business.", "3 模組可單裝": "3 Modules, Each Standalone", "4 維反作弊": "4-Dimension Anti-Cheat", "參數全可調": "Fully Configurable Parameters", "v1.0 · 活動引擎": "v1.0 · Campaign Engine", "Polymarket Clone — 東南亞預測市場": "Polymarket Clone — Southeast Asia Prediction Market", "針對越南、菲律賓、孟加拉設計的預測市場 PRD — 完整 11 個 sections，含市場分析、區塊鏈金流、團隊分潤、財務模型。": "A prediction market PRD designed for Vietnam, the Philippines, and Bangladesh — 11 complete sections covering market analysis, blockchain payment flow, team revenue sharing, and financial modeling.", "這是「如果我來做 Polymarket clone」的設計提案，非已落地客戶": "This is a design proposal for \"what if I built a Polymarket clone\" — not a shipped client product", "11 個 sections": "11 Sections", "東南亞市場": "Southeast Asia Market", "區塊鏈金流": "Blockchain Payment Flow", "財務模型": "Financial Model", "v1.0 · 完整 PRD · 6,300+ 行": "v1.0 · Complete PRD · 6,300+ lines", "雙階段": "Two-phase", "單階段": "Single-phase", "忠誠升級": "Loyalty Upgrade", "90% 分潤": "90% Revenue Share", "日虧損上限": "Daily Loss Limit", "總虧損上限": "Total Loss Limit", "帳戶規模": "Account Size", "槓桿上限": "Leverage Cap", "Prop Challenge — 自營交易挑戰系統": "Prop Challenge — Proprietary Trading Challenge System", "為 CFD 券商設計端到端自營交易挑戰賽系統，涵蓋系統邏輯、MT4/MT5 雙平台風控、用戶旅程、行銷著陸頁，以及相關性對沖偵測。": "End-to-end prop trading challenge system designed for a CFD broker, covering system logic, MT4/MT5 dual-platform risk controls, user journey, marketing landing page, and correlation-hedging detection.", "面試作業，獲得高分評價。": "Interview assignment — received high-score evaluation.", "雙語 PRD": "Bilingual PRD", "風控引擎": "Risk Control Engine", "商業模式": "Business Model", "競品分析": "Competitive Analysis", "5 Parts · A–E 完整架構": "5 Parts · Complete A–E Architecture", "不是自營 —": "Not self-operated —", "是": "it's", "白標基礎設施": "White-Label Infrastructure", "這 4 個產品都是「白標 (White Label)」方案 — 同一套引擎要服務多個 B 端客戶，每個客戶的品牌、合規地區、費率結構都不同。挑戰遠高於自營交易所：必須讓所有東西都「參數化、可配置、可隔離」。": "All 4 products are white-label solutions — the same engine serves multiple B2B clients, each with different branding, compliance regions, and fee structures. The challenge far exceeds running a proprietary exchange: everything must be parameterized, configurable, and isolated.", "服務多個 B 端客戶": "Serving Multiple B2B Clients", "同一套撮合 + 帳本，需支援不同品牌、地區、合規要求，做到客戶間資料完全隔離。": "The same matching engine + ledger must support different brands, regions, and compliance requirements — with complete data isolation between clients.", "參數化的風控與費率": "Parameterized Risk Controls & Fee Structures", "VIP 分級、Maker/Taker 費率、提現限額、強平閾值都需可配置而非寫死。": "VIP tiers, Maker/Taker fees, withdrawal limits, and liquidation thresholds all need to be configurable, not hardcoded.", "高可用 + 高安全": "High Availability + High Security", "冷熱錢包分離、3/5 多簽、每日對帳 — 任何一個客戶出事都是公司風險。": "Cold/hot wallet separation, 3-of-5 multi-sig, daily reconciliation — any incident with any client is a company-level risk."};
+  var mmdZh = [];
+  var mmdEn = [];
+  var reverseDict = {}; for (var k in dict){ if(!(dict[k] in reverseDict)) reverseDict[dict[k]] = k; }
+  var currentLang = "zh";
+  function rerenderMermaid(lang){
+    if(!mmdEn.length) return;
+    var ds = document.querySelectorAll(".mermaid");
+    if(!ds.length) return;
+    var src = lang==="en"?mmdEn:mmdZh;
+    var changed=[];
+    for(var i=0;i<ds.length;i++){ if(i>=src.length) continue; ds[i].removeAttribute("data-processed"); ds[i].innerHTML=""; ds[i].textContent=src[i]; changed.push(ds[i]); }
+    try{ if(window.mermaid){ if(typeof mermaid.run==="function"){ mermaid.run({nodes:changed}); } else if(typeof mermaid.init==="function"){ mermaid.init(undefined, changed); } } }catch(e){ console.warn("mermaid rerender", e); }
+  }
+  function translateNode(node, fromDict, sortedKeys){
+    var original = node.textContent; var trimmed = original.trim(); if(!trimmed) return;
+    if(fromDict[trimmed]){ node.textContent = original.replace(trimmed, fromDict[trimmed]); return; }
+    var text = original;
+    // substring fallback only for long, specific phrases (>=5 chars) to avoid corrupting text with short generic keys
+    for(var i=0;i<sortedKeys.length;i++){ var key=sortedKeys[i]; if(key.length<5) continue; if(text.indexOf(key)!==-1){ text = text.split(key).join(fromDict[key]); } }
+    if(text!==original) node.textContent = text;
+  }
+  function translatePage(toLang, fromLang){
+    var fromDict;
+    if(fromLang==="zh"&&toLang==="en") fromDict=dict;
+    else if(fromLang==="en"&&toLang==="zh") fromDict=reverseDict;
+    else return;
+    var sortedKeys = Object.keys(fromDict).sort(function(a,b){return b.length-a.length;});
+    var walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, { acceptNode:function(node){
+      var el=node.parentElement; while(el){ var tag=el.tagName; if(tag==="SCRIPT"||tag==="STYLE"||tag==="NOSCRIPT") return NodeFilter.FILTER_REJECT; if(el.dataset&&el.dataset.notranslate) return NodeFilter.FILTER_REJECT; el=el.parentElement; } return NodeFilter.FILTER_ACCEPT;
+    }}, false);
+    var nodes=[], n; while(n=walker.nextNode()) nodes.push(n);
+    for(var j=0;j<nodes.length;j++) translateNode(nodes[j], fromDict, sortedKeys);
+    var t=document.title, nt=t; for(var m=0;m<sortedKeys.length;m++){ var kk=sortedKeys[m]; if(nt.indexOf(kk)!==-1) nt=nt.split(kk).join(fromDict[kk]); } document.title=nt;
+  }
+  function switchLang(lang){ if(lang===currentLang) return; var prev=currentLang; translatePage(lang,prev); rerenderMermaid(lang); currentLang=lang;
+    var btn=document.getElementById("langBtn"), toast=document.getElementById("langToast");
+    var btnLabels={zh:"EN",en:"中"}, toastMsgs={zh:"已切換為中文",en:"Switched to English"}, btnTitles={zh:"切換語言",en:"Switch Language"};
+    if(btn){ btn.textContent=btnLabels[lang]; btn.title=btnTitles[lang]; }
+    if(toast){ toast.textContent=toastMsgs[lang]; toast.classList.add("show"); setTimeout(function(){toast.classList.remove("show");},1800); }
+    var bz=document.getElementById("btnZh"), be=document.getElementById("btnEn");
+    if(bz) bz.classList.toggle("active",lang==="zh"); if(be) be.classList.toggle("active",lang==="en");
+  }
+  function toggleLang(){ switchLang(currentLang==="zh"?"en":"zh"); }
+  window.switchLang=switchLang; window.toggleLang=toggleLang;
+})();
+</script>
+<button class="lang-toggle" id="langBtn" data-notranslate="true" title="切換語言" onclick="toggleLang()">EN</button>
+<div class="lang-toast" id="langToast" data-notranslate="true"></div>
+<!-- I18N-JS-END -->
 </body>
 </html>

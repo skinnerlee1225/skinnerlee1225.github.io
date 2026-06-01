@@ -1,0 +1,4 @@
+# i18n build artifacts (not part of the site)
+crypto-portfolio/_i18n_work/
+crypto-portfolio/_i18n_inject.py
+.DS_Store
